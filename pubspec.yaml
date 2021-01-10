@@ -69,7 +69,7 @@ flutter:
   fonts:
     - family: Gotham
       fonts:
-        - asset: fonts/Gotham-Black.oft
+        - asset: fonts/Gotham-Black.otf
   # fonts:
   #   - family: Schyler
   #     fonts:
