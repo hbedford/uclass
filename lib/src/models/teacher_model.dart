@@ -9,11 +9,24 @@ class TeacherModel {
   final password = ValueNotifier<String>(null);
   final email = ValueNotifier<String>(null);
   final pin = ValueNotifier<String>(null);
+  TeacherModel({
+    int id,
+    String name,
+    String doc,
+    String phone,
+    DateTime birth,
+  }) {
+    changeId(id);
+    changeName(name);
+    changeDoc(doc);
+    changePhone(phone);
+    changeBirth(birth);
+  }
   changeId(int i) => id.value = i;
   changeName(String n) => name.value = n;
   changeDoc(String d) => doc.value = d;
   changePhone(String p) => phone.value = p;
-  changeDate(DateTime d) => dateBirth.value = d;
+  changeBirth(DateTime d) => dateBirth.value = d;
   changePassword(String p) => password.value = p;
   changeEmail(String e) => email.value = e;
   changePin(String p) => pin.value = p;

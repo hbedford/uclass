@@ -30,7 +30,8 @@ dependencies:
   cupertino_icons: ^1.0.1
   get_it:
   google_fonts: ^1.1.1
-  
+  flutter_localizations: 
+    sdk: flutter 
 
 dev_dependencies:
   flutter_test:
@@ -70,6 +71,8 @@ flutter:
     - family: Gotham
       fonts:
         - asset: fonts/Gotham-Black.otf
+        - asset: fonts/Gotham-XLight.otf
+          weight: 400
   # fonts:
   #   - family: Schyler
   #     fonts:

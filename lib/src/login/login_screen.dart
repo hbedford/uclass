@@ -14,7 +14,6 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     style = TextStyle(fontFamily: 'Gotham', color: Colors.white);
     return Scaffold(
-      backgroundColor: Color(0xff050D10),
       body: LayoutBuilder(
         builder: (_, constraint) => Center(
           child: Column(
@@ -75,7 +74,7 @@ class LoginScreen extends StatelessWidget {
                 /* shape: RoundedRectangleBorder(
                   borderRadius: new BorderRadius.circular(18.0),
                 ), */
-                onPressed: () => null,
+                onPressed: () => controller.confirm(context),
                 child: Text(
                   'Entrar',
                   style: style,
@@ -99,6 +98,18 @@ class LoginScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           top(constraint),
+          ValueListenableBuilder(
+            valueListenable: controller.step,
+            builder: (context, value, child) => value == 0
+                ? step1(constraint, context)
+                : value == 1
+                    ? step2(constraint, context)
+                    : step3(constraint, context),
+          )
+        ],
+      );
+  step1(BoxConstraints constraint, BuildContext context) => Column(
+        children: [
           Column(
             children: [
               TextFieldWidget(
@@ -130,7 +141,7 @@ class LoginScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 RaisedButton(
-                  onPressed: () => null,
+                  onPressed: () => controller.changeStep(1),
                   padding: EdgeInsets.symmetric(horizontal: 20),
                   child: Text('PRÓXIMO'),
                 ),
@@ -145,6 +156,132 @@ class LoginScreen extends StatelessWidget {
             ),
           )
         ],
+      );
+  step2(BoxConstraints constraint, BuildContext context) => Expanded(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            Container(),
+            Column(
+              children: [
+                ValueListenableBuilder(
+                    valueListenable: controller.email.value,
+                    builder: (context, value, child) => Container(
+                          margin: EdgeInsets.symmetric(
+                              horizontal: constraint.maxWidth * 0.15,
+                              vertical: constraint.maxHeight * 0.05),
+                          child: Text(
+                            'Enviamos um código para seu e-mail ${value.text}',
+                            style: style,
+                            textAlign: TextAlign.center,
+                          ),
+                        )),
+                TextFieldWidget(
+                  margin: EdgeInsets.symmetric(
+                      horizontal: constraint.maxWidth * 0.05),
+                  controller: controller.code.value,
+                  hint: 'Digite aqui seu codigo',
+                ),
+              ],
+            ),
+            Text(
+              'Reenviar codigo 00:57',
+              style: style.copyWith(
+                  decoration: TextDecoration.underline, fontSize: 12),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                RaisedButton(
+                  onPressed: () => controller.changeStep(2),
+                  child: Text('CONFIRMAR'),
+                ),
+                RaisedButton(
+                  color:
+                      Theme.of(context).buttonTheme.colorScheme.primaryVariant,
+                  onPressed: () => controller.changeStep(0),
+                  child: Text('voltar'),
+                )
+              ],
+            )
+          ],
+        ),
+      );
+  step3(BoxConstraints constraint, BuildContext context) => Expanded(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            Text(
+              'Complete seu perfil',
+              style: style,
+            ),
+            CircleAvatar(
+              radius: constraint.maxWidth * 0.1,
+              child: Stack(
+                children: [
+                  Positioned(
+                    child: Icon(Icons.camera_alt),
+                    bottom: 0,
+                    right: 0,
+                  )
+                ],
+              ),
+            ),
+            TextFieldWidget(
+              controller: controller.name.value,
+              margin:
+                  EdgeInsets.symmetric(horizontal: constraint.maxWidth * 0.05),
+              hint: 'Nome',
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: ['Professor', 'Aluno', 'Outro']
+                  .map((e) => ValueListenableBuilder(
+                      valueListenable: controller.function,
+                      builder: (context, value, child) => InkWell(
+                            onTap: () => controller.changeFunction(e),
+                            child: value == e
+                                ? Container(
+                                    decoration: BoxDecoration(
+                                        color: Colors.blue,
+                                        borderRadius:
+                                            BorderRadius.circular(20)),
+                                    margin: EdgeInsets.symmetric(
+                                        vertical: constraint.maxHeight * 0.01,
+                                        horizontal: constraint.maxWidth * 0.2),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: [
+                                        Text(
+                                          e,
+                                          style: style,
+                                        ),
+                                        Icon(
+                                          Icons.check,
+                                          color: Colors.white,
+                                        )
+                                      ],
+                                    ),
+                                  )
+                                : Container(
+                                    margin: EdgeInsets.symmetric(
+                                      vertical: constraint.maxHeight * 0.01,
+                                    ),
+                                    child: Text(
+                                      e,
+                                      style: style,
+                                    ),
+                                  ),
+                          )))
+                  .toList(),
+            ),
+            RaisedButton(
+              onPressed: () => controller.confirm(context),
+              child: Text('CONFIRMAR'),
+            )
+          ],
+        ),
       );
   top(BoxConstraints constraint) => Row(
         children: [

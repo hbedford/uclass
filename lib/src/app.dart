@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:uclass/src/home/home_screen.dart';
 import 'package:uclass/src/loading/loading_screen.dart';
 import 'package:uclass/src/login/login_screen.dart';
@@ -8,7 +9,15 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     Color def = Colors.white;
     return MaterialApp(
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      locale: Locale('pt', 'BR'),
+      supportedLocales: [const Locale('pt', 'BR')],
       theme: ThemeData(
+          scaffoldBackgroundColor: Color(0xff050D10),
           fontFamily: 'Gotham',
           accentColor: Colors.white,
 
@@ -39,7 +48,7 @@ class App extends StatelessWidget {
       routes: {
         '/loading': (context) => LoadingScreen(),
         '/login': (context) => LoginScreen(),
-        '/home': (context) => HomeScreen()
+        '/home': (context) => HomeScreen(),
       },
       initialRoute: '/loading',
     );
