@@ -14,7 +14,9 @@ class TextFieldWidget extends StatelessWidget {
           color: Colors.white, borderRadius: BorderRadius.circular(10)),
       child: TextField(
         decoration: InputDecoration(
-            hintText: hint, hintStyle: TextStyle(color: Colors.black26)),
+            hintText: hint,
+            hintStyle:
+                TextStyle(color: Colors.black26, fontWeight: FontWeight.w700)),
       ),
     );
   }

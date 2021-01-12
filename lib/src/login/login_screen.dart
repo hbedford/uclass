@@ -12,7 +12,8 @@ class LoginScreen extends StatelessWidget {
   TextStyle style;
   @override
   Widget build(BuildContext context) {
-    style = TextStyle(fontFamily: 'Gotham', color: Colors.white);
+    style = TextStyle(
+        fontFamily: 'Gotham', color: Colors.white, fontWeight: FontWeight.w700);
     return Scaffold(
       body: LayoutBuilder(
         builder: (_, constraint) => Center(
