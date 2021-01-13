@@ -4,11 +4,11 @@ import 'package:uclass/src/models/type_activity_model.dart';
 
 class DayActivityModel {
   final id;
-  final date;
+  final ValueNotifier<DateTime> date;
   final ValueNotifier<List<TypeActivityModel>> activities;
   DayActivityModel({int id, DateTime date, List<TypeActivityModel> activities})
       : this.id = ValueNotifier<int>(id),
-        this.date = ValueNotifier<DateTime>(null),
+        this.date = ValueNotifier<DateTime>(date),
         this.activities = ValueNotifier<List<TypeActivityModel>>(activities);
   List<TypeActivityModel> get list {
     List<TypeActivityModel> l = activities.value;

@@ -3,6 +3,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:uclass/src/home/home_screen.dart';
 import 'package:uclass/src/loading/loading_screen.dart';
 import 'package:uclass/src/login/login_screen.dart';
+import 'package:flutter/foundation.dart' as platform;
 
 class App extends StatelessWidget {
   @override
@@ -42,7 +43,8 @@ class App extends StatelessWidget {
                 brightness: Brightness.light),
             textTheme: ButtonTextTheme.accent,
             shape: RoundedRectangleBorder(
-              borderRadius: new BorderRadius.circular(18.0),
+              borderRadius:
+                  new BorderRadius.circular(platform.kIsWeb ? 30 : 18.0),
             ),
           )),
       routes: {

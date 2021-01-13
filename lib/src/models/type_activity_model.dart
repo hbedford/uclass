@@ -5,8 +5,8 @@ import 'activity_model.dart';
 
 class TypeActivityModel {
   final id;
-  final name;
-  final color;
+  final ValueNotifier<String> name;
+  final ValueNotifier<Color> color;
   final ValueNotifier<List<ActivityModel>> activities;
   TypeActivityModel(
       {int id, String name, Color color, List<ActivityModel> activities})
