@@ -30,7 +30,7 @@ class HomeClasses extends StatelessWidget {
           scrollDirection: Axis.horizontal,
           itemCount: list.length,
           itemBuilder: (_, index) => withPercent
-              ? classWithPercentMobile(list[index], constraint)
+              ? classWithPercentDesktop(list[index], constraint)
               : classDesktop(list[index], constraint),
         ),
       ));
@@ -54,9 +54,10 @@ class HomeClasses extends StatelessWidget {
       );
   classDesktop(ClassModel e, constraint) => Container(
         margin: EdgeInsets.only(
-          left: constraint.maxWidth * 0.02,
-        ),
-        width: constraint.maxWidth * 0.5,
+            left: constraint.maxWidth * 0.02,
+            top: constraint.maxHeight * 0.1,
+            bottom: constraint.maxHeight * 0.1),
+        width: constraint.maxWidth * 0.2,
         decoration: BoxDecoration(
             color: e.color.value, borderRadius: BorderRadius.circular(20)),
         child: Column(
@@ -179,6 +180,80 @@ class HomeClasses extends StatelessWidget {
               ],
             )
           ],
+        ),
+      );
+  classWithPercentDesktop(ClassModel c, BoxConstraints constraint) => Container(
+        margin: EdgeInsets.only(
+            left: constraint.maxWidth * 0.02,
+            top: constraint.maxHeight * 0.1,
+            bottom: constraint.maxHeight * 0.1),
+        width: constraint.maxWidth * 0.2,
+        height: constraint.maxHeight * 0.1,
+        decoration: BoxDecoration(
+            color: c.color.value, borderRadius: BorderRadius.circular(20)),
+        child: LayoutBuilder(
+          builder: (_, constraint) => Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                height: constraint.maxHeight * 0.1,
+                width: constraint.maxWidth,
+                child: Stack(
+                  children: [
+                    Positioned.fill(
+                        child: Container(
+                      height: constraint.maxHeight,
+                      width: constraint.maxWidth,
+                      decoration: BoxDecoration(
+                          color: Colors.grey,
+                          borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(20),
+                              topLeft: Radius.circular(20))),
+                    )),
+                    Positioned.fill(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Container(
+                            height: constraint.maxHeight,
+                            width: (constraint.maxWidth * 0.5) *
+                                (c.percent.value / 10),
+                            decoration: BoxDecoration(
+                                color: Colors.blue,
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(20))),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Positioned.fill(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Progresso',
+                            style: style,
+                          )
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              Text(
+                c.title.value,
+                style: style,
+              ),
+              Column(
+                children: [
+                  Text(
+                    'Participantes:${c.students.value}',
+                    style: style.copyWith(fontSize: 10),
+                  ),
+                ],
+              )
+            ],
+          ),
         ),
       );
 }
