@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:uclass/src/models/activity_model.dart';
-import 'package:uclass/src/models/class_model.dart';
-import 'package:uclass/src/models/day_activity_model.dart';
+import 'package:uclass/src/home/home_classes.dart';
+import 'package:uclass/src/home/home_events.dart';
+import 'package:uclass/src/home/home_resume.dart';
 import 'package:uclass/src/models/event_model.dart';
 import 'package:uclass/src/models/menu_model.dart';
-import 'package:uclass/src/models/teacher_model.dart';
-import 'package:uclass/src/models/type_activity_model.dart';
 import 'package:uclass/src/utils/date_convert.dart';
 import 'package:uclass/src/utils/time_convert.dart';
 import 'package:flutter/foundation.dart' as platform;
@@ -19,54 +17,21 @@ class HomeScreen extends StatelessWidget {
     MenuModel(name: 'SOCIAL'),
     MenuModel(name: 'CALENDARIO')
   ];
+  /* final List recentClasses = [
+    ClassModel(
+        teacherModel: TeacherModel(
+          name: 'Martin Marks',
+        ),
+        studentsNumber: 35,
+        name: 'Biologia Marinha',
+        color: Colors.green),
+  ]; */
+
   final TextStyle style = TextStyle(fontFamily: 'Gotham', color: Colors.white);
-  final List<DayActivityModel> list = [
-    DayActivityModel(date: DateTime(2021, 01, 25), activities: [
-      TypeActivityModel(
-          color: Colors.blue, name: 'Tempo Livre', activities: []),
-      TypeActivityModel(color: Colors.purple, name: 'Exercicios', activities: [
-        ActivityModel(
-          name: 'Exercicio 1',
-          time: TimeOfDay(hour: 0, minute: 35),
-        ),
-        ActivityModel(
-          name: 'Exercicio 2',
-          time: TimeOfDay(hour: 0, minute: 25),
-        ),
-        ActivityModel(
-          name: 'Exercicio 3',
-          time: TimeOfDay(hour: 0, minute: 15),
-        ),
-      ]),
-      TypeActivityModel(color: Colors.yellow, name: 'Videos', activities: [
-        ActivityModel(
-          name: 'Exercicio 1',
-          time: TimeOfDay(hour: 0, minute: 15),
-        ),
-        ActivityModel(
-          name: 'Exercicio 2',
-          time: TimeOfDay(hour: 0, minute: 10),
-        ),
-        ActivityModel(
-          name: 'Exercicio 3',
-          time: TimeOfDay(hour: 0, minute: 15),
-        ),
-      ]),
-      TypeActivityModel(color: Colors.green, name: 'Forum/Sala', activities: [
-        ActivityModel(
-          name: 'Exercicio 1',
-          time: TimeOfDay(hour: 0, minute: 35),
-        ),
-        ActivityModel(
-          name: 'Exercicio 1',
-          time: TimeOfDay(hour: 0, minute: 15),
-        ),
-      ])
-    ]),
-    DayActivityModel(date: DateTime(2021, 01, 26), activities: []),
-  ];
+
   @override
   Widget build(BuildContext context) {
+    print(platform.kIsWeb);
     return platform.kIsWeb ? desktop(context) : mobile(context);
   }
 
@@ -177,19 +142,61 @@ class HomeScreen extends StatelessWidget {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Container(
-                                          child: Text(
-                                            'SALAS RECENTES',
-                                            style: style.copyWith(
-                                                fontWeight: FontWeight.w900),
-                                          ),
-                                        )
+                                        Flexible(
+                                            flex: 2,
+                                            child: LayoutBuilder(
+                                                builder: (_, constraint) =>
+                                                    Column(
+                                                      children: [
+                                                        Container(
+                                                          child: Text(
+                                                            'SALAS RECENTES',
+                                                            style: style.copyWith(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w900),
+                                                          ),
+                                                        ),
+                                                        HomeClasses(
+                                                          constraint:
+                                                              constraint,
+                                                        )
+                                                      ],
+                                                    ))),
+                                        Flexible(child: Column()),
                                       ],
                                     ))),
                       ],
                     ),
                   ),
-                ))
+                )),
+            Flexible(
+                child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Icon(
+                      Icons.notification_important,
+                      color: Colors.white,
+                    ),
+                    Icon(
+                      Icons.settings,
+                      color: Colors.white,
+                    )
+                  ],
+                ),
+                Text(
+                  'EVENTOS',
+                  style: style,
+                ),
+                Expanded(
+                    child: LayoutBuilder(
+                        builder: (_, constraint) => HomeEvents(
+                              constraint: constraint,
+                            )))
+              ],
+            ))
           ],
         ),
       );
@@ -209,184 +216,24 @@ class HomeScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             title('SALAS RECENTES', constraint),
-            classes(constraint),
+            HomeClasses(
+              constraint: constraint,
+            ),
+            /* classes(constraint), */
             title('MINHAS SALAS', constraint),
-            myClasses(constraint),
+            HomeClasses(
+              constraint: constraint,
+              withPercent: true,
+            ),
             title('EVENTOS', constraint),
-            events(constraint),
+            HomeEvents(
+              constraint: constraint,
+            ),
             resume1()
           ],
         );
       }));
-  classes(BoxConstraints constraint) => Container(
-        margin: EdgeInsets.symmetric(vertical: constraint.maxHeight * 0.02),
-        height: constraint.maxHeight * 0.15,
-        child: SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            children: [
-              ClassModel(
-                  teacherModel: TeacherModel(
-                    name: 'Martin Marks',
-                  ),
-                  studentsNumber: 35,
-                  name: 'Biologia Marinha',
-                  color: Colors.green),
-            ].map<Widget>((e) => classWithPercent(e, constraint)).toList(),
-          ),
-        ),
-      );
-  classWithPercent(ClassModel e, constraint) => Container(
-        margin: EdgeInsets.only(
-          left: constraint.maxWidth * 0.02,
-        ),
-        width: constraint.maxWidth * 0.5,
-        decoration: BoxDecoration(
-            color: e.color.value, borderRadius: BorderRadius.circular(20)),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Container(),
-            Text(
-              e.title.value,
-              style: style,
-            ),
-            Column(
-              children: [
-                Text(
-                  'Prof:${e.teacher.value.name.value}',
-                  style: style.copyWith(fontSize: 10),
-                ),
-                Text(
-                  'Participantes:${e.students.value}',
-                  style: style.copyWith(fontSize: 10),
-                ),
-              ],
-            )
-          ],
-        ),
-      );
-  myClasses(BoxConstraints constraint) => Container(
-        margin: EdgeInsets.symmetric(vertical: constraint.maxHeight * 0.02),
-        height: constraint.maxHeight * 0.15,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: [
-                  ClassModel(
-                      teacherModel: TeacherModel(
-                        name: 'Martin Marks',
-                      ),
-                      studentsNumber: 35,
-                      name: 'Biologia Marinha',
-                      percent: 7,
-                      color: Colors.green),
-                ].map<Widget>((e) => classWidget(e, constraint)).toList(),
-              ),
-            ),
-          ],
-        ),
-      );
-  events(BoxConstraints constraint) => Container(
-        height: constraint.maxHeight * 0.2,
-        child: SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            children: [
-              EventModel(
-                title: 'Biologia Marinha',
-                start: TimeOfDay(hour: 7, minute: 30),
-                end: TimeOfDay(hour: 11, minute: 0),
-                date: DateTime(2021, 01, 25),
-              ),
-              EventModel(
-                title: 'Anatomia',
-                start: TimeOfDay(hour: 14, minute: 30),
-                end: TimeOfDay(hour: 15, minute: 45),
-                date: DateTime(2021, 01, 25),
-              ),
-              EventModel(
-                title: 'Biologia',
-                start: TimeOfDay(hour: 08, minute: 30),
-                end: TimeOfDay(hour: 09, minute: 45),
-                date: DateTime(2021, 01, 26),
-              ),
-            ].map<Widget>((e) => event(e, constraint)).toList(),
-          ),
-        ),
-      );
-  classWidget(ClassModel c, BoxConstraints constraint) => Container(
-        margin: EdgeInsets.only(
-          left: constraint.maxWidth * 0.02,
-        ),
-        width: constraint.maxWidth * 0.5,
-        height: constraint.maxHeight * 0.15,
-        decoration: BoxDecoration(
-            color: c.color.value, borderRadius: BorderRadius.circular(20)),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Container(
-              height: constraint.maxHeight * 0.03,
-              width: constraint.maxWidth,
-              child: Stack(
-                children: [
-                  Positioned.fill(
-                    child: Row(
-                      children: [
-                        Container(
-                          height: constraint.maxHeight * 0.03,
-                          width: (constraint.maxWidth * 0.5) *
-                              (c.percent.value / 10),
-                          decoration: BoxDecoration(
-                              color: Colors.blue,
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(20))),
-                        ),
-                        Container(
-                          height: constraint.maxHeight * 0.03,
-                          width: (constraint.maxWidth * 0.5) *
-                              ((10 - c.percent.value) / 10),
-                          decoration: BoxDecoration(
-                              color: Colors.grey,
-                              borderRadius: BorderRadius.only(
-                                  topRight: Radius.circular(20))),
-                        )
-                      ],
-                    ),
-                  ),
-                  Positioned.fill(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Progresso',
-                          style: style,
-                        )
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            ),
-            Text(
-              c.title.value,
-              style: style,
-            ),
-            Column(
-              children: [
-                Text(
-                  'Participantes:${c.students.value}',
-                  style: style.copyWith(fontSize: 10),
-                ),
-              ],
-            )
-          ],
-        ),
-      );
+
   event(EventModel e, BoxConstraints constraint) => Container(
         margin: EdgeInsets.symmetric(
             vertical: constraint.maxHeight * 0.02,
@@ -442,17 +289,12 @@ class HomeScreen extends StatelessWidget {
             Expanded(
                 flex: 8,
                 child: LayoutBuilder(
-                  builder: (_, constraint) => ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: list.length,
-                    itemBuilder: (_, index) =>
-                        resumeInfo1(list[index], constraint),
-                  ),
-                ))
+                    builder: (_, constraint) =>
+                        HomeResume(constraint: constraint)))
           ],
         ),
       );
-  resumeInfo1(DayActivityModel d, BoxConstraints constraint) => Container(
+  /* resumeInfo1(DayActivityModel d, BoxConstraints constraint) => Container(
         width: constraint.maxWidth * 0.2,
         child: Column(
           children: [
@@ -474,8 +316,8 @@ class HomeScreen extends StatelessWidget {
             ),
           ],
         ),
-      );
-  resume(BoxConstraints constraint) => SizedBox(
+      ); */
+  /* resume(BoxConstraints constraint) => SizedBox(
         /* color: Colors.blue, */
         height: constraint.maxHeight * 0.2,
         width: constraint.maxWidth,
@@ -545,11 +387,11 @@ class HomeScreen extends StatelessWidget {
             )
           ],
         ),
-      );
+      ); */
   title(String t, BoxConstraints constraint) => Container(
         margin: EdgeInsets.only(left: constraint.maxWidth * 0.05),
         child: Text(
-          'SALAS RECENTES',
+          t,
           style: style.copyWith(fontWeight: FontWeight.w900),
         ),
       );
