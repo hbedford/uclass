@@ -30,23 +30,24 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     print(platform.kIsWeb);
     return LayoutBuilder(
-      builder: (_, constraint) => Expanded(
-        child: Stack(
-          children: [
-            Positioned.fill(
-                child: platform.kIsWeb ? HomeDesktop() : HomeMobile()),
-            Positioned(
-              bottom: 0,
-              right: 0,
-              child: Container(
-                height: constraint.maxHeight * 0.5,
-                width: constraint.maxWidth * 0.5,
-                child: ChatWidget(),
-              ),
-            )
-          ],
-        ),
+      builder: (_, constraint) => /* Expanded(
+        child: */
+          Stack(
+        children: [
+          Positioned.fill(
+              child: platform.kIsWeb ? HomeDesktop() : HomeMobile()),
+          Positioned(
+            bottom: 0,
+            right: 0,
+            child: Container(
+              height: constraint.maxHeight * 0.5,
+              width: constraint.maxWidth * 0.5,
+              child: ChatWidget(),
+            ),
+          )
+        ],
       ),
+      /*  ), */
     );
   }
 
