@@ -36,5 +36,5 @@ class ChatMessageWidget extends StatelessWidget {
     );
   }
 
-  button() => IconButton(icon: Icon(Icons.menu), onPressed: () => null);
+  button() => IconButton(icon: Icon(Icons.more_horiz), onPressed: () => null);
 }

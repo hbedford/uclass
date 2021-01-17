@@ -99,6 +99,7 @@ class HomeClasses extends StatelessWidget {
               style: style,
             ),
             Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Text(
                   'Prof:${e.teacher.value.name.value}',
@@ -167,17 +168,21 @@ class HomeClasses extends StatelessWidget {
                 ],
               ),
             ),
-            Text(
-              c.title.value,
-              style: style,
-            ),
-            Column(
-              children: [
-                Text(
-                  'Participantes:${c.students.value}',
-                  style: style.copyWith(fontSize: 10),
-                ),
-              ],
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Container(),
+                  Text(
+                    c.title.value,
+                    style: style,
+                  ),
+                  Text(
+                    'Participantes:${c.students.value}',
+                    style: style.copyWith(fontSize: 10),
+                  ),
+                ],
+              ),
             )
           ],
         ),

@@ -46,7 +46,7 @@ class HomeDesktop extends StatelessWidget {
                                       HomeEvents(
                                         constraint: constraints,
                                       ), */
-                                      resume1()
+                                      resume1(constraint)
                                     ],
                                   ))),
                     ],
@@ -85,7 +85,7 @@ class HomeDesktop extends StatelessWidget {
     );
   }
 
-  resume1() => Flexible(
+  resume1(BoxConstraints constraint) => Flexible(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -94,7 +94,9 @@ class HomeDesktop extends StatelessWidget {
               flex: 2,
               child: Row(
                 children: [
-                  Text('Resumo de atividades', style: style),
+                  Container(
+                      margin: EdgeInsets.only(left: constraint.maxWidth * 0.00),
+                      child: Text('Resumo de atividades', style: style)),
                   TextButton(
                       onPressed: () => null,
                       child: Text(

@@ -28,7 +28,6 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(platform.kIsWeb);
     return LayoutBuilder(
       builder: (_, constraint) => /* Expanded(
         child: */
@@ -36,14 +35,8 @@ class HomeScreen extends StatelessWidget {
         children: [
           Positioned.fill(
               child: platform.kIsWeb ? HomeDesktop() : HomeMobile()),
-          Positioned(
-            bottom: 0,
-            right: 0,
-            child: Container(
-              height: constraint.maxHeight * 0.5,
-              width: constraint.maxWidth * 0.5,
-              child: ChatWidget(),
-            ),
+          ChatWidget(
+            constraints: constraint,
           )
         ],
       ),

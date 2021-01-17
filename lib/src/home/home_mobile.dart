@@ -29,30 +29,83 @@ class HomeMobile extends StatelessWidget {
           ),
         ),
         drawer: drawer(context),
-        body: LayoutBuilder(builder: (context, constraint) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              title('SALAS RECENTES', constraint),
-              HomeClasses(
-                constraint: constraint,
-              ),
-              /* classes(constraint), */
-              title('MINHAS SALAS', constraint),
-              HomeClasses(
-                constraint: constraint,
-                withPercent: true,
-              ),
-              title('EVENTOS', constraint),
-              HomeEvents(
-                constraint: constraint,
-              ),
-              resume1()
-            ],
-          );
-        }));
+        /*     drawer: drawer(context), */
+        body: drawerBody(context));
   }
 
+  railBody(BuildContext context) => Row(
+        children: [
+          Flexible(
+            flex: 1,
+            child: NavigationRail(
+              labelType: NavigationRailLabelType.all,
+              backgroundColor: Colors.white12,
+              destinations: [
+                NavigationRailDestination(
+                  icon: Icon(
+                    Icons.dashboard,
+                    color: Colors.transparent,
+                  ),
+                  label: Padding(
+                    padding: EdgeInsets.symmetric(vertical: 8),
+                    child: RotatedBox(
+                      quarterTurns: -1,
+                      child: Text(
+                        "Meu Dash",
+                        style: style.copyWith(
+                            fontSize: 20, fontWeight: FontWeight.w700),
+                      ),
+                    ),
+                  ),
+                ),
+                NavigationRailDestination(
+                  icon: Icon(
+                    Icons.dashboard,
+                    color: Colors.transparent,
+                  ),
+                  label: Padding(
+                    padding: EdgeInsets.symmetric(vertical: 8),
+                    child: RotatedBox(
+                      quarterTurns: -1,
+                      child: Text(
+                        "Salas",
+                        style: style.copyWith(
+                            fontSize: 20, fontWeight: FontWeight.w700),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+              selectedIndex: 0,
+            ),
+          ),
+          VerticalDivider(thickness: 1, width: 1),
+          Expanded(flex: 9, child: body()),
+        ],
+      );
+  drawerBody(BuildContext context) => body();
+  body() => LayoutBuilder(builder: (context, constraint) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            title('SALAS RECENTES', constraint),
+            HomeClasses(
+              constraint: constraint,
+            ),
+            /* classes(constraint), */
+            title('MINHAS SALAS', constraint),
+            HomeClasses(
+              constraint: constraint,
+              withPercent: true,
+            ),
+            title('EVENTOS', constraint),
+            HomeEvents(
+              constraint: constraint,
+            ),
+            resume1(constraint)
+          ],
+        );
+      });
   drawer(BuildContext context) => Drawer(
         child: Container(
           color: Theme.of(context).scaffoldBackgroundColor,
@@ -119,23 +172,27 @@ class HomeMobile extends StatelessWidget {
           ),
         ),
       );
-  resume1() => Flexible(
+  resume1(BoxConstraints constraint) => Flexible(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Flexible(
               flex: 2,
-              child: Row(
-                children: [
-                  Text('Resumo de atividades', style: style),
-                  TextButton(
-                      onPressed: () => null,
-                      child: Text(
-                        'Ver mais',
-                        style: style.copyWith(fontWeight: FontWeight.w700),
-                      ))
-                ],
+              child: Container(
+                margin: EdgeInsets.only(left: constraint.maxWidth * 0.05),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('Resumo de atividades', style: style),
+                    TextButton(
+                        onPressed: () => null,
+                        child: Text(
+                          'Ver mais',
+                          style: style.copyWith(fontWeight: FontWeight.w700),
+                        ))
+                  ],
+                ),
               ),
             ),
             Spacer(),
