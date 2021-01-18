@@ -31,7 +31,9 @@ class ChatWidget extends StatelessWidget {
     return Positioned(
         bottom: 0,
         right: 0,
-        child: platform.kIsWeb ? web() : mobileCircle(context));
+        child: platform.kIsWeb && MediaQuery.of(context).size.width > 1320
+            ? web()
+            : mobileCircle(context));
   }
 
   web() => Material(

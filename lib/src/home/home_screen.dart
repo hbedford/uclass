@@ -1,17 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:uclass/src/chat/chat_widget.dart';
-import 'package:uclass/src/home/home_classes.dart';
 import 'package:uclass/src/home/home_desktop.dart';
-import 'package:uclass/src/home/home_events.dart';
 import 'package:uclass/src/home/home_mobile.dart';
-import 'package:uclass/src/home/home_resume.dart';
-import 'package:uclass/src/models/event_model.dart';
-import 'package:uclass/src/models/menu_model.dart';
-import 'package:uclass/src/utils/date_convert.dart';
-import 'package:uclass/src/utils/time_convert.dart';
-import 'package:flutter/foundation.dart' as platform;
 
-import 'home_leftside.dart';
+import 'package:flutter/foundation.dart' as platform;
 
 class HomeScreen extends StatelessWidget {
   /* final List recentClasses = [
@@ -34,7 +26,9 @@ class HomeScreen extends StatelessWidget {
           Stack(
         children: [
           Positioned.fill(
-              child: platform.kIsWeb ? HomeDesktop() : HomeMobile()),
+              child: platform.kIsWeb && MediaQuery.of(context).size.width > 1320
+                  ? HomeDesktop()
+                  : HomeMobile()),
           ChatWidget(
             constraints: constraint,
           )
@@ -44,7 +38,7 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  event(EventModel e, BoxConstraints constraint) => Container(
+  /* event(EventModel e, BoxConstraints constraint) => Container(
         margin: EdgeInsets.symmetric(
             vertical: constraint.maxHeight * 0.02,
             horizontal: constraint.maxWidth * 0.05),
@@ -75,5 +69,5 @@ class HomeScreen extends StatelessWidget {
             )
           ],
         ),
-      );
+      ); */
 }

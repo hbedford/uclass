@@ -10,11 +10,10 @@ import 'package:uclass/src/widgets/textfield_widget.dart';
 
 class LoginScreen extends StatelessWidget {
   final controller = GetIt.I.get<LoginController>();
-  TextStyle style;
+  final TextStyle style = TextStyle(
+      fontFamily: 'Gotham', color: Colors.white, fontWeight: FontWeight.w700);
   @override
   Widget build(BuildContext context) {
-    style = TextStyle(
-        fontFamily: 'Gotham', color: Colors.white, fontWeight: FontWeight.w700);
     return Scaffold(
       body: LayoutBuilder(
         builder: (_, constraint) => Center(
@@ -27,7 +26,8 @@ class LoginScreen extends StatelessWidget {
                       color: Color(0xff13191E),
                       borderRadius: BorderRadius.circular(20)),
                   height: constraint.maxHeight * 0.6,
-                  width: platform.kIsWeb
+                  width: platform.kIsWeb &&
+                          MediaQuery.of(context).size.width > 1320
                       ? constraint.maxWidth * 0.3
                       : constraint.maxWidth * 0.8,
                   child: LayoutBuilder(

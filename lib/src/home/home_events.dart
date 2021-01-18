@@ -31,7 +31,9 @@ class HomeEvents extends StatelessWidget {
   final TextStyle style = TextStyle(fontFamily: 'Gotham', color: Colors.white);
   @override
   Widget build(BuildContext context) {
-    return platform.kIsWeb ? desktopEvents() : mobileEvents();
+    return platform.kIsWeb && MediaQuery.of(context).size.width > 1320
+        ? desktopEvents()
+        : mobileEvents();
   }
 
   mobileEvents() => Container(

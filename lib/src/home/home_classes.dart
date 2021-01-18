@@ -21,7 +21,9 @@ class HomeClasses extends StatelessWidget {
   final TextStyle style = TextStyle(fontFamily: 'Gotham', color: Colors.white);
   @override
   Widget build(BuildContext context) {
-    return platform.kIsWeb ? classesDesktop() : classesMobile();
+    return platform.kIsWeb && MediaQuery.of(context).size.width > 1320
+        ? classesDesktop()
+        : classesMobile();
   }
 
   classesDesktop() => Expanded(
