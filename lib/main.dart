@@ -16,7 +16,7 @@ void main() {
   getIt.registerSingleton<ChatController>(ChatController(conversations: [
     ConversationModel(
         color: Colors.blue,
-        isOpened: false,
+        isOpened: true,
         user: UserChatModel(name: 'Corona Virus'))
   ]));
   runApp(App());

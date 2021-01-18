@@ -18,6 +18,16 @@ class App extends StatelessWidget {
       locale: Locale('pt', 'BR'),
       supportedLocales: [const Locale('pt', 'BR')],
       theme: ThemeData(
+          inputDecorationTheme: InputDecorationTheme(
+            enabledBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.transparent)),
+            disabledBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.transparent)),
+            border: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.transparent)),
+            focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.transparent)),
+          ),
           scaffoldBackgroundColor: Color(0xff050D10),
           fontFamily: 'Gotham',
           accentColor: Colors.white,

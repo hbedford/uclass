@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:uclass/src/chat/chat_controller.dart';
-import 'package:uclass/src/home/home_mobile.dart';
 import 'package:uclass/src/models/message_model.dart';
 import 'package:flutter/foundation.dart' as platform;
 import 'package:uclass/src/widgets/textfield_widget.dart';
 import 'chat_message_widget.dart';
+import 'chat_screen.dart';
 
 class ChatWidget extends StatelessWidget {
   final BoxConstraints constraints;
@@ -34,7 +34,84 @@ class ChatWidget extends StatelessWidget {
         child: platform.kIsWeb ? web() : mobileCircle(context));
   }
 
-  web() => Container(
+  web() => Material(
+        color: Colors.transparent,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            ValueListenableBuilder(
+                valueListenable: controller.conversations.value[0].isOpened,
+                builder: (_, value, child) => AnimatedContainer(
+                    duration: Duration(milliseconds: 200),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(20),
+                      ),
+                      color: Colors.white,
+                    ),
+                    height: value
+                        ? constraints.maxHeight * 0.4
+                        : constraints.maxHeight * 0.05,
+                    width: constraints.maxWidth * 0.2,
+                    child: LayoutBuilder(
+                        builder: (_, constraint) => Column(children: [
+                              topBar(),
+                              Visibility(visible: value, child: center()),
+                              Visibility(visible: value, child: bottomBar())
+                            ]))))
+          ],
+        ),
+      );
+  topBar() => Flexible(
+        flex: 1,
+        child: LayoutBuilder(
+          builder: (_, constraint) => Container(
+            padding:
+                EdgeInsets.symmetric(horizontal: constraint.maxWidth * 0.05),
+            height: constraint.maxHeight,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20),
+              ),
+              color: Colors.blue,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text('Fulano de tal'),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    IconButton(
+                      icon: Icon(Icons.remove),
+                      onPressed: () =>
+                          controller.conversations.value[0].changeIsOpened(),
+                    ),
+                    IconButton(icon: Icon(Icons.close), onPressed: () => null)
+                  ],
+                )
+              ],
+            ),
+          ),
+        ),
+      );
+  center() => Expanded(
+        flex: 8,
+        child: LayoutBuilder(
+          builder: (_, constraint) => ListView(
+            scrollDirection: Axis.vertical,
+            children: list
+                .map<Widget>((MessageModel e) => ChatMessageWidget(
+                      constraint: constraint,
+                      receiver: e.userReceiveId.value == 0,
+                      message: e,
+                    ))
+                .toList(),
+          ),
+        ),
+      );
+  /* web() => Container(
         height: constraints.maxHeight * 0.5,
         width: constraints.maxWidth * 0.5,
         child: LayoutBuilder(
@@ -60,7 +137,7 @@ class ChatWidget extends StatelessWidget {
                             child: Column(
                               children: [
                                 Expanded(
-                                  /* flex: 9, */
+                                  flex: 9,
                                   child: LayoutBuilder(
                                     builder: (_, constraint) => Container(
                                       padding: EdgeInsets.symmetric(
@@ -98,36 +175,31 @@ class ChatWidget extends StatelessWidget {
                                   ),
                                 ),
                                 Expanded(
-                                    flex: value ? 8 : 0,
-                                    child: Visibility(
-                                      visible: value,
-                                      child: LayoutBuilder(
-                                        builder: (_, constraint) => ListView(
-                                          scrollDirection: Axis.vertical,
-                                          children: list
-                                              .map<Widget>((MessageModel e) =>
-                                                  ChatMessageWidget(
-                                                    constraint: constraint,
-                                                    receiver:
-                                                        e.userReceiveId.value ==
-                                                            0,
-                                                    message: e,
-                                                  ))
-                                              .toList(),
-                                        ),
-                                      ),
-                                    )),
+                                  flex: value ? 8 : 0,
+                                  child: LayoutBuilder(
+                                    builder: (_, constraint) => ListView(
+                                      scrollDirection: Axis.vertical,
+                                      children: list
+                                          .map<Widget>((MessageModel e) =>
+                                              ChatMessageWidget(
+                                                constraint: constraint,
+                                                receiver:
+                                                    e.userReceiveId.value == 0,
+                                                message: e,
+                                              ))
+                                          .toList(),
+                                    ),
+                                  ),
+                                ),
                                 Flexible(
-                                    flex: value ? 1 : 0,
-                                    child: Visibility(
-                                        visible: value, child: bottomBar()))
+                                    flex: value ? 1 : 0, child: bottomBar())
                               ],
                             ),
                           )),
                 ],
               )),
         ),
-      );
+      ); */
 
   mobileCircle(BuildContext context) => Container(
       margin: EdgeInsets.only(
@@ -138,8 +210,19 @@ class ChatWidget extends StatelessWidget {
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-            onTap: () => showDialog(
-                context: context, builder: (ctxt) => mobileChat(ctxt)),
+            onTap: () => showModalBottomSheet(
+                  shape: RoundedRectangleBorder(
+                      borderRadius:
+                          BorderRadius.vertical(top: Radius.circular(0))),
+                  backgroundColor: Colors.transparent,
+                  isScrollControlled: true,
+                  context: context,
+                  builder: (ctxt) => Padding(
+                      padding: MediaQuery.of(context).viewPadding,
+                      child: ChatScreen(
+                        list: list,
+                      )),
+                ),
             child: Container(
               height: constraints.maxWidth * 0.15,
               width: constraints.maxWidth * 0.15,
@@ -151,76 +234,7 @@ class ChatWidget extends StatelessWidget {
               ),
             )),
       ));
-  mobileChat(BuildContext context) => Material(
-        child: Container(
-          child: Column(
-            children: [
-              Flexible(
-                flex: 1,
-                child: LayoutBuilder(
-                  builder: (_, constraint) => Container(
-                    padding: EdgeInsets.symmetric(
-                        vertical: constraint.maxHeight * 0.1,
-                        horizontal: constraint.maxWidth * 0.05),
-                    color: Colors.blueAccent,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            Image.asset(
-                              'assets/avatar.png',
-                            ),
-                            Text('Professor Goku'),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            Icon(Icons.videocam),
-                            Icon(Icons.remove),
-                            IconButton(
-                                icon: Icon(Icons.close),
-                                onPressed: () => Navigator.pop(context))
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              Expanded(
-                  flex: 11,
-                  child: LayoutBuilder(
-                    builder: (_, constraint) => Column(
-                      children: list
-                          .map<Widget>((e) => ChatMessageWidget(
-                                constraint: constraint,
-                                message: e,
-                                receiver: e.userReceiveId.value == 0,
-                              ))
-                          .toList(),
-                    ),
-                  )),
-              Flexible(
-                flex: 1,
-                child: LayoutBuilder(
-                  builder: (_, constraint) => Container(
-                    padding: EdgeInsets.symmetric(
-                        vertical: constraint.maxHeight * 0.2),
-                    child: Row(
-                      children: [
-                        Icon(Icons.add),
-                        Expanded(child: TextFieldWidget()),
-                        Image.asset('assets/send.png')
-                      ],
-                    ),
-                  ),
-                ),
-              )
-            ],
-          ),
-        ),
-      );
+
   mobileNotification() => ValueListenableBuilder(
         valueListenable: controller.notification,
         builder: (_, value, child) => AnimatedContainer(
@@ -306,18 +320,35 @@ class ChatWidget extends StatelessWidget {
           ),
         ),
       );
-  bottomBar() => LayoutBuilder(
-      builder: (_, constraint) => Container(
-            margin: EdgeInsets.symmetric(vertical: constraint.maxHeight * 0.1),
-            child: Row(
-              children: [
-                IconButton(
-                    icon: Icon(
-                      Icons.add_circle_rounded,
-                      color: Colors.grey,
-                    ),
-                    onPressed: () => null)
-              ],
-            ),
-          ));
+  bottomBar() => Flexible(
+        flex: 1,
+        child: LayoutBuilder(
+            builder: (_, constraint) => Container(
+                  margin: EdgeInsets.symmetric(
+                      vertical: constraint.maxHeight * 0.1),
+                  child: Row(
+                    children: [
+                      IconButton(
+                          icon: Icon(
+                            Icons.add_circle_rounded,
+                            color: Colors.grey,
+                          ),
+                          onPressed: () => null),
+                      Expanded(
+                        child: TextFieldWidget(
+                          height: constraint.maxHeight,
+                          hint: 'Digite a mensagem',
+                          padding: EdgeInsets.symmetric(
+                              horizontal: constraint.maxWidth * 0.05,
+                              vertical: constraint.maxHeight * 0.01),
+                          margin: EdgeInsets.symmetric(
+                              vertical: constraint.maxHeight * 0.02),
+                          color: Colors.grey,
+                        ),
+                      ),
+                      Image.asset('assets/send.png')
+                    ],
+                  ),
+                )),
+      );
 }

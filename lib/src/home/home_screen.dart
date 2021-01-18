@@ -30,7 +30,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (_, constraint) => /* Expanded(
-        child: */
+          child: */
           Stack(
         children: [
           Positioned.fill(
