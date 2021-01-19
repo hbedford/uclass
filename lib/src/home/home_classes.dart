@@ -26,15 +26,23 @@ class HomeClasses extends StatelessWidget {
         : classesMobile();
   }
 
-  classesDesktop() => Expanded(
-          child: LayoutBuilder(
-        builder: (_, constraint) => ListView.builder(
-          scrollDirection: Axis.horizontal,
-          itemCount: list.length,
-          itemBuilder: (_, index) => withPercent
-              ? classWithPercentDesktop(list[index], constraint)
-              : classDesktop(list[index], constraint),
-        ),
+  classesDesktop() => Flexible(
+      flex: 1,
+      child: Column(
+        children: [
+          Expanded(
+            child: LayoutBuilder(
+              builder: (_, constraint) => ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: list.length,
+                itemBuilder: (_, index) => withPercent
+                    ? classWithPercentDesktop(list[index], constraint)
+                    : classDesktop(list[index], constraint),
+              ),
+            ),
+          ),
+          Container(height: constraint.maxHeight * 0.05)
+        ],
       ));
   classesMobile() => Container(
         margin: EdgeInsets.symmetric(vertical: constraint.maxHeight * 0.02),
@@ -65,22 +73,35 @@ class HomeClasses extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Container(),
-            Text(
-              e.title.value,
-              style: style,
+            Expanded(
+              flex: 5,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(
+                    e.title.value,
+                    style: style.copyWith(fontSize: 20),
+                  ),
+                ],
+              ),
             ),
-            Column(
-              children: [
-                Text(
-                  'Prof:${e.teacher.value.name.value}',
-                  style: style.copyWith(fontSize: 10),
-                ),
-                Text(
-                  'Participantes:${e.students.value}',
-                  style: style.copyWith(fontSize: 10),
-                ),
-              ],
+            Expanded(
+              flex: 5,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Container(),
+                  Text(
+                    'Prof:${e.teacher.value.name.value}',
+                    style: style.copyWith(fontSize: 10),
+                  ),
+                  Text(
+                    'Participantes:${e.students.value}',
+                    style: style.copyWith(fontSize: 10),
+                  ),
+                  Container(),
+                ],
+              ),
             )
           ],
         ),
@@ -247,18 +268,22 @@ class HomeClasses extends StatelessWidget {
                   ],
                 ),
               ),
-              Text(
-                c.title.value,
-                style: style,
-              ),
-              Column(
-                children: [
-                  Text(
-                    'Participantes:${c.students.value}',
-                    style: style.copyWith(fontSize: 10),
+              Expanded(
+                flex: 6,
+                child: Center(
+                  child: Text(
+                    c.title.value,
+                    style: style.copyWith(fontSize: 20),
                   ),
-                ],
-              )
+                ),
+              ),
+              Expanded(
+                flex: 2,
+                child: Text(
+                  'Participantes: ${c.students.value}',
+                  style: style.copyWith(fontSize: 10),
+                ),
+              ),
             ],
           ),
         ),

@@ -11,7 +11,10 @@ import 'package:uclass/src/widgets/textfield_widget.dart';
 class LoginScreen extends StatelessWidget {
   final controller = GetIt.I.get<LoginController>();
   final TextStyle style = TextStyle(
-      fontFamily: 'Gotham', color: Colors.white, fontWeight: FontWeight.w700);
+      fontFamily: 'Gotham',
+      color: Colors.white,
+      fontWeight: FontWeight.w100,
+      fontSize: 20);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,7 +39,7 @@ class LoginScreen extends StatelessWidget {
                         builder: (context, value, child) => value
                             ? register(constraints, context)
                             : login(constraints, context)),
-                  ))
+                  )),
             ],
           ),
         ),
@@ -55,19 +58,21 @@ class LoginScreen extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Container(),
                 Column(
                   children: [
                     TextFieldWidget(
-                        margin: EdgeInsets.symmetric(
-                          vertical: constraint.maxHeight * 0.02,
-                          horizontal: constraint.maxWidth * 0.15,
-                        ),
-                        controller: controller.email.value,
-                        hint: 'E-mail'),
+                      height: constraint.maxHeight * 0.1,
+                      margin: EdgeInsets.symmetric(
+                        vertical: constraint.maxHeight * 0.03,
+                        horizontal: constraint.maxWidth * 0.15,
+                      ),
+                      controller: controller.email.value,
+                      hint: 'E-mail',
+                    ),
                     TextFieldWidget(
+                        height: constraint.maxHeight * 0.1,
                         margin: EdgeInsets.symmetric(
-                          vertical: constraint.maxHeight * 0.02,
+                          vertical: constraint.maxHeight * 0.03,
                           horizontal: constraint.maxWidth * 0.15,
                         ),
                         controller: controller.password.value,
@@ -75,19 +80,21 @@ class LoginScreen extends StatelessWidget {
                   ],
                 ),
                 ButtonWidget(
-                  title: 'Entrar',
+                  title: 'ENTRAR',
                   f: () => controller.confirm(context),
                   height: constraint.maxHeight * 0.1,
                   width: constraint.maxWidth * 0.25,
-                  style: style,
+                  style:
+                      style.copyWith(fontSize: 20, fontWeight: FontWeight.w100),
                 ),
                 FlatButton(
                     onPressed: () => null,
                     child: Text(
                       'Problemas com login?',
                       style: style.copyWith(
-                        color: Colors.grey,
+                        color: Colors.white70,
                         fontSize: 12,
+                        fontWeight: FontWeight.w200,
                         decoration: TextDecoration.underline,
                       ),
                     ))
@@ -96,21 +103,25 @@ class LoginScreen extends StatelessWidget {
           )
         ],
       );
-  register(BoxConstraints constraint, BuildContext context) => Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          top(constraint),
-          Expanded(
-            child: ValueListenableBuilder(
-              valueListenable: controller.step,
-              builder: (context, value, child) => value == 0
-                  ? step1(constraint, context)
-                  : value == 1
-                      ? step2(constraint, context)
-                      : step3(constraint, context),
-            ),
-          )
-        ],
+  register(BoxConstraints constraint, BuildContext context) =>
+      ValueListenableBuilder(
+        valueListenable: controller.step,
+        builder: (_, value, child) => value == 2
+            ? step3(constraint, context)
+            : Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  top(constraint),
+                  Expanded(
+                    child: ValueListenableBuilder(
+                      valueListenable: controller.step,
+                      builder: (context, value, child) => value == 0
+                          ? step1(constraint, context)
+                          : step2(constraint, context),
+                    ),
+                  )
+                ],
+              ),
       );
   step1(BoxConstraints constraint, BuildContext context) => Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -118,22 +129,25 @@ class LoginScreen extends StatelessWidget {
           Column(
             children: [
               TextFieldWidget(
+                  height: constraint.maxHeight * 0.1,
                   margin: EdgeInsets.symmetric(
-                    vertical: constraint.maxHeight * 0.02,
+                    vertical: constraint.maxHeight * 0.03,
                     horizontal: constraint.maxWidth * 0.15,
                   ),
                   controller: controller.email.value,
                   hint: 'E-mail'),
               TextFieldWidget(
+                  height: constraint.maxHeight * 0.1,
                   margin: EdgeInsets.symmetric(
-                    vertical: constraint.maxHeight * 0.02,
+                    vertical: constraint.maxHeight * 0.03,
                     horizontal: constraint.maxWidth * 0.15,
                   ),
                   controller: controller.password.value,
                   hint: 'Senha'),
               TextFieldWidget(
+                  height: constraint.maxHeight * 0.1,
                   margin: EdgeInsets.symmetric(
-                    vertical: constraint.maxHeight * 0.02,
+                    vertical: constraint.maxHeight * 0.03,
                     horizontal: constraint.maxWidth * 0.15,
                   ),
                   controller: controller.repeatPassword.value,
@@ -150,7 +164,8 @@ class LoginScreen extends StatelessWidget {
                   f: () => controller.changeStep(1),
                   height: constraint.maxHeight * 0.1,
                   width: constraint.maxWidth * 0.3,
-                  style: style,
+                  style:
+                      style.copyWith(fontWeight: FontWeight.w100, fontSize: 20),
                 ),
                 /* RaisedButton(
                   onPressed: () => controller.changeStep(1),
@@ -164,7 +179,8 @@ class LoginScreen extends StatelessWidget {
                   f: () => controller.changeStep(1),
                   height: constraint.maxHeight * 0.1,
                   width: constraint.maxWidth * 0.3,
-                  style: style,
+                  style:
+                      style.copyWith(fontWeight: FontWeight.w100, fontSize: 20),
                 ),
                 /* RaisedButton(
                   onPressed: () => null,
@@ -181,16 +197,18 @@ class LoginScreen extends StatelessWidget {
   step2(BoxConstraints constraint, BuildContext context) => Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
+          Container(),
           Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               ValueListenableBuilder(
                   valueListenable: controller.email.value,
                   builder: (context, value, child) => Container(
                         margin: EdgeInsets.symmetric(
-                            horizontal: constraint.maxWidth * 0.15,
-                            vertical: constraint.maxHeight * 0.15),
+                            horizontal: constraint.maxWidth * 0.25,
+                            vertical: constraint.maxHeight * 0.05),
                         child: Text(
-                          'Enviamos um código para seu e-mail ${value.text}',
+                          'Enviamos um código para seu e-mail ****@gmail.com',
                           style: style,
                           textAlign: TextAlign.center,
                         ),
@@ -206,18 +224,19 @@ class LoginScreen extends StatelessWidget {
           Text(
             'Reenviar codigo 00:57',
             style: style.copyWith(
-                decoration: TextDecoration.underline, fontSize: 12),
+                decoration: TextDecoration.underline,
+                fontSize: 12,
+                color: Colors.white),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               ButtonWidget(
-                title: 'CONFIRMAR',
-                f: () => controller.changeStep(2),
-                height: constraint.maxHeight * 0.1,
-                width: constraint.maxWidth * 0.3,
-                style: style,
-              ),
+                  title: 'CONFIRMAR',
+                  f: () => controller.changeStep(2),
+                  height: constraint.maxHeight * 0.1,
+                  width: constraint.maxWidth * 0.3,
+                  style: style),
               ButtonWidget(
                 title: 'voltar',
                 color: Theme.of(context).buttonTheme.colorScheme.primaryVariant,
@@ -235,14 +254,21 @@ class LoginScreen extends StatelessWidget {
         children: [
           Text(
             'Complete seu perfil',
-            style: style,
+            style: style.copyWith(fontWeight: FontWeight.w100, fontSize: 20),
           ),
           CircleAvatar(
+            backgroundImage: AssetImage('assets/avatar.png'),
             radius: constraint.maxWidth * 0.1,
             child: Stack(
               children: [
                 Positioned(
-                  child: Icon(Icons.camera_alt),
+                  child: CircleAvatar(
+                    child: Icon(
+                      Icons.camera_alt,
+                      color: Colors.grey,
+                    ),
+                    backgroundColor: Colors.white,
+                  ),
                   bottom: 0,
                   right: 0,
                 )
@@ -252,51 +278,35 @@ class LoginScreen extends StatelessWidget {
           TextFieldWidget(
             controller: controller.name.value,
             margin:
-                EdgeInsets.symmetric(horizontal: constraint.maxWidth * 0.05),
+                EdgeInsets.symmetric(horizontal: constraint.maxWidth * 0.15),
             hint: 'Nome',
           ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: ['Professor', 'Aluno', 'Outro']
-                .map((e) => ValueListenableBuilder(
-                    valueListenable: controller.function,
-                    builder: (context, value, child) => InkWell(
-                          onTap: () => controller.changeFunction(e),
-                          child: value == e
-                              ? Container(
-                                  decoration: BoxDecoration(
-                                      color: Colors.blue,
-                                      borderRadius: BorderRadius.circular(20)),
-                                  margin: EdgeInsets.symmetric(
-                                      vertical: constraint.maxHeight * 0.01,
-                                      horizontal: constraint.maxWidth * 0.2),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    children: [
-                                      Text(
-                                        e,
-                                        style: style,
-                                      ),
-                                      Icon(
-                                        Icons.check,
-                                        color: Colors.white,
-                                      )
-                                    ],
-                                  ),
-                                )
-                              : Container(
-                                  margin: EdgeInsets.symmetric(
-                                    vertical: constraint.maxHeight * 0.01,
-                                  ),
-                                  child: Text(
-                                    e,
-                                    style: style,
-                                  ),
-                                ),
-                        )))
-                .toList(),
-          ),
+          Column(children: [
+            Text('Eu sou...',
+                style: style.copyWith(fontWeight: FontWeight.w100)),
+            Container(),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: ['Professor', 'Aluno', 'Outro']
+                  .map((e) => ValueListenableBuilder(
+                      valueListenable: controller.function,
+                      builder: (context, value, child) => RaisedButton(
+                          padding: EdgeInsets.symmetric(
+                              vertical: constraint.maxHeight * 0.02,
+                              horizontal: constraint.maxWidth * 0.05),
+                          color: value == e
+                              ? Colors.blueAccent
+                              : Colors.transparent,
+                          onPressed: () => controller.changeFunction(e),
+                          // decoration: BoxDecoration(
+                          //     color: Colors.blue,
+                          //     borderRadius:
+                          //         BorderRadius.circular(20)),
+
+                          child: Text(e, style: style))))
+                  .toList(),
+            ),
+          ]),
           ButtonWidget(
             title: 'CONFIRMAR',
             f: () => controller.confirm(context),
@@ -324,6 +334,8 @@ class LoginScreen extends StatelessWidget {
                   child: Center(
                       child: Text('Login',
                           style: style.copyWith(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w100,
                               color: value ? Color(0xff20C598) : null)))),
             ),
           ),
@@ -344,6 +356,8 @@ class LoginScreen extends StatelessWidget {
                           child: Text(
                         'Registro',
                         style: style.copyWith(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w100,
                             color: value ? null : Color(0xff20C598)),
                       )),
                     ),

@@ -52,26 +52,28 @@ class HomeEvents extends StatelessWidget {
       itemBuilder: (_, index) => event(eventsList[index], constraint));
   event(EventModel e, BoxConstraints constraints) => Container(
         margin: EdgeInsets.symmetric(
-            vertical: constraints.maxHeight * 0.02,
+            vertical: constraints.maxHeight * 0.03,
             horizontal: constraints.maxWidth * 0.05),
         child: Column(
           children: [
             Text(
               DateConvert().dayWeek(e.date.value).toString().toUpperCase(),
               style: style.copyWith(
-                  color: Colors.grey, fontWeight: FontWeight.bold),
+                  color: Colors.grey, fontWeight: FontWeight.w100),
             ),
             Text(
               e.date.value.day.toString(),
               style: style.copyWith(
                   color: Colors.white,
                   fontSize: 35,
-                  fontWeight: FontWeight.w900),
+                  fontWeight: FontWeight.w100),
             ),
             Text(
               e.title.value,
               style: style.copyWith(
-                  color: Colors.grey, fontWeight: FontWeight.w700),
+                  color: Colors.grey,
+                  fontWeight: FontWeight.w100,
+                  fontSize: 10),
             ),
             Text(
               TimeConvert().hAndMString(e.start.value) +

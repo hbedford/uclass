@@ -3,7 +3,8 @@ import 'package:uclass/src/models/menu_model.dart';
 import 'package:uclass/src/utils/date_convert.dart';
 
 class LeftSideDesktop extends StatelessWidget {
-  final TextStyle style = TextStyle(fontFamily: 'Gotham', color: Colors.white);
+  final TextStyle style =
+      TextStyle(fontFamily: 'Gotham', color: Colors.white, fontSize: 16);
   final List listMenu = [
     MenuModel(name: 'MEU DASH'),
     MenuModel(
@@ -19,8 +20,10 @@ class LeftSideDesktop extends StatelessWidget {
       child: Container(
         color: Color(0xff13191E),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Flexible(
+              flex: 1,
               child: Center(
                 child: Text(
                   'Uclass',
@@ -30,11 +33,12 @@ class LeftSideDesktop extends StatelessWidget {
               ),
             ),
             Flexible(
+                flex: 2,
                 child: LayoutBuilder(
                     builder: (_, constraint) => Column(
                           children: listMenu
                               .map<Widget>((e) => Container(
-                                    height: constraint.maxHeight * 0.1,
+                                    height: constraint.maxHeight * 0.15,
                                     width: constraint.maxWidth,
                                     color: listMenu.indexOf(e) == 0
                                         ? Theme.of(context)
@@ -49,18 +53,30 @@ class LeftSideDesktop extends StatelessWidget {
                                   ))
                               .toList(),
                         ))),
+            Spacer(
+              flex: 2,
+            ),
             Flexible(
-                child: Column(
-              children: [
-                Text(
-                  DateConvert().dayWeekComplet(DateTime.now()),
-                  style: style,
-                ),
-                Text(
-                  DateConvert().dateBrString(DateTime.now()),
-                  style: style.copyWith(color: Colors.white30),
-                )
-              ],
+                child: LayoutBuilder(
+              builder: (_, constraint) => Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(
+                    DateConvert()
+                        .dayWeekComplet(DateTime.now())
+                        .toString()
+                        .toUpperCase(),
+                    style: style.copyWith(color: Colors.white54),
+                  ),
+                  Text(
+                    DateConvert().dateBrString(DateTime.now()),
+                    style: style.copyWith(color: Colors.white30),
+                  ),
+                  Container(
+                    height: constraint.maxHeight * 0.1,
+                  )
+                ],
+              ),
             ))
           ],
         ),

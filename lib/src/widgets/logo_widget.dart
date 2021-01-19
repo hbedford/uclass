@@ -6,9 +6,11 @@ class LogoWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: platform.kIsWeb ? 100 : 20),
-      child: Text('Uclass',
-          style: GoogleFonts.ubuntu(color: Colors.white, fontSize: 25)),
-    );
+        margin: EdgeInsets.symmetric(vertical: platform.kIsWeb ? 60 : 20),
+        child: Text('Uclass',
+            style: GoogleFonts.ubuntu(
+                color: Colors.white,
+                fontSize: 25,
+                fontWeight: FontWeight.w700)));
   }
 }

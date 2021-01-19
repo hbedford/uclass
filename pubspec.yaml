@@ -72,11 +72,11 @@ flutter:
   fonts:
     - family: Gotham
       fonts:
-        - asset: fonts/Gotham-Bold.otf
+        - asset: fonts/Gotham-Regular.otf
         - asset: fonts/Gotham-XLight.otf
           weight: 100
-        - asset: fonts/Gotham-Black.otf
-          weight: 900
+        # - asset: fonts/Gotham-Bold.otf
+        #   weight: 900
   # fonts:
   #   - family: Schyler
   #     fonts:

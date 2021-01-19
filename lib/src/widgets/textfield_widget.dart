@@ -8,6 +8,7 @@ class TextFieldWidget extends StatelessWidget {
   final Color hintColor;
   final double height;
   final EdgeInsets padding;
+  final TextStyle hintStyle;
   TextFieldWidget(
       {this.margin,
       this.controller,
@@ -15,7 +16,8 @@ class TextFieldWidget extends StatelessWidget {
       this.height,
       this.hint = '',
       this.hintColor = Colors.black26,
-      this.color = Colors.white});
+      this.color = Colors.white,
+      this.hintStyle});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -28,8 +30,11 @@ class TextFieldWidget extends StatelessWidget {
         child: TextField(
           decoration: InputDecoration(
               hintText: hint,
-              hintStyle:
-                  TextStyle(color: hintColor, fontWeight: FontWeight.w700)),
+              hintStyle: hintStyle ??
+                  TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w100,
+                      color: Colors.black12)),
         ),
       ),
     );
