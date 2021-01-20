@@ -1,5 +1,5 @@
 class MenuModel {
+  int id;
   String name;
-  Function f;
-  MenuModel({this.name, this.f});
+  MenuModel({this.id, this.name});
 }

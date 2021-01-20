@@ -1,18 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:uclass/src/home/home_controller.dart';
 import 'package:uclass/src/models/menu_model.dart';
 import 'package:uclass/src/utils/date_convert.dart';
 
 class LeftSideDesktop extends StatelessWidget {
   final TextStyle style =
       TextStyle(fontFamily: 'Gotham', color: Colors.white, fontSize: 16);
-  final List listMenu = [
-    MenuModel(name: 'MEU DASH'),
-    MenuModel(
-      name: 'SALAS',
-    ),
-    MenuModel(name: 'SOCIAL'),
-    MenuModel(name: 'CALENDARIO')
-  ];
+  final controller = GetIt.I.get<HomeController>();
+
   @override
   Widget build(BuildContext context) {
     return Flexible(
@@ -36,18 +32,24 @@ class LeftSideDesktop extends StatelessWidget {
                 flex: 2,
                 child: LayoutBuilder(
                     builder: (_, constraint) => Column(
-                          children: listMenu
-                              .map<Widget>((e) => Container(
-                                    height: constraint.maxHeight * 0.15,
-                                    width: constraint.maxWidth,
-                                    color: listMenu.indexOf(e) == 0
-                                        ? Theme.of(context)
-                                            .scaffoldBackgroundColor
-                                        : Colors.transparent,
-                                    child: Center(
-                                      child: Text(
-                                        e.name,
-                                        style: style,
+                          children: controller.menu.value
+                              .map<Widget>((e) => ValueListenableBuilder(
+                                    valueListenable: controller.page,
+                                    builder: (_, value, child) => InkWell(
+                                      onTap: () => controller.changePage(e.id),
+                                      child: Container(
+                                        height: constraint.maxHeight * 0.15,
+                                        width: constraint.maxWidth,
+                                        color: e.id == value
+                                            ? Theme.of(context)
+                                                .scaffoldBackgroundColor
+                                            : Colors.transparent,
+                                        child: Center(
+                                          child: Text(
+                                            e.name,
+                                            style: style,
+                                          ),
+                                        ),
                                       ),
                                     ),
                                   ))

@@ -30,7 +30,7 @@ class ChatWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Positioned(
         bottom: 0,
-        right: 0,
+        right: constraints.maxWidth * 0.1,
         child: platform.kIsWeb && MediaQuery.of(context).size.width > 1320
             ? web()
             : mobileCircle(context));
@@ -48,8 +48,8 @@ class ChatWidget extends StatelessWidget {
                     duration: Duration(milliseconds: 200),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(20),
-                      ),
+                          topLeft: Radius.circular(20),
+                          topRight: Radius.circular(20)),
                       color: Colors.white,
                     ),
                     height: value
@@ -74,23 +74,39 @@ class ChatWidget extends StatelessWidget {
             height: constraint.maxHeight,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(20),
-              ),
-              color: Colors.blue,
+                  topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+              color: Colors.blue[300],
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Fulano de tal'),
+                Row(children: [
+                  Visibility(
+                      child: Container(
+                          margin: EdgeInsets.only(
+                              right: constraint.maxWidth * 0.03),
+                          padding: EdgeInsets.symmetric(
+                              vertical: constraint.maxHeight * 0.1),
+                          child: Image.asset(
+                            'assets/avatar.png',
+                          ))),
+                  Text('Fulano de tal', style: style),
+                ]),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     IconButton(
+                      iconSize: 14,
+                      color: Colors.white,
                       icon: Icon(Icons.remove),
                       onPressed: () =>
                           controller.conversations.value[0].changeIsOpened(),
                     ),
-                    IconButton(icon: Icon(Icons.close), onPressed: () => null)
+                    IconButton(
+                        color: Colors.white,
+                        iconSize: 14,
+                        icon: Icon(Icons.close),
+                        onPressed: () => null)
                   ],
                 )
               ],
@@ -327,7 +343,8 @@ class ChatWidget extends StatelessWidget {
         child: LayoutBuilder(
             builder: (_, constraint) => Container(
                   margin: EdgeInsets.symmetric(
-                      vertical: constraint.maxHeight * 0.1),
+                      vertical: constraint.maxHeight * 0.1,
+                      horizontal: constraint.maxWidth * 0.02),
                   child: Row(
                     children: [
                       IconButton(
@@ -338,6 +355,7 @@ class ChatWidget extends StatelessWidget {
                           onPressed: () => null),
                       Expanded(
                         child: TextFieldWidget(
+                          radius: 20,
                           height: constraint.maxHeight,
                           hint: 'Digite a mensagem',
                           padding: EdgeInsets.symmetric(
@@ -345,10 +363,13 @@ class ChatWidget extends StatelessWidget {
                               vertical: constraint.maxHeight * 0.01),
                           margin: EdgeInsets.symmetric(
                               vertical: constraint.maxHeight * 0.02),
-                          color: Colors.grey,
+                          color: Colors.grey[300],
                         ),
                       ),
-                      Image.asset('assets/send.png')
+                      Container(
+                          height: constraint.maxHeight * 0.6,
+                          width: constraint.maxWidth * 0.1,
+                          child: Image.asset('assets/send.png'))
                     ],
                   ),
                 )),

@@ -23,7 +23,8 @@ class ChatMessageWidget extends StatelessWidget {
               vertical: constraint.maxHeight * 0.02,
               horizontal: constraint.maxWidth * 0.05),
           decoration: BoxDecoration(
-              color: Colors.black26, borderRadius: BorderRadius.circular(30)),
+              color: !receiver ? Colors.blue[300] : Colors.black26,
+              borderRadius: BorderRadius.circular(30)),
           child: Text(
             message.message.value,
             style: style.copyWith(

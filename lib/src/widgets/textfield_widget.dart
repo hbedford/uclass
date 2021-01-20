@@ -8,12 +8,14 @@ class TextFieldWidget extends StatelessWidget {
   final Color hintColor;
   final double height;
   final EdgeInsets padding;
+  final double radius;
   final TextStyle hintStyle;
   TextFieldWidget(
       {this.margin,
       this.controller,
       this.padding,
       this.height,
+      this.radius = 10,
       this.hint = '',
       this.hintColor = Colors.black26,
       this.color = Colors.white,
@@ -24,8 +26,8 @@ class TextFieldWidget extends StatelessWidget {
       height: height,
       margin: margin,
       padding: padding ?? const EdgeInsets.symmetric(horizontal: 20),
-      decoration:
-          BoxDecoration(color: color, borderRadius: BorderRadius.circular(10)),
+      decoration: BoxDecoration(
+          color: color, borderRadius: BorderRadius.circular(radius)),
       child: Center(
         child: TextField(
           decoration: InputDecoration(
