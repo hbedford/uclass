@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:uclass/src/classes/classes_controller.dart';
+import 'package:uclass/src/widgets/button_check_widget.dart';
+import 'package:uclass/src/widgets/button_rectangular_widget.dart';
 import 'package:uclass/src/widgets/button_widget.dart';
+import 'package:uclass/src/widgets/manage_invites_widget.dart';
 import 'package:uclass/src/widgets/textfield_widget.dart';
 
 class HomePageNewClassDesktop extends StatelessWidget {
@@ -17,33 +20,41 @@ class HomePageNewClassDesktop extends StatelessWidget {
           controller.classe.value.title.value ?? '<Nome da sala nova>',
           style: style,
         ),
-        Expanded(
-          child: Row(children: [
-            Expanded(
-              flex: 5,
-              child: LayoutBuilder(
-                builder: (_, constraints) => Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      margin: EdgeInsets.symmetric(
-                          vertical: constraint.maxHeight * 0.02),
-                      child: Text(
-                        'CONFIGURE SUA NOVA SALA',
-                        style: style,
-                      ),
+        ValueListenableBuilder(
+            valueListenable: controller.step,
+            builder: (_, value, child) =>
+                value == 1 ? step1(context, constraint) : step2(context))
+      ]),
+    );
+  }
+
+  step1(BuildContext context, BoxConstraints constraint) => Expanded(
+        child: Row(children: [
+          Expanded(
+            flex: 5,
+            child: LayoutBuilder(
+              builder: (_, constraints) => Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    margin: EdgeInsets.symmetric(
+                        vertical: constraint.maxHeight * 0.02),
+                    child: Text(
+                      'CONFIGURE SUA NOVA SALA',
+                      style: style,
                     ),
-                    Expanded(
-                      child: Container(
-                        margin:
-                            EdgeInsets.only(left: constraint.maxWidth * 0.01),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Flexible(
-                              flex: 3,
-                              child: Column(
+                  ),
+                  Expanded(
+                    child: Container(
+                      margin: EdgeInsets.only(left: constraint.maxWidth * 0.01),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Flexible(
+                            flex: 4,
+                            child: LayoutBuilder(
+                              builder: (_, size) => Column(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceAround,
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -53,267 +64,159 @@ class HomePageNewClassDesktop extends StatelessWidget {
                                       style: style,
                                     ),
                                     Container(
-                                        width: constraint.maxWidth * 0.3,
+                                        width: size.maxWidth * 0.6,
                                         child: TextFieldWidget(
                                           radius: 20,
-                                          height: constraint.maxHeight * 0.20,
+                                          height: size.maxHeight * 0.6,
                                         )),
                                     Row(children: [
                                       Text('N° de vagas', style: style),
                                       Container(
+                                          height: size.maxHeight * 0.25,
                                           margin: EdgeInsets.only(
-                                              left: constraint.maxWidth * 0.01,
-                                              right:
-                                                  constraint.maxWidth * 0.03),
-                                          width: constraint.maxWidth * 0.05,
+                                              left: size.maxWidth * 0.01,
+                                              right: size.maxWidth * 0.03),
+                                          width: size.maxWidth * 0.15,
                                           child: TextFieldWidget()),
                                       Text(
                                         'Sem limites',
                                         style: style,
                                       ),
-                                      buttonCheck(
+                                      ButtonCheckWidget(
+                                          f: () => null,
+                                          check: true,
                                           margin: EdgeInsets.only(
-                                              left:
-                                                  constraint.maxWidth * 0.01)),
+                                              left: constraint.maxWidth * 0.02,
+                                              right:
+                                                  constraints.maxWidth * 0.01)),
                                     ]),
                                   ]),
                             ),
-                            Divider(
-                              color: Colors.grey,
-                            ),
-                            Flexible(
-                                flex: 1,
-                                child: Text('Configurações adicionais:',
-                                    style: style)),
-                            Flexible(
+                          ),
+                          Divider(
+                            color: Colors.grey,
+                          ),
+                          Flexible(
                               flex: 1,
-                              child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        buttonCheck(
-                                            margin: EdgeInsets.only(
-                                                right: constraints.maxWidth *
-                                                    0.01)),
-                                        Text(
-                                          'Vídeo ao vivo',
-                                          style: style,
-                                        ),
-                                        buttonCheck(
-                                            margin: EdgeInsets.only(
-                                                left:
-                                                    constraint.maxWidth * 0.02,
-                                                right: constraints.maxWidth *
-                                                    0.01)),
-                                        Text('Armazenamento de arquivos',
-                                            style: style)
-                                      ],
-                                    ),
-                                    Row(
-                                      children: [
-                                        buttonCheck(
-                                            margin: EdgeInsets.only(
-                                                right: constraints.maxWidth *
-                                                    0.01)),
-                                        Text('Canais de voz', style: style),
-                                        buttonCheck(
-                                            margin: EdgeInsets.only(
-                                                left:
-                                                    constraint.maxWidth * 0.02,
-                                                right: constraints.maxWidth *
-                                                    0.01)),
-                                        Text('Canais de texto', style: style)
-                                      ],
-                                    )
-                                  ]),
-                            ),
-                            Flexible(
-                              flex: 3,
-                              child: Row(children: [
-                                Container(
-                                  margin: EdgeInsets.only(
-                                      right: constraint.maxWidth * 0.02),
-                                  child: ButtonWidget(
-                                    title: 'CONTINUAR',
-                                    f: () => null,
-                                    height: constraint.maxHeight * 0.05,
-                                    width: constraint.maxWidth * 0.1,
-                                    style: style.copyWith(
-                                        fontWeight: FontWeight.w100),
+                              child: Text('Configurações adicionais:',
+                                  style: style)),
+                          Flexible(
+                            flex: 1,
+                            child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  Row(
+                                    children: [
+                                      ButtonCheckWidget(
+                                          f: () => null,
+                                          check: true,
+                                          margin: EdgeInsets.only(
+                                              left: constraint.maxWidth * 0.02,
+                                              right:
+                                                  constraints.maxWidth * 0.01)),
+                                      Text(
+                                        'Vídeo ao vivo',
+                                        style: style,
+                                      ),
+                                      ButtonCheckWidget(
+                                          f: () => null,
+                                          check: true,
+                                          margin: EdgeInsets.only(
+                                              left: constraint.maxWidth * 0.02,
+                                              right:
+                                                  constraints.maxWidth * 0.01)),
+                                      FittedBox(
+                                        fit: BoxFit.fitHeight,
+                                        child: Text('Armazenamento de arquivos',
+                                            style: style),
+                                      )
+                                    ],
                                   ),
-                                ),
-                                ButtonWidget(
-                                  title: 'VOLTAR',
-                                  f: () => null,
+                                  Row(
+                                    children: [
+                                      ButtonCheckWidget(
+                                          f: () => null,
+                                          check: true,
+                                          margin: EdgeInsets.only(
+                                              left: constraint.maxWidth * 0.02,
+                                              right:
+                                                  constraints.maxWidth * 0.01)),
+                                      Text('Canais de voz', style: style),
+                                      ButtonCheckWidget(
+                                          f: () => null,
+                                          check: true,
+                                          margin: EdgeInsets.only(
+                                              left: constraint.maxWidth * 0.02,
+                                              right:
+                                                  constraints.maxWidth * 0.01)),
+                                      Text('Canais de texto', style: style)
+                                    ],
+                                  )
+                                ]),
+                          ),
+                          Flexible(
+                            flex: 3,
+                            child: Row(children: [
+                              Container(
+                                margin: EdgeInsets.only(
+                                    right: constraint.maxWidth * 0.02),
+                                child: ButtonWidget(
+                                  title: 'CONTINUAR',
+                                  f: () => controller.changeStep(2),
                                   height: constraint.maxHeight * 0.05,
                                   width: constraint.maxWidth * 0.1,
                                   style: style.copyWith(
                                       fontWeight: FontWeight.w100),
-                                  color: Theme.of(context)
-                                      .buttonTheme
-                                      .colorScheme
-                                      .primaryVariant,
                                 ),
-                              ]),
-                            )
-                          ],
-                        ),
+                              ),
+                              ButtonWidget(
+                                title: 'VOLTAR',
+                                f: () => null,
+                                height: constraint.maxHeight * 0.05,
+                                width: constraint.maxWidth * 0.1,
+                                style:
+                                    style.copyWith(fontWeight: FontWeight.w100),
+                                color: Theme.of(context)
+                                    .buttonTheme
+                                    .colorScheme
+                                    .primaryVariant,
+                              ),
+                            ]),
+                          )
+                        ],
                       ),
                     ),
-                  ],
-                ),
-              ),
-            ),
-            rightInfo()
-          ]),
-        )
-      ]),
-    );
-  }
-
-  rightInfo() => Flexible(
-        flex: 5,
-        child: LayoutBuilder(
-          builder: (_, constraint) =>
-              Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-            Container(height: constraint.maxHeight * 0.05),
-            Container(
-              margin: EdgeInsets.only(bottom: constraint.maxHeight * 0.02),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text('GERENCIAR CONVITES',
-                      style: style.copyWith(fontSize: 16)),
-                  Icon(
-                    Icons.keyboard_arrow_up,
-                    color: Colors.white,
-                  )
+                  ),
                 ],
               ),
             ),
-            Expanded(
-                child: Container(
-              width: constraint.maxWidth * 0.45,
-              padding:
-                  EdgeInsets.symmetric(horizontal: constraint.maxWidth * 0.025),
-              decoration: BoxDecoration(
-                color: Color(0xff13191E),
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: LayoutBuilder(
-                  builder: (_, size) => Column(children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Convite por link',
-                              style: style,
-                            ),
-                            Container(
-                              child:
-                                  TextFieldWidget(hint: 'uclass.io/AcjjHfGC01'),
-                            ),
-                            Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  InkWell(
-                                    child: Container(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: size.maxWidth * 0.05,
-                                          vertical: size.maxHeight * 0.002),
-                                      child: Text(
-                                        'Gerar novo link',
-                                        style: style.copyWith(fontSize: 16),
-                                      ),
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(5),
-                                          color: Colors.green[400]),
-                                    ),
-                                  ),
-                                  Icon(Icons.share, color: Colors.grey)
-                                ])
-                          ],
-                        ),
-                        Expanded(
-                          child: Column(
-                            children: [
-                              Text('Sua rede', style: style),
-                              Expanded(
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20),
-                                      color: Colors.white),
-                                  child: LayoutBuilder(
-                                    builder: (_, constraint) => ListView(
-                                      children: [
-                                        'Juliana Apsotolo',
-                                        'Karen Golden',
-                                        'Patricio Urugha',
-                                        'Rosana Santiago'
-                                      ]
-                                          .map((e) => InkWell(
-                                                  child: Container(
-                                                margin: EdgeInsets.symmetric(
-                                                    horizontal:
-                                                        constraint.maxWidth *
-                                                            0.1,
-                                                    vertical:
-                                                        constraint.maxHeight *
-                                                            0.01),
-                                                child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      CircleAvatar(),
-                                                      Text(e),
-                                                      buttonCheck()
-                                                    ]),
-                                              )))
-                                          .toList(),
-                                    ),
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                        InkWell(
-                          child: Container(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: size.maxWidth * 0.05,
-                                vertical: size.maxHeight * 0.002),
-                            child: Text(
-                              'Convidar',
-                              style: style.copyWith(fontSize: 16),
-                            ),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5),
-                                color: Colors.purple),
-                          ),
-                        ),
-                      ])),
-            ))
-          ]),
-        ),
-      );
-  buttonCheck({EdgeInsets margin}) => Container(
-        width: 15,
-        height: 15,
-        margin: margin,
-        padding: EdgeInsets.symmetric(horizontal: 1, vertical: 1),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(3),
-          border: Border.all(color: Colors.grey, width: 1),
-        ),
-        child: Container(
-          decoration: BoxDecoration(
-            color: Colors.green,
-            borderRadius: BorderRadius.circular(1),
           ),
+          ManageInvitesWidget()
+        ]),
+      );
+  step2(BuildContext context) => Expanded(
+        child: Row(
+          children: [
+            Expanded(
+                child: LayoutBuilder(
+                    builder: (_, constraint) => Column(
+                          children: [
+                            Text('ADICIONAR MÓDULOS'),
+                            Wrap(
+                              children: [
+                                RectangularButtonWidget(
+                                  f: () => null,
+                                  title: 'ADICIONAR +',
+                                  constraint: constraint,
+                                  color: Colors.green,
+                                ),
+                              ],
+                            )
+                          ],
+                        ))),
+            ManageInvitesWidget()
+          ],
         ),
       );
 }

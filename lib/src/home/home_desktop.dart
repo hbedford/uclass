@@ -82,43 +82,52 @@ class HomeDesktop extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Flexible(
-                flex: 1,
-                fit: FlexFit.tight,
-                child: Row(children: [
-                  Container(
-                    margin: EdgeInsets.only(
-                        right: constraint.maxWidth * 0.02,
-                        top: constraint.maxHeight * 0.01,
-                        bottom: constraint.maxHeight * 0.03),
-                    child: CircleAvatar(
-                      radius: 40,
-                      backgroundColor: Colors.transparent,
-                      backgroundImage: AssetImage('assets/avatar.png'),
-                      child: Stack(
-                        children: [
-                          Positioned(
-                            child: CircleAvatar(
-                              backgroundColor: Colors.green,
-                              radius: 4,
-                            ),
-                            bottom: 5,
-                            right: 5,
-                          )
-                        ],
+                flex: 2,
+                child: LayoutBuilder(
+                  builder: (_, constraints) => Row(children: [
+                    Container(
+                      margin: EdgeInsets.only(
+                          right: constraints.maxWidth * 0.02,
+                          top: constraints.maxHeight * 0.01,
+                          bottom: constraints.maxHeight * 0.03),
+                      child: CircleAvatar(
+                        radius: 40,
+                        backgroundColor: Colors.transparent,
+                        backgroundImage: AssetImage('assets/avatar.png'),
+                        child: Stack(
+                          children: [
+                            Positioned(
+                              child: CircleAvatar(
+                                backgroundColor: Colors.green,
+                                radius: 4,
+                              ),
+                              bottom: 5,
+                              right: 5,
+                            )
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('Nome', style: style),
-                      Text('Instituição',
-                          style:
-                              style.copyWith(fontSize: 12, color: Colors.grey))
-                    ],
-                  )
-                ]),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        FittedBox(
+                          fit: BoxFit.fitHeight,
+                          child: Text('Nome', style: style),
+                        ),
+                        FittedBox(
+                          fit: BoxFit.fitHeight,
+                          child: Text(
+                            'Instituição',
+                            style: style.copyWith(
+                                fontSize: 12, color: Colors.grey),
+                          ),
+                        )
+                      ],
+                    )
+                  ]),
+                ),
               ),
               topCenterBar(),
               Flexible(

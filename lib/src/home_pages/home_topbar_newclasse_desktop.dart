@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:uclass/src/classes/classes_controller.dart';
 
 class HomeTopBarNewClassDesktop extends StatelessWidget {
+  final controller = GetIt.I.get<ClassesController>();
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
@@ -24,14 +27,17 @@ class HomeTopBarNewClassDesktop extends StatelessWidget {
                       Positioned(
                           child: Container(
                         width: constraint.maxWidth * 0.5,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            circle(constraint, Colors.transparent, false),
-                            circle(constraint, Colors.grey, true),
-                            circle(constraint, Colors.grey, true),
-                            circle(constraint, Colors.grey, false),
-                          ],
+                        child: ValueListenableBuilder(
+                          valueListenable: controller.step,
+                          builder: (_, value, child) => Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              circle(constraint, Colors.transparent, false),
+                              circle(constraint, Colors.grey, value >= 1),
+                              circle(constraint, Colors.grey, value >= 2),
+                              circle(constraint, Colors.grey, value >= 3),
+                            ],
+                          ),
                         ),
                       ))
                     ],
