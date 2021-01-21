@@ -32,7 +32,12 @@ class _LoadingScreenState extends State<LoadingScreen>
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text('Uclass', style: GoogleFonts.ubuntu(color: Colors.white)),
+          Text('Uclass',
+              style: TextStyle(
+                  fontFamily: 'Gotham',
+                  fontSize: 40,
+                  fontWeight: FontWeight.w100,
+                  color: Colors.white)),
           Container(
             alignment: Alignment.center,
             child: new AnimatedBuilder(

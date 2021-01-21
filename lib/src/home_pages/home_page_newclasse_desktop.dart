@@ -71,7 +71,10 @@ class HomePageNewClassDesktop extends StatelessWidget {
                                         'Sem limites',
                                         style: style,
                                       ),
-                                      buttonCheck(),
+                                      buttonCheck(
+                                          margin: EdgeInsets.only(
+                                              left:
+                                                  constraint.maxWidth * 0.01)),
                                     ]),
                                   ]),
                             ),
@@ -90,21 +93,37 @@ class HomePageNewClassDesktop extends StatelessWidget {
                                   children: [
                                     Row(
                                       children: [
-                                        buttonCheck(),
+                                        buttonCheck(
+                                            margin: EdgeInsets.only(
+                                                right: constraints.maxWidth *
+                                                    0.01)),
                                         Text(
                                           'Vídeo ao vivo',
                                           style: style,
                                         ),
-                                        buttonCheck(),
+                                        buttonCheck(
+                                            margin: EdgeInsets.only(
+                                                left:
+                                                    constraint.maxWidth * 0.02,
+                                                right: constraints.maxWidth *
+                                                    0.01)),
                                         Text('Armazenamento de arquivos',
                                             style: style)
                                       ],
                                     ),
                                     Row(
                                       children: [
-                                        buttonCheck(),
+                                        buttonCheck(
+                                            margin: EdgeInsets.only(
+                                                right: constraints.maxWidth *
+                                                    0.01)),
                                         Text('Canais de voz', style: style),
-                                        buttonCheck(),
+                                        buttonCheck(
+                                            margin: EdgeInsets.only(
+                                                left:
+                                                    constraint.maxWidth * 0.02,
+                                                right: constraints.maxWidth *
+                                                    0.01)),
                                         Text('Canais de texto', style: style)
                                       ],
                                     )
@@ -227,36 +246,64 @@ class HomePageNewClassDesktop extends StatelessWidget {
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(20),
                                       color: Colors.white),
-                                  child: ListView(
-                                    children: [
-                                      'Juliana Apsotolo',
-                                      'Karen Golden',
-                                      'Patricio Urugha',
-                                      'Rosana Santiago'
-                                    ]
-                                        .map((e) => InkWell(
-                                                child: Container(
-                                              child: Row(children: [
-                                                CircleAvatar(),
-                                                Text(e),
-                                                buttonCheck()
-                                              ]),
-                                            )))
-                                        .toList(),
+                                  child: LayoutBuilder(
+                                    builder: (_, constraint) => ListView(
+                                      children: [
+                                        'Juliana Apsotolo',
+                                        'Karen Golden',
+                                        'Patricio Urugha',
+                                        'Rosana Santiago'
+                                      ]
+                                          .map((e) => InkWell(
+                                                  child: Container(
+                                                margin: EdgeInsets.symmetric(
+                                                    horizontal:
+                                                        constraint.maxWidth *
+                                                            0.1,
+                                                    vertical:
+                                                        constraint.maxHeight *
+                                                            0.01),
+                                                child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      CircleAvatar(),
+                                                      Text(e),
+                                                      buttonCheck()
+                                                    ]),
+                                              )))
+                                          .toList(),
+                                    ),
                                   ),
                                 ),
                               )
                             ],
                           ),
-                        )
+                        ),
+                        InkWell(
+                          child: Container(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: size.maxWidth * 0.05,
+                                vertical: size.maxHeight * 0.002),
+                            child: Text(
+                              'Convidar',
+                              style: style.copyWith(fontSize: 16),
+                            ),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                color: Colors.purple),
+                          ),
+                        ),
                       ])),
             ))
           ]),
         ),
       );
-  buttonCheck() => Container(
+  buttonCheck({EdgeInsets margin}) => Container(
         width: 15,
         height: 15,
+        margin: margin,
         padding: EdgeInsets.symmetric(horizontal: 1, vertical: 1),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(3),
