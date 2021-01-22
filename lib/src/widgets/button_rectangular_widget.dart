@@ -6,9 +6,13 @@ class RectangularButtonWidget extends StatelessWidget {
   final String title;
   final Color color;
   final TextStyle style;
+  final EdgeInsets padding;
+  final EdgeInsets margin;
   RectangularButtonWidget(
       {this.constraint,
+      this.margin,
       this.f,
+      this.padding,
       this.title,
       this.color,
       this.style = const TextStyle(
@@ -18,18 +22,20 @@ class RectangularButtonWidget extends StatelessWidget {
       TextStyle(fontFamily: 'Gotham', color: Colors.white, fontSize: 20); */
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: f,
-      child: Container(
-        padding: EdgeInsets.symmetric(
-            horizontal: constraint.maxWidth * 0.05,
-            vertical: constraint.maxHeight * 0.002),
+    return Container(
+      margin: margin,
+      padding: padding ??
+          EdgeInsets.symmetric(
+              horizontal: constraint.maxWidth * 0.05,
+              vertical: constraint.maxHeight * 0.002),
+      decoration:
+          BoxDecoration(borderRadius: BorderRadius.circular(5), color: color),
+      child: InkWell(
+        onTap: f,
         child: Text(
           title,
           style: style,
         ),
-        decoration:
-            BoxDecoration(borderRadius: BorderRadius.circular(5), color: color),
       ),
     );
   }

@@ -9,12 +9,11 @@ class HomeClasses extends StatelessWidget {
   HomeClasses({@required this.constraint, this.withPercent = false});
   final List list = [
     ClassModel(
-        teacherModel: TeacherModel(
+        teacher: TeacherModel(
           name: 'Martin Marks',
         ),
-        studentsNumber: 35,
         percent: 7,
-        name: 'Biologia Marinha',
+        title: 'Biologia Marinha',
         color: Colors.green),
   ];
 
@@ -96,7 +95,7 @@ class HomeClasses extends StatelessWidget {
                     style: style.copyWith(fontSize: 10),
                   ),
                   Text(
-                    'Participantes:${e.students.value}',
+                    'Participantes:${e.members.value.length}',
                     style: style.copyWith(fontSize: 10),
                   ),
                   Container(),
@@ -129,7 +128,7 @@ class HomeClasses extends StatelessWidget {
                   style: style.copyWith(fontSize: 10),
                 ),
                 Text(
-                  'Participantes:${e.students.value}',
+                  'Participantes:${e.members.value.length}',
                   style: style.copyWith(fontSize: 10),
                 ),
               ],
@@ -201,7 +200,7 @@ class HomeClasses extends StatelessWidget {
                     style: style,
                   ),
                   Text(
-                    'Participantes:${c.students.value}',
+                    'Participantes:${c.members.value.length}',
                     style: style.copyWith(fontSize: 10),
                   ),
                 ],
@@ -280,7 +279,7 @@ class HomeClasses extends StatelessWidget {
               Expanded(
                 flex: 2,
                 child: Text(
-                  'Participantes: ${c.students.value}',
+                  'Participantes: ${c.members.value.length}',
                   style: style.copyWith(fontSize: 10),
                 ),
               ),
