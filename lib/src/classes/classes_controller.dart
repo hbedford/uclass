@@ -1,14 +1,14 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:uclass/src/models/class_model.dart';
+import 'package:uclass/domain/entities/class.dart';
 
 class ClassesController {
-  final ValueNotifier<ClassModel> classe;
+  final ValueNotifier<Class> classe;
   final ValueNotifier<int> step;
-  final ValueNotifier<List<ClassModel>> classes;
-  ClassesController({ClassModel classe, int step, List<ClassModel> classes})
+  final ValueNotifier<List<Class>> classes;
+  ClassesController({Class classe, int step, List<Class> classes})
       : this.classe = ValueNotifier(classe),
         this.step = ValueNotifier<int>(step),
-        this.classes = ValueNotifier<List<ClassModel>>(classes);
+        this.classes = ValueNotifier<List<Class>>(classes);
   changeStep(int s) => step.value = s;
 }

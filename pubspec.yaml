@@ -55,9 +55,11 @@ flutter:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
   assets:
-    - assets/loading.png
-    - assets/avatar.png
-    - assets/send.png
+   ## - assets/loading.png
+   # - assets/avatar.png
+   # - assets/send.png
+   # - assets/edit.png
+    - assets/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

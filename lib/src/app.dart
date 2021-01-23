@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:uclass/src/home/home_screen.dart';
-import 'package:uclass/src/loading/loading_screen.dart';
-import 'package:uclass/src/login/login_screen.dart';
 import 'package:flutter/foundation.dart' as platform;
+import 'package:uclass/app/pages/home/home_screen.dart';
+import 'package:uclass/app/pages/loading/loading_screen.dart';
+import 'package:uclass/app/pages/login/login_screen.dart';
 
 class App extends StatelessWidget {
   @override
