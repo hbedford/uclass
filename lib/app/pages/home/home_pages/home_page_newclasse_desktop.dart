@@ -223,8 +223,9 @@ class HomePageNewClassDesktop extends StatelessWidget {
                                       color: Colors.green,
                                       add: () {
                                         controller.classe.value.addModule();
-                                        /*  controller.classe.value.module.value
-                                            .dialogNewModule(context); */
+
+                                        controller.classe.value.module.value
+                                            .dialogEditModule(context);
                                       } /* 
                                           controller.classe.value.addModule() */
                                       ,

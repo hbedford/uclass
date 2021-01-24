@@ -34,37 +34,6 @@ class ChatScreen extends StatelessWidget {
       body: LayoutBuilder(
         builder: (_, constraint) => Column(
           children: [
-            /* Flexible(
-              flex: 1,
-              child: LayoutBuilder(
-                builder: (_, constraint) => Container(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: constraint.maxWidth * 0.05),
-                  height: constraint.maxHeight,
-                  decoration: BoxDecoration(
-                    color: Colors.blue,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('Fulano de tal'),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          IconButton(
-                            icon: Icon(Icons.remove),
-                            onPressed: () => controller.conversations.value[0]
-                                .changeIsOpened(),
-                          ),
-                          IconButton(
-                              icon: Icon(Icons.close), onPressed: () => null)
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            ), */
             Expanded(
                 flex: 8,
                 child: LayoutBuilder(

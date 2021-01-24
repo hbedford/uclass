@@ -3,15 +3,28 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:uclass/src/widgets/dialog_edit_module_widget.dart';
 
+import 'activity.dart';
+
 class Module {
   final ValueNotifier<int> id;
   final ValueNotifier<String> name;
   final ValueNotifier<TextEditingController> nameEdit;
-  Module({int id, String name, String nameEdit})
+  final ValueNotifier<List<Activity>> activitys;
+  Module({int id, String name, String nameEdit, List<Activity> activitys})
       : this.id = ValueNotifier<int>(id),
         this.name = ValueNotifier<String>(name),
         this.nameEdit = ValueNotifier<TextEditingController>(
-            TextEditingController(text: nameEdit ?? ''));
+            TextEditingController(text: nameEdit ?? '')),
+        this.activitys = ValueNotifier<List<Activity>>(activitys ??
+            [
+              Activity(),
+              Activity(),
+              Activity(),
+            ]);
+  addActivity() {
+    activitys.value.add(Activity());
+    activitys.notifyListeners();
+  }
 
   save() {
     name.value = nameEdit.value.text;
