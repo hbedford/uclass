@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:uclass/domain/entities/activity.dart';
 import 'package:uclass/domain/entities/module.dart';
+import 'package:uclass/domain/entities/type_activity.dart';
 import 'package:uclass/src/classes/classes_controller.dart';
 import 'package:uclass/src/widgets/button_widget.dart';
+import 'package:uclass/src/widgets/module_live_widget.dart';
+import 'package:uclass/src/widgets/module_video_widget.dart';
 
 class DialogEditModuleWidget extends StatelessWidget {
   final TextStyle style =
@@ -17,7 +20,7 @@ class DialogEditModuleWidget extends StatelessWidget {
         builder: (_, constraint) => Material(
               color: Colors.transparent,
               child: Container(
-                height: constraint.maxHeight * 0.7,
+                height: constraint.maxHeight * 0.8,
                 width: constraint.maxWidth * 0.6,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
@@ -77,7 +80,7 @@ class DialogEditModuleWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Flexible(
-              flex: 2,
+              flex: 1,
               child: Container(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -119,72 +122,81 @@ class DialogEditModuleWidget extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: module.activitys.value
                           .map<Widget>(
-                            (e) => DragTarget(
-                              onAccept: e.setType,
-                              builder: (context, candidateData, rejectedData) =>
-                                  Container(
-                                margin: EdgeInsets.only(
-                                    top: constraint.maxHeight * 0.03),
-                                height: constraint.maxHeight *
-                                    (e.type.value != null
-                                        ? e.type.value.id.value == 2
-                                            ? 0.6
-                                            : 0.4
-                                        : 0.4),
-                                width: constraint.maxWidth,
-                                child: Stack(
-                                  children: [
-                                    Positioned.fill(
-                                      child: LayoutBuilder(
-                                        builder: (_, constraint) => Container(
-                                          margin: EdgeInsets.only(
-                                              top: constraint.maxHeight * 0.02,
-                                              left: constraint.maxWidth * 0.02),
-                                          height: constraint.maxHeight * 0.8,
-                                          width: constraint.maxWidth * 0.98,
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: [
-                                              Expanded(
-                                                flex: 7,
-                                                child: Container(
-                                                    decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(20),
-                                                        color: Colors.black87),
-                                                    child: Center(
-                                                      child: Text(
-                                                        e.type.value != null
-                                                            ? e.type.value.name
-                                                                .value
-                                                            : 'ADICIONAR ITEM',
-                                                        style: style,
+                            (e) => ValueListenableBuilder(
+                              valueListenable: e.type,
+                              builder: (_, value, child) => DragTarget(
+                                onAccept: e.setType,
+                                builder:
+                                    (context, candidateData, rejectedData) =>
+                                        Container(
+                                  margin: EdgeInsets.only(
+                                      top: constraint.maxHeight * 0.03),
+                                  height: constraint.maxHeight *
+                                      (e.type.value != null
+                                          ? e.type.value.id.value == 2
+                                              ? 0.6
+                                              : 0.4
+                                          : 0.4),
+                                  width: constraint.maxWidth,
+                                  child: Stack(
+                                    children: [
+                                      Positioned.fill(
+                                        child: LayoutBuilder(
+                                          builder: (_, constraint) => Container(
+                                            margin: EdgeInsets.only(
+                                                top:
+                                                    constraint.maxHeight * 0.02,
+                                                left:
+                                                    constraint.maxWidth * 0.02),
+                                            height: constraint.maxHeight * 0.8,
+                                            width: constraint.maxWidth * 0.98,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: [
+                                                Expanded(
+                                                    flex: 7,
+                                                    child: LayoutBuilder(
+                                                      builder:
+                                                          (_, constraint) =>
+                                                              Container(
+                                                        padding: EdgeInsets.all(
+                                                            constraint
+                                                                    .maxHeight *
+                                                                0.05),
+                                                        decoration: BoxDecoration(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        20),
+                                                            color:
+                                                                Colors.black87),
+                                                        child: type(e),
                                                       ),
                                                     )),
-                                              ),
-                                              Flexible(
-                                                flex: 1,
-                                                child: IconButton(
-                                                    color: Colors.white,
-                                                    icon: Icon(Icons.close),
-                                                    onPressed: () => null),
-                                              ),
-                                              Flexible(
-                                                  flex: 2, child: Container())
-                                            ],
+                                                Flexible(
+                                                  flex: 1,
+                                                  child: IconButton(
+                                                      color: Colors.white,
+                                                      icon: Icon(Icons.close),
+                                                      onPressed: () =>
+                                                          e.setType(null)),
+                                                ),
+                                                Flexible(
+                                                    flex: 2, child: Container())
+                                              ],
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                    Visibility(
-                                        visible: e.type.value != null,
-                                        child: e.type.value != null
-                                            ? Image.asset(
-                                                e.type.value.image.value)
-                                            : Container())
-                                  ],
+                                      Visibility(
+                                          visible: e.type.value != null,
+                                          child: e.type.value != null
+                                              ? Image.asset(
+                                                  e.type.value.image.value)
+                                              : Container())
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
@@ -195,7 +207,7 @@ class DialogEditModuleWidget extends StatelessWidget {
                 ),
               )),
           Flexible(
-              flex: 2,
+              flex: 1,
               child: LayoutBuilder(
                 builder: (_, constraint) => Column(
                   children: [
@@ -223,7 +235,7 @@ class DialogEditModuleWidget extends StatelessWidget {
                 ),
               )),
           Flexible(
-            flex: 3,
+            flex: 2,
             child: LayoutBuilder(
               builder: (_, constraint) => Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -255,4 +267,14 @@ class DialogEditModuleWidget extends StatelessWidget {
           )
         ],
       ));
+  type(Activity activity) => activity.type.value != null
+      ? activity.type.value.id.value == 1
+          ? ModuleLiveWidget()
+          : ModuleVideoWidget()
+      : Center(
+          child: Text(
+            'ADICIONAR ITEM',
+            style: style,
+          ),
+        );
 }
