@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'activity.dart';
 
 class TypeActivity {
-  final id;
+  final ValueNotifier<int> id;
   final ValueNotifier<String> name;
   final ValueNotifier<Color> color;
   final ValueNotifier<List<Activity>> activities;
