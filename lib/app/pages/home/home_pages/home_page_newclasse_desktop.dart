@@ -9,25 +9,94 @@ import 'package:uclass/src/widgets/button_widget.dart';
 import 'package:uclass/src/widgets/manage_invites_widget.dart';
 import 'package:uclass/src/widgets/textfield_widget.dart';
 
-class HomePageNewClassDesktop extends StatelessWidget {
+class HomePageNewClassDesktop extends StatefulWidget {
+  @override
+  _HomePageNewClassDesktopState createState() =>
+      _HomePageNewClassDesktopState();
+}
+
+class _HomePageNewClassDesktopState extends State<HomePageNewClassDesktop> {
   final controller = GetIt.I.get<ClassesController>();
+
   final TextStyle style =
       TextStyle(fontFamily: 'Gotham', color: Colors.white, fontSize: 20);
+  OverlayEntry _overlayEntry;
+  bool _overlayIsShown = false;
+  final LayerLink link = LayerLink();
+  GlobalKey key1 = GlobalKey();
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (_, constraint) =>
-          Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Text(
-          controller.classe.value.title.value ?? '<Nome da sala nova>',
-          style: style,
+    return Stack(
+      children: [
+        Positioned.fill(
+          child: LayoutBuilder(
+            builder: (_, constraint) =>
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Text(
+                controller.classe.value.title.value ?? '<Nome da sala nova>',
+                style: style,
+              ),
+              ValueListenableBuilder(
+                  valueListenable: controller.step,
+                  builder: (_, value, child) =>
+                      value == 1 ? step1(context, constraint) : step2(context))
+            ]),
+          ),
         ),
-        ValueListenableBuilder(
-            valueListenable: controller.step,
-            builder: (_, value, child) =>
-                value == 1 ? step1(context, constraint) : step2(context))
-      ]),
+      ],
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    if (_overlayIsShown) {
+      _hideOverlay();
+    }
+  }
+
+  void _showOverlay() {
+    if (_overlayIsShown) return;
+    _overlayEntry = _createOverlayEntry();
+    Overlay.of(context).insert(_overlayEntry);
+    _overlayIsShown = true;
+  }
+
+  void _hideOverlay() {
+    _overlayIsShown = false;
+    _overlayEntry.remove();
+  }
+
+  OverlayEntry _createOverlayEntry() {
+    RenderBox renderBox = context.findRenderObject();
+    var anchorSize = renderBox.size;
+    return OverlayEntry(builder: (context) {
+      // TODO: dynamically use the correct child width / height for
+      // positioning us correctly on top + centered on the anchor
+      /*    var childWidth = 0;
+      var childHeight = 0.0;
+      var childOffset =
+          Offset(-(childWidth - anchorSize.width) / 2, -(childHeight)); */
+      RenderBox box = key1.currentContext.findRenderObject();
+      Offset position = box.localToGlobal(Offset.zero);
+      return /* CompositedTransformFollower(
+        followerAnchor: Alignment.topCenter,
+        link: link,
+        child: */
+          Positioned(
+        top: position.dy,
+        left: position.dx+(),
+        child: Container(
+          height: 20,
+          width: 20,
+          child: RaisedButton(
+            child: Text('close'),
+            onPressed: _hideOverlay,
+          ),
+        ),
+        /* ), */
+      );
+    });
   }
 
   step1(BuildContext context, BoxConstraints constraint) => Expanded(
@@ -197,6 +266,7 @@ class HomePageNewClassDesktop extends StatelessWidget {
           ManageInvitesWidget()
         ]),
       );
+
   step2(BuildContext context) => Expanded(
         child: Row(
           children: [
@@ -320,6 +390,7 @@ class HomePageNewClassDesktop extends StatelessWidget {
           ],
         ),
       );
+
   listWrap(
           {/* BoxConstraints size, */
           List list,
@@ -364,39 +435,34 @@ class HomePageNewClassDesktop extends StatelessWidget {
               )),
         ),
       );
-  /* listWrap(
-          {BoxConstraints size,
-          List list,
-          Color color,
-          Function f,
-          Function add}) =>
-      Container(
-          margin: EdgeInsets.symmetric(
-            vertical: size.maxHeight * 0.1,
-          ),
-          child: Wrap(
-              /* s */
-              children: list
-                  .map<Widget>((e) => RectangularButtonWidget(
-                        f: e.name.value == null
-                            ? add /* controller.classe.value.addModule() */
-                            : () => null,
-                        title: e.name.value ?? 'ADICIONAR +',
-                        constraint: size,
-                        margin: EdgeInsets.only(
-                            right: size.maxWidth * 0.02,
-                            bottom: size.maxHeight * 0.02),
-                        padding: EdgeInsets.symmetric(
-                            vertical: size.maxHeight * 0.05,
-                            horizontal: size.maxWidth * 0.05),
-                        color: color,
-                      ))
-                  .toList())); */
+
   listMembers() => Flexible(
       flex: 1,
       child: Wrap(
-        children: [],
+        children: [
+          Container(
+            key: key1,
+            height: 40,
+            width: 40,
+            color: Colors.blue,
+            child: InkWell(
+              onTap: _showOverlay,
+            ),
+          )
+          /* CompositedTransformTarget(
+            link: this.link,
+            child: InkWell(
+              onTap: _showOverlay,
+              child: Image.asset(
+                'assets/avatar1.png',
+                key: key,
+              ),
+            ),
+          ),
+          Image.asset('assets/avatar2.png'), */
+        ],
       ));
+
   buttonCheck(String title, BoxConstraints size) => Container(
         height: size.maxHeight * 0.3,
         width: size.maxWidth * 0.2,
