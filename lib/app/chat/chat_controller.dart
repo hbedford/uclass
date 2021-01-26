@@ -4,7 +4,10 @@ import 'package:uclass/domain/entities/conversation.dart';
 class ChatController {
   final ValueNotifier<List<Conversation>> conversations;
   final notification;
-  ChatController({List<Conversation> conversations, bool notification = true})
+  ChatController(
+      {List<Conversation> conversations,
+      bool notification = true,
+      bool overlayIsShown})
       : this.conversations = ValueNotifier<List<Conversation>>(conversations),
         this.notification = ValueNotifier<bool>(notification);
   addConversation(Conversation c) => conversations.value.add(c);

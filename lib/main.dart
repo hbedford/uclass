@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:uclass/app/chat/popup_user_controller.dart';
 import 'package:uclass/src/classes/classes_controller.dart';
 
 import 'app/chat/chat_controller.dart';
@@ -15,6 +16,7 @@ void main() {
   final getIt = GetIt.instance;
   getIt.registerSingleton<HomeController>(HomeController());
   getIt.registerSingleton<LoginController>(LoginController());
+  getIt.registerSingleton<PopUpUserController>(PopUpUserController());
   getIt.registerSingleton<ClassesController>(
       ClassesController(classe: Class(), step: 2));
   getIt.registerSingleton<ChatController>(ChatController(conversations: [

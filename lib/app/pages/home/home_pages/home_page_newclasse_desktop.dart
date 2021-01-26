@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:uclass/app/chat/popup_user_controller.dart';
 import 'package:uclass/src/classes/classes_controller.dart';
 import 'package:uclass/src/widgets/button_check_widget.dart';
 import 'package:uclass/src/widgets/button_rectangular_widget.dart';
@@ -17,7 +18,7 @@ class HomePageNewClassDesktop extends StatefulWidget {
 
 class _HomePageNewClassDesktopState extends State<HomePageNewClassDesktop> {
   final controller = GetIt.I.get<ClassesController>();
-
+  final popController = GetIt.I.get<PopUpUserController>();
   final TextStyle style =
       TextStyle(fontFamily: 'Gotham', color: Colors.white, fontSize: 20);
   OverlayEntry _overlayEntry;
@@ -45,58 +46,6 @@ class _HomePageNewClassDesktopState extends State<HomePageNewClassDesktop> {
         ),
       ],
     );
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    if (_overlayIsShown) {
-      _hideOverlay();
-    }
-  }
-
-  void _showOverlay() {
-    if (_overlayIsShown) return;
-    _overlayEntry = _createOverlayEntry();
-    Overlay.of(context).insert(_overlayEntry);
-    _overlayIsShown = true;
-  }
-
-  void _hideOverlay() {
-    _overlayIsShown = false;
-    _overlayEntry.remove();
-  }
-
-  OverlayEntry _createOverlayEntry() {
-    RenderBox renderBox = context.findRenderObject();
-    var anchorSize = renderBox.size;
-    return OverlayEntry(builder: (context) {
-      // TODO: dynamically use the correct child width / height for
-      // positioning us correctly on top + centered on the anchor
-      /*    var childWidth = 0;
-      var childHeight = 0.0;
-      var childOffset =
-          Offset(-(childWidth - anchorSize.width) / 2, -(childHeight)); */
-      RenderBox box = key1.currentContext.findRenderObject();
-      Offset position = box.localToGlobal(Offset.zero);
-      return /* CompositedTransformFollower(
-        followerAnchor: Alignment.topCenter,
-        link: link,
-        child: */
-          Positioned(
-        top: position.dy,
-        left: position.dx+(),
-        child: Container(
-          height: 20,
-          width: 20,
-          child: RaisedButton(
-            child: Text('close'),
-            onPressed: _hideOverlay,
-          ),
-        ),
-        /* ), */
-      );
-    });
   }
 
   step1(BuildContext context, BoxConstraints constraint) => Expanded(
@@ -381,7 +330,7 @@ class _HomePageNewClassDesktopState extends State<HomePageNewClassDesktop> {
                         style: style,
                       ),
                     ),
-                    listMembers()
+                    listMembers(context)
                   ],
                 ),
               ),
@@ -436,7 +385,7 @@ class _HomePageNewClassDesktopState extends State<HomePageNewClassDesktop> {
         ),
       );
 
-  listMembers() => Flexible(
+  listMembers(BuildContext context) => Flexible(
       flex: 1,
       child: Wrap(
         children: [
@@ -446,7 +395,8 @@ class _HomePageNewClassDesktopState extends State<HomePageNewClassDesktop> {
             width: 40,
             color: Colors.blue,
             child: InkWell(
-              onTap: _showOverlay,
+              onTap: () =>
+                  popController.showOverlay(context, key1, Size(40, 40)),
             ),
           )
           /* CompositedTransformTarget(
