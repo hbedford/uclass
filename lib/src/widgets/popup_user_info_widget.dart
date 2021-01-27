@@ -9,8 +9,8 @@ class PopUpUserInfoWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Positioned(
       top: MediaQuery.of(context).size.height -
-          (controller.position.value.dy) / 2,
-      left: controller.position.value.dx - 75,
+          (controller.position.value.dy) / 1.9,
+      left: controller.position.value.dx - 80,
       child: Material(
         color: Colors.transparent,
         child: Container(

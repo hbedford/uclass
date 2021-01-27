@@ -14,7 +14,10 @@ class PopUpUserController {
         this.anchorSize = ValueNotifier<Size>(null),
         this.link = ValueNotifier<LayerLink>(LayerLink());
   void showOverlay(BuildContext context, GlobalKey key, Size size) {
-    if (overlayIsShown.value) return;
+    if (overlayIsShown.value) {
+      overlayIsShown.value = false;
+      overlayEntry.value.remove();
+    }
     overlayEntry.value = _createOverlayEntry(context, key);
     Overlay.of(context).insert(overlayEntry.value);
     overlayIsShown.value = true;

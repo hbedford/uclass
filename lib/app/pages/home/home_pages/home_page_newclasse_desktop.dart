@@ -21,10 +21,6 @@ class _HomePageNewClassDesktopState extends State<HomePageNewClassDesktop> {
   final popController = GetIt.I.get<PopUpUserController>();
   final TextStyle style =
       TextStyle(fontFamily: 'Gotham', color: Colors.white, fontSize: 20);
-  OverlayEntry _overlayEntry;
-  bool _overlayIsShown = false;
-  final LayerLink link = LayerLink();
-  GlobalKey key1 = GlobalKey();
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -347,6 +343,7 @@ class _HomePageNewClassDesktopState extends State<HomePageNewClassDesktop> {
           Function f,
           Function add}) =>
       Expanded(
+        flex: 1,
         child: LayoutBuilder(
           builder: (_, size) => Container(
               margin: EdgeInsets.symmetric(
@@ -385,33 +382,59 @@ class _HomePageNewClassDesktopState extends State<HomePageNewClassDesktop> {
         ),
       );
 
-  listMembers(BuildContext context) => Flexible(
-      flex: 1,
-      child: Wrap(
-        children: [
-          Container(
-            key: key1,
-            height: 40,
-            width: 40,
-            color: Colors.blue,
-            child: InkWell(
-              onTap: () =>
-                  popController.showOverlay(context, key1, Size(40, 40)),
-            ),
-          ),
-          /* CompositedTransformTarget(
-            link: this.link,
-            child: InkWell(
-              onTap: _showOverlay,
-              child: Image.asset(
-                'assets/avatar1.png',
-                key: key,
+  listMembers(BuildContext context) {
+    final List<GlobalKey> keys = [
+      GlobalKey(debugLabel: '1'),
+      GlobalKey(debugLabel: '2'),
+      GlobalKey(debugLabel: '3')
+    ];
+    return Flexible(
+        flex: 1,
+        child: LayoutBuilder(
+          builder: (_, constraint) => Wrap(
+            children: [
+              Container(
+                key: keys[0],
+                margin: EdgeInsets.only(right: constraint.maxWidth * 0.02),
+                child: InkWell(
+                  onTap: () =>
+                      popController.showOverlay(context, keys[0], Size(40, 40)),
+                  child: Image.asset('assets/avatar1.png'),
+                ),
+              ),
+              Container(
+                key: keys[1],
+                margin: EdgeInsets.only(right: constraint.maxWidth * 0.02),
+                child: InkWell(
+                  onTap: () =>
+                      popController.showOverlay(context, keys[1], Size(40, 40)),
+                  child: Image.asset('assets/avatar2.png'),
+                ),
+              ),
+              Container(
+                key: keys[2],
+                margin: EdgeInsets.only(right: constraint.maxWidth * 0.02),
+                child: InkWell(
+                  onTap: () =>
+                      popController.showOverlay(context, keys[2], Size(40, 40)),
+                  child: Image.asset('assets/avatar3.png'),
+                ),
+              ),
+              /* CompositedTransformTarget(
+              link: this.link,
+              child: InkWell(
+                onTap: _showOverlay,
+                child: Image.asset(
+                  'assets/avatar1.png',
+                  key: key,
+                ),
               ),
             ),
+            Image.asset('assets/avatar2.png'), */
+            ],
           ),
-          Image.asset('assets/avatar2.png'), */
-        ],
-      ));
+        ));
+  }
 
   buttonCheck(String title, BoxConstraints size) => Container(
         height: size.maxHeight * 0.3,
