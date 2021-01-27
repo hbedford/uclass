@@ -8,70 +8,98 @@ class PopUpUserInfoWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      top: controller.position.value.dy -
-          controller.anchorSize.value.height -
-          200,
-      left: controller.position.value.dx,
-      child: Column(
-        children: [
-          Container(
-            /*  padding: EdgeInsets.symmetric(
-                horizontal: controller.anchorSize.value.width,
-                vertical: controller.anchorSize.value.height), */
-            height: 200,
-            width: 200,
-            child: Column(
-              children: [
-                Row(
+      top: MediaQuery.of(context).size.height -
+          (controller.position.value.dy) / 2,
+      left: controller.position.value.dx - 75,
+      child: Material(
+        color: Colors.transparent,
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 10),
+          child: Column(
+            children: [
+              Container(
+                /*  padding: EdgeInsets.symmetric(
+                    horizontal: controller.anchorSize.value.width,
+                    vertical: controller.anchorSize.value.height), */
+                /* height: 200, */
+                width: 200,
+                child: Column(
                   children: [
-                    Flexible(
-                        flex: 4,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Image.asset('assets/avatar1.png'),
-                          ],
-                        )),
-                    Flexible(
-                        flex: 2,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.close,
-                              color: Colors.black,
-                            ),
-                          ],
-                        ))
+                    Row(
+                      children: [
+                        Flexible(
+                            flex: 4,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Image.asset('assets/avatar1.png'),
+                              ],
+                            )),
+                        Flexible(
+                            flex: 2,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                IconButton(
+                                  onPressed: () => controller.hideOverlay(),
+                                  icon: Icon(
+                                    Icons.close,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ],
+                            ))
+                      ],
+                    ),
+                    Text(
+                      'Fulano de tal',
+                      style: TextStyle(color: Colors.black),
+                    ),
+                    Row(
+                      children: [
+                        Icon(Icons.star_rate),
+                        Icon(Icons.star_rate_outlined),
+                      ],
+                    ),
+                    RaisedButton(
+                      onPressed: () => null,
+                      child: Text('Chat'),
+                    ),
+                    RaisedButton(
+                      onPressed: () => null,
+                      child: Text('Avaliar'),
+                    ),
+                    Container(
+                      margin: EdgeInsets.symmetric(horizontal: 30),
+                      child: Divider(
+                        color: Colors.grey,
+                      ),
+                    ),
+                    RaisedButton(
+                      onPressed: () => null,
+                      child: Text('Adicionar a sua rede'),
+                    ),
+                    RaisedButton(
+                      onPressed: () => null,
+                      child: Text('Cancelar Convite'),
+                    ),
+                    Text('Aguardando aceitar o convite')
                   ],
                 ),
-                Text(
-                  'Fulano de tal',
-                  style: TextStyle(color: Colors.black),
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20)),
+              ),
+              SizedBox(
+                height: 10,
+                width: 50,
+                child: CustomPaint(
+                  painter: TrianglePainter(color: Colors.white, isDown: true),
                 ),
-                Row(
-                  children: [
-                    Icon(Icons.star_rate),
-                    Icon(Icons.star_rate_outlined),
-                  ],
-                ),
-                RaisedButton(
-                  onPressed: () => null,
-                  child: Text('Chat'),
-                ),
-              ],
-            ),
-            decoration: BoxDecoration(
-                color: Colors.white, borderRadius: BorderRadius.circular(20)),
+              )
+            ],
           ),
-          SizedBox(
-            height: 10,
-            width: 50,
-            child: CustomPaint(
-              painter: TrianglePainter(color: Colors.white, isDown: true),
-            ),
-          )
-        ],
+        ),
       ),
     );
   }

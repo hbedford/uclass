@@ -398,7 +398,7 @@ class _HomePageNewClassDesktopState extends State<HomePageNewClassDesktop> {
               onTap: () =>
                   popController.showOverlay(context, key1, Size(40, 40)),
             ),
-          )
+          ),
           /* CompositedTransformTarget(
             link: this.link,
             child: InkWell(
