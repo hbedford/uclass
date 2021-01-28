@@ -3,8 +3,8 @@ import 'package:uclass/app/chat/chat_widget.dart';
 
 import 'package:flutter/foundation.dart' as platform;
 
-import 'home_desktop.dart';
-import 'home_mobile.dart';
+import 'home_desktop/home_desktop.dart';
+import 'home_mobile/home_mobile.dart';
 
 class HomeScreen extends StatelessWidget {
   /* final List recentClasses = [

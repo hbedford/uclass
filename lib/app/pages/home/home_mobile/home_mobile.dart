@@ -4,9 +4,9 @@ import 'package:uclass/app/pages/classe/classe_controller.dart';
 import 'package:uclass/domain/entities/menu.dart';
 import 'package:uclass/src/utils/date_convert.dart';
 
-import 'home_classes.dart';
-import 'home_events.dart';
-import 'home_resume.dart';
+import '../home_classes.dart';
+import '../home_events.dart';
+import '../home_resume.dart';
 
 class HomeMobile extends StatelessWidget {
   final TextStyle style = TextStyle(fontFamily: 'Gotham', color: Colors.white);
@@ -93,12 +93,12 @@ class HomeMobile extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             title('SALAS RECENTES', constraint),
-            HomeListClassesWidget(
+            ListClassesWidget(
               list: controller.studentClasses,
             ),
             /* classes(constraint), */
             title('MINHAS SALAS', constraint),
-            HomeListClassesWidget(
+            ListClassesWidget(
               list: controller.teacherClasses,
               withPercent: true,
             ),

@@ -18,12 +18,12 @@ class HomeDashDesktop extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           TitleTopicWidget(title: 'SALAS RECENTES', constraint: constraints),
-          HomeListClassesWidget(
+          ListClassesWidget(
             list: classeController.studentClasses,
           ),
           /* classes(constraint), */
           TitleTopicWidget(title: 'MINHAS SALAS', constraint: constraints),
-          HomeListClassesWidget(
+          ListClassesWidget(
             list: classeController.teacherClasses,
             withPercent: true,
           ),

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'home_controller.dart';
-import 'home_events.dart';
-import 'home_leftside.dart';
-import 'home_pages_desktop/home_page_dash_desktop.dart';
-import 'home_pages_desktop/home_page_newclasse_desktop.dart';
-import 'home_pages_desktop/home_topbar_newclasse_desktop.dart';
+import '../home_controller.dart';
+import '../home_events.dart';
+import '../home_leftside.dart';
+import 'home_page_dash_desktop.dart';
+import 'home_page_newclasse_desktop.dart';
+import 'home_topbar_newclasse_desktop.dart';
 
 class HomeDesktop extends StatelessWidget {
   final TextStyle style =

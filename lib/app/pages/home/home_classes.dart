@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' as platform;
 import 'package:uclass/domain/entities/class.dart';
 
-class HomeListClassesWidget extends StatelessWidget {
+class ListClassesWidget extends StatelessWidget {
   /* final BoxConstraints constraint; */
   final bool withPercent;
   final List<Class> list;
-  HomeListClassesWidget({this.withPercent = false, @required this.list});
+  ListClassesWidget({this.withPercent = false, @required this.list});
 
   final TextStyle style = TextStyle(fontFamily: 'Gotham', color: Colors.white);
   @override
