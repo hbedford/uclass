@@ -1,17 +1,17 @@
 import 'package:flutter/cupertino.dart';
-import 'package:uclass/domain/entities/student.dart';
-import 'package:uclass/domain/entities/teacher.dart';
+import 'package:flutter/material.dart';
 import 'package:uclass/domain/entities/text_channel.dart';
+import 'package:uclass/domain/entities/user.dart';
 import 'package:uclass/domain/entities/video_channel.dart';
 
 import 'module.dart';
 
 class Class {
-  final title;
-  final teacher;
-  final ValueNotifier<List<Student>> members;
-  final color;
-  final percent;
+  final ValueNotifier<String> title;
+  final ValueNotifier<User> teacher;
+  final ValueNotifier<List<User>> members;
+  final ValueNotifier<Color> color;
+  final ValueNotifier<int> percent;
   final ValueNotifier<Module> module;
   final ValueNotifier<List<Module>> modules;
   final ValueNotifier<TextChannel> textChannel;
@@ -20,8 +20,8 @@ class Class {
   final ValueNotifier<List<VideoChannel>> videoChannels;
   Class(
       {String title,
-      Teacher teacher,
-      List<Student> members,
+      User teacher,
+      List<User> members,
       Color color,
       int percent,
       Module module,
@@ -31,9 +31,9 @@ class Class {
       VideoChannel videoChannel,
       List<VideoChannel> videoChannels})
       : this.title = ValueNotifier<String>(title),
-        this.teacher = ValueNotifier<Teacher>(teacher),
-        this.members = ValueNotifier<List<Student>>(members ?? []),
-        this.color = ValueNotifier<Color>(color),
+        this.teacher = ValueNotifier<User>(teacher),
+        this.members = ValueNotifier<List<User>>(members ?? []),
+        this.color = ValueNotifier<Color>(color ?? Colors.black),
         this.percent = ValueNotifier<int>(percent),
         this.module = ValueNotifier<Module>(module),
         this.modules = ValueNotifier<List<Module>>(modules ?? []),
@@ -45,7 +45,7 @@ class Class {
             ValueNotifier<List<VideoChannel>>(videoChannels ?? []);
 
   changeTitle(String t) => title.value = t;
-  changeTeacher(Teacher t) => teacher.value = t;
+  changeTeacher(User t) => teacher.value = t;
   changeColor(Color c) => color.value = c;
   changePercent(int p) => percent.value = p;
   addModule() {

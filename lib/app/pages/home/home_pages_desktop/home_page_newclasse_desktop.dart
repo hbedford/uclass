@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:uclass/app/chat/popup_user_controller.dart';
-import 'package:uclass/src/classes/classes_controller.dart';
+import 'package:uclass/app/pages/classe/classe_controller.dart';
 import 'package:uclass/src/widgets/button_check_widget.dart';
 import 'package:uclass/src/widgets/button_rectangular_widget.dart';
 import 'package:uclass/src/widgets/button_widget.dart';
@@ -17,7 +17,7 @@ class HomePageNewClassDesktop extends StatefulWidget {
 }
 
 class _HomePageNewClassDesktopState extends State<HomePageNewClassDesktop> {
-  final controller = GetIt.I.get<ClassesController>();
+  final controller = GetIt.I.get<ClasseController>();
   final popController = GetIt.I.get<PopUpUserController>();
   final TextStyle style =
       TextStyle(fontFamily: 'Gotham', color: Colors.white, fontSize: 20);

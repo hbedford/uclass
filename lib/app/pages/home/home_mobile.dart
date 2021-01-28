@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:uclass/app/pages/classe/classe_controller.dart';
 import 'package:uclass/domain/entities/menu.dart';
 import 'package:uclass/src/utils/date_convert.dart';
 
@@ -16,6 +18,7 @@ class HomeMobile extends StatelessWidget {
     Menu(name: 'SOCIAL'),
     Menu(name: 'CALENDARIO')
   ];
+  final controller = GetIt.I.get<ClasseController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,6 +36,7 @@ class HomeMobile extends StatelessWidget {
         body: drawerBody(context));
   }
 
+/* 
   railBody(BuildContext context) => Row(
         children: [
           Flexible(
@@ -82,20 +86,20 @@ class HomeMobile extends StatelessWidget {
           VerticalDivider(thickness: 1, width: 1),
           Expanded(flex: 9, child: body()),
         ],
-      );
+      ); */
   drawerBody(BuildContext context) => body();
   body() => LayoutBuilder(builder: (context, constraint) {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             title('SALAS RECENTES', constraint),
-            HomeClasses(
-              constraint: constraint,
+            HomeListClassesWidget(
+              list: controller.studentClasses,
             ),
             /* classes(constraint), */
             title('MINHAS SALAS', constraint),
-            HomeClasses(
-              constraint: constraint,
+            HomeListClassesWidget(
+              list: controller.teacherClasses,
               withPercent: true,
             ),
             title('EVENTOS', constraint),

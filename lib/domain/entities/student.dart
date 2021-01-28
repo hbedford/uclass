@@ -1,10 +1,10 @@
-import 'package:flutter/cupertino.dart';
+/* import 'package:flutter/cupertino.dart';
 import 'package:uclass/domain/entities/user.dart';
 
 class Student extends User {
   final id;
-  final image;
-  Student({int id, String image})
+  Student({int id, String name, String password, String email,String image})
       : this.id = ValueNotifier<int>(id),
-        this.image = ValueNotifier<String>(image);
+        super(id: ,email: email, password: password, name: name,image: image);
 }
+ */

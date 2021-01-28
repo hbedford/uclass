@@ -7,7 +7,7 @@ class HomeController {
   final school = ValueNotifier<School>(null);
   final team = ValueNotifier<Team>(null);
   final teams = ValueNotifier<List>([]);
-  final page = ValueNotifier<int>(1);
+  final page = ValueNotifier<int>(0);
   final menu = ValueNotifier<List<Menu>>([
     Menu(
       id: 0,

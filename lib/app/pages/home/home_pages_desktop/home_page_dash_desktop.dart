@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:uclass/app/pages/classe/classe_controller.dart';
+import 'package:uclass/src/widgets/title_topic_widget.dart';
 
 import '../home_classes.dart';
 import '../home_resume.dart';
@@ -6,20 +9,22 @@ import '../home_resume.dart';
 class HomeDashDesktop extends StatelessWidget {
   final TextStyle style =
       TextStyle(fontFamily: 'Gotham', color: Colors.white, fontSize: 20);
+  final classeController = GetIt.I.get<ClasseController>();
+
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (_, constraints) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          title('SALAS RECENTES', constraints),
-          HomeClasses(
-            constraint: constraints,
+          TitleTopicWidget(title: 'SALAS RECENTES', constraint: constraints),
+          HomeListClassesWidget(
+            list: classeController.studentClasses,
           ),
           /* classes(constraint), */
-          title('MINHAS SALAS', constraints),
-          HomeClasses(
-            constraint: constraints,
+          TitleTopicWidget(title: 'MINHAS SALAS', constraint: constraints),
+          HomeListClassesWidget(
+            list: classeController.teacherClasses,
             withPercent: true,
           ),
           /* title('EVENTOS', constraints),
@@ -65,13 +70,6 @@ class HomeDashDesktop extends StatelessWidget {
                     builder: (_, constraint) =>
                         HomeResume(constraint: constraint)))
           ],
-        ),
-      );
-  title(String t, BoxConstraints constraint) => Container(
-        margin: EdgeInsets.only(left: constraint.maxWidth * 0.00),
-        child: Text(
-          t,
-          style: style.copyWith(fontWeight: FontWeight.w100, fontSize: 16),
         ),
       );
 }

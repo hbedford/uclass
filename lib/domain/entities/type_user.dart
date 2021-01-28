@@ -1,9 +1,9 @@
 import 'package:flutter/foundation.dart';
 
-class TypeUserModel {
+class TypeUser {
   final id;
   final ValueNotifier<String> name;
-  TypeUserModel({int id, String name})
+  TypeUser({int id})
       : this.id = ValueNotifier<int>(id),
-        this.name = ValueNotifier<String>(name);
+        this.name = ValueNotifier<String>(id == 0 ? 'Estudante' : 'Professor');
 }

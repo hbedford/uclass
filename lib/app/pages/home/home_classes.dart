@@ -1,21 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' as platform;
 import 'package:uclass/domain/entities/class.dart';
-import 'package:uclass/domain/entities/teacher.dart';
 
-class HomeClasses extends StatelessWidget {
-  final BoxConstraints constraint;
+class HomeListClassesWidget extends StatelessWidget {
+  /* final BoxConstraints constraint; */
   final bool withPercent;
-  HomeClasses({@required this.constraint, this.withPercent = false});
-  final List list = [
-    Class(
-        teacher: Teacher(
-          name: 'Martin Marks',
-        ),
-        percent: 7,
-        title: 'Biologia Marinha',
-        color: Colors.green),
-  ];
+  final List<Class> list;
+  HomeListClassesWidget({this.withPercent = false, @required this.list});
 
   final TextStyle style = TextStyle(fontFamily: 'Gotham', color: Colors.white);
   @override
@@ -27,39 +18,46 @@ class HomeClasses extends StatelessWidget {
 
   classesDesktop() => Flexible(
       flex: 1,
-      child: Column(
-        children: [
-          Expanded(
-            child: LayoutBuilder(
-              builder: (_, constraint) => ListView.builder(
+      child: LayoutBuilder(
+        builder: (_, constraint) => Column(
+          children: [
+            Expanded(
+              child: LayoutBuilder(
+                builder: (_, constraints) => ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: list.length,
+                  itemBuilder: (_, index) => withPercent
+                      ? classWithPercentDesktop(list[index], constraints)
+                      : classDesktop(list[index], constraints),
+                ),
+              ),
+            ),
+            Container(height: constraint.maxHeight * 0.05)
+          ],
+        ),
+      ));
+  classesMobile() => Flexible(
+        flex: 1,
+        child: LayoutBuilder(
+          builder: (_, constraint) => Container(
+            margin: EdgeInsets.symmetric(vertical: constraint.maxHeight * 0.02),
+            height: constraint.maxHeight * 0.15,
+            child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 itemCount: list.length,
                 itemBuilder: (_, index) => withPercent
-                    ? classWithPercentDesktop(list[index], constraint)
-                    : classDesktop(list[index], constraint),
+                    ? classWithPercentMobile(list[index], constraint)
+                    : classMobile(list[index], constraint)),
+            /*  SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: recentClasses
+                    .map<Widget>((e) => classWithPercent(e, constraint))
+                    .toList(),
               ),
-            ),
+            ), */
           ),
-          Container(height: constraint.maxHeight * 0.05)
-        ],
-      ));
-  classesMobile() => Container(
-        margin: EdgeInsets.symmetric(vertical: constraint.maxHeight * 0.02),
-        height: constraint.maxHeight * 0.15,
-        child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount: list.length,
-            itemBuilder: (_, index) => withPercent
-                ? classWithPercentMobile(list[index], constraint)
-                : classMobile(list[index], constraint)),
-        /*  SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            children: recentClasses
-                .map<Widget>((e) => classWithPercent(e, constraint))
-                .toList(),
-          ),
-        ), */
+        ),
       );
   classDesktop(Class e, constraint) => Container(
         margin: EdgeInsets.only(
@@ -68,42 +66,48 @@ class HomeClasses extends StatelessWidget {
             bottom: constraint.maxHeight * 0.1),
         width: constraint.maxWidth * 0.2,
         decoration: BoxDecoration(
-            color: e.color.value, borderRadius: BorderRadius.circular(20)),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Expanded(
-              flex: 5,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Text(
-                    e.title.value,
-                    style: style.copyWith(fontSize: 20),
-                  ),
-                ],
-              ),
-            ),
-            Expanded(
-              flex: 5,
-              child: Column(
+            color: e == null ? Colors.grey : e.color.value,
+            borderRadius: BorderRadius.circular(20)),
+        child: e == null
+            ? Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [Icon(Icons.add), Text('Adicionar Sala')],
+              )
+            : Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Container(),
-                  Text(
-                    'Prof:${e.teacher.value.name.value}',
-                    style: style.copyWith(fontSize: 10),
+                  Expanded(
+                    flex: 5,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text(
+                          e.title.value,
+                          style: style.copyWith(fontSize: 20),
+                        ),
+                      ],
+                    ),
                   ),
-                  Text(
-                    'Participantes:${e.members.value.length}',
-                    style: style.copyWith(fontSize: 10),
-                  ),
-                  Container(),
+                  Expanded(
+                    flex: 5,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Container(),
+                        Text(
+                          'Prof:${e.teacher.value.name.value}',
+                          style: style.copyWith(fontSize: 10),
+                        ),
+                        Text(
+                          'Participantes:${e.members.value.length}',
+                          style: style.copyWith(fontSize: 10),
+                        ),
+                        Container(),
+                      ],
+                    ),
+                  )
                 ],
               ),
-            )
-          ],
-        ),
       );
   classMobile(Class e, constraint) => Container(
         margin: EdgeInsets.only(
@@ -223,7 +227,7 @@ class HomeClasses extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
-                height: constraint.maxHeight * 0.1,
+                height: constraint.maxHeight * 0.2,
                 width: constraint.maxWidth,
                 child: Stack(
                   children: [

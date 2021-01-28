@@ -1,22 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:uclass/domain/entities/user.dart';
 
-class Teacher extends User {
+/* class Teacher extends User {
   final ValueNotifier<int> id;
-  final ValueNotifier<String> name;
   final ValueNotifier<String> doc;
   final ValueNotifier<String> phone;
   final ValueNotifier<DateTime> birth;
   final ValueNotifier<String> pin;
-  Teacher(
-      {int id,
-      String name,
-      String doc,
-      String phone,
-      DateTime birth,
-      String pin})
+  Teacher({int id, String doc, String phone, DateTime birth, String pin})
       : this.id = ValueNotifier<int>(id),
-        this.name = ValueNotifier<String>(name),
         this.doc = ValueNotifier<String>(doc),
         this.phone = ValueNotifier<String>(phone),
         this.birth = ValueNotifier<DateTime>(birth),
@@ -29,3 +21,4 @@ class Teacher extends User {
   changeBirth(DateTime d) => birth.value = d;
   changePin(String p) => pin.value = p;
 }
+ */

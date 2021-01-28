@@ -1,20 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:uclass/app/pages/classe/classe_controller.dart';
 import 'package:uclass/app/pages/home/module_dialog/activity_widget.dart';
 import 'package:uclass/domain/entities/activity.dart';
 import 'package:uclass/domain/entities/class.dart';
 import 'package:uclass/domain/entities/module.dart';
-import 'package:uclass/domain/entities/type_activity.dart';
-import 'package:uclass/src/classes/classes_controller.dart';
 import 'package:uclass/src/widgets/button_widget.dart';
-import 'package:uclass/app/pages/home/module_dialog/module_video_widget.dart';
-
-import 'module_live_widget.dart';
 
 class DialogEditModuleWidget extends StatelessWidget {
   final TextStyle style =
       TextStyle(fontFamily: 'Gotham', color: Colors.white, fontSize: 20);
-  final controllerClasse = GetIt.I.get<ClassesController>();
+  final controllerClasse = GetIt.I.get<ClasseController>();
 
   @override
   Widget build(BuildContext context) {
