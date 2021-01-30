@@ -55,8 +55,32 @@ class DialogNewClassWidget extends StatelessWidget {
                               constraint: constraint,
                               title: 'Nome da sala',
                             ),
-                            AutoCompletedTextField(
-                              context: context,
+                            Container(
+                              height: constraint.maxHeight * 0.1,
+                              child: AutoCompletedTextField(
+                                itemBuilder: (context, suggestion) =>
+                                    Chip(label: Text(suggestion)),
+                                filter: (item, query) {
+                                  return item
+                                      .toLowerCase()
+                                      .startsWith(query.toLowerCase());
+                                },
+                                sort: (a, b) => a.compareTo(b),
+                                list: ['Hugo', 'Marcio', 'Hugo Bedford'],
+                                hint:
+                                    'Exemplo: Nome sobrenome ou nome da instituição',
+                              ),
+                            ),
+                            Wrap(
+                              children: controller.classe.value.admins.value
+                                  .map((e) => Chip(
+                                        avatar: Image.asset(e.image.value),
+                                        label: FittedBox(
+                                          fit: BoxFit.fitWidth,
+                                          child: Text(e.name.value),
+                                        ),
+                                      ))
+                                  .toList(),
                             ),
                             /* TextFieldWidget(
                               onChange: (v) => null,

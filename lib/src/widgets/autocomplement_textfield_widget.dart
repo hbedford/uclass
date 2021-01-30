@@ -1,8 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:uclass/src/widgets/textfield_widget.dart';
+
+typedef AutoCompletedTextFieldItem<T>(BuildContext context, T suggestion);
+typedef bool Filter<T>(T suggestion, String query);
 
 class AutoCompletedTextField extends StatefulWidget {
-  final BuildContext context;
-  AutoCompletedTextField({@required this.context});
+  final String hint;
+  final AutoCompletedTextFieldItem itemBuilder;
+  final List list;
+  final Filter filter;
+  final Comparator sort;
+  AutoCompletedTextField(
+      {this.hint,
+      @required this.itemBuilder,
+      @required this.list,
+      @required this.filter,
+      @required this.sort});
   @override
   _AutoCompletedTextFieldState createState() => _AutoCompletedTextFieldState();
 }
@@ -10,7 +23,7 @@ class AutoCompletedTextField extends StatefulWidget {
 class _AutoCompletedTextFieldState extends State<AutoCompletedTextField> {
   LayerLink link = LayerLink();
 
-  TextField textField;
+  Widget textField;
   OverlayEntry overlay;
   onChange(String value) {
     print(value);
@@ -18,41 +31,29 @@ class _AutoCompletedTextFieldState extends State<AutoCompletedTextField> {
       overlay.remove();
       setState(() {});
     } else {
-      List<String> moka = ['Hugo', 'Bruno', 'Marcio', 'hugo bedford'];
       List<String> list = [];
-      moka.forEach((e) {
-        if (value.toLowerCase().contains(e.toLowerCase())) {
-          print(e);
+      widget.list.forEach((e) {
+        if (widget.filter(e, value)) {
           list.add(e);
         }
       });
+      list.sort(widget.sort);
 
       overlay = createOverlayEntry(list: List.of(list));
 
       Overlay.of(context).insert(overlay);
       if (overlay == null) overlay.remove();
-      /* setState(() {}); */
     }
   }
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    textField = TextField(
-      onChanged: onChange,
+    textField = TextFieldWidget(
+      onChange: onChange,
+      hint: widget.hint,
     );
   }
-
-  /* @override
-  void dispose() {
-    setState(() {
-      overlay.remove();
-      overlay.dispose();
-      textField = null;
-      super.dispose();
-    });
-  } */
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +63,7 @@ class _AutoCompletedTextFieldState extends State<AutoCompletedTextField> {
     );
   }
 
-  OverlayEntry createOverlayEntry({List<String> list}) {
+  OverlayEntry createOverlayEntry({List list}) {
     final Size textFieldSize = (context.findRenderObject() as RenderBox).size;
     final width = textFieldSize.width;
     final height = textFieldSize.height;
@@ -77,11 +78,7 @@ class _AutoCompletedTextFieldState extends State<AutoCompletedTextField> {
             color: Colors.transparent,
             child: Column(
                 children: list
-                    .map((e) => Container(
-                        width: width,
-                        height: 30,
-                        color: Colors.blue,
-                        child: Text(e)))
+                    .map<Widget>((e) => widget.itemBuilder(context, e))
                     .toList()),
           ),
         ),
