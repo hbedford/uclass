@@ -7,21 +7,30 @@ import 'package:uclass/domain/entities/video_channel.dart';
 import 'module.dart';
 
 class Class {
-  final ValueNotifier<String> title;
+  final ValueNotifier<int> id;
+  final ValueNotifier<String> name;
   final ValueNotifier<User> teacher;
   final ValueNotifier<List<User>> members;
   final ValueNotifier<Color> color;
   final ValueNotifier<int> percent;
   final ValueNotifier<Module> module;
+  final ValueNotifier<String> limitMembers;
   final ValueNotifier<List<Module>> modules;
   final ValueNotifier<TextChannel> textChannel;
   final ValueNotifier<List<TextChannel>> textChannels;
   final ValueNotifier<VideoChannel> videoChannel;
   final ValueNotifier<List<VideoChannel>> videoChannels;
+  final ValueNotifier<DateTime> lastAccess;
+  final ValueNotifier<TextEditingController> limitEdit =
+      ValueNotifier<TextEditingController>(TextEditingController());
+  final ValueNotifier<List<User>> admins;
   Class(
-      {String title,
+      {int id,
+      String name,
       User teacher,
+      List<User> admins,
       List<User> members,
+      String limitMembers = '',
       Color color,
       int percent,
       Module module,
@@ -29,10 +38,14 @@ class Class {
       TextChannel textChannel,
       List<TextChannel> textChannels,
       VideoChannel videoChannel,
-      List<VideoChannel> videoChannels})
-      : this.title = ValueNotifier<String>(title),
+      List<VideoChannel> videoChannels,
+      DateTime lastAccess})
+      : this.id = ValueNotifier<int>(id),
+        this.admins = ValueNotifier<List<User>>(admins ?? []),
+        this.name = ValueNotifier<String>(name = ''),
         this.teacher = ValueNotifier<User>(teacher),
         this.members = ValueNotifier<List<User>>(members ?? []),
+        this.limitMembers = ValueNotifier<String>(limitMembers),
         this.color = ValueNotifier<Color>(color ?? Colors.black),
         this.percent = ValueNotifier<int>(percent),
         this.module = ValueNotifier<Module>(module),
@@ -42,12 +55,19 @@ class Class {
             ValueNotifier<List<TextChannel>>(textChannels ?? []),
         this.videoChannel = ValueNotifier<VideoChannel>(videoChannel),
         this.videoChannels =
-            ValueNotifier<List<VideoChannel>>(videoChannels ?? []);
+            ValueNotifier<List<VideoChannel>>(videoChannels ?? []),
+        this.lastAccess = ValueNotifier<DateTime>(lastAccess);
 
-  changeTitle(String t) => title.value = t;
-  changeTeacher(User t) => teacher.value = t;
-  changeColor(Color c) => color.value = c;
-  changePercent(int p) => percent.value = p;
+  changeName(String value) => name.value = value;
+  changeTeacher(User value) => teacher.value = value;
+  changeLimitMembers(String value) {
+    limitMembers.value = value;
+    if (value.isEmpty) limitEdit.value.clear();
+  }
+
+  changeColor(Color value) => color.value = value;
+  changePercent(int value) => percent.value = value;
+  changeLastAccess(DateTime value) => lastAccess.value = value;
   addModule() {
     module.value = Module();
     /*  modules.value.add(Module(name: 'Teste'));
@@ -89,4 +109,7 @@ class Class {
     v.add(VideoChannel(name: null));
     return v;
   }
+
+  bool get isValidName => name.value.isNotEmpty && name.value.length > 2;
+  bool get isValidAdmins => admins.value != null;
 }

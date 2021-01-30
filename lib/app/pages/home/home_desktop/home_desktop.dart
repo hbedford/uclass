@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:uclass/app/pages/classe/classe_controller.dart';
+import 'package:uclass/app/pages/home/home_desktop/classes_desktop/home_page_classes_desktop.dart';
 import '../home_controller.dart';
 import '../home_events.dart';
 import '../home_leftside.dart';
-import 'home_page_dash_desktop.dart';
-import 'home_page_newclasse_desktop.dart';
-import 'home_topbar_newclasse_desktop.dart';
+import 'dashboard_desktop/home_page_dash_desktop.dart';
+import 'classes_desktop/home_topbar_newclasse_desktop.dart';
 
 class HomeDesktop extends StatelessWidget {
   final TextStyle style =
@@ -40,7 +41,7 @@ class HomeDesktop extends StatelessWidget {
                                                 flex: 9,
                                                 child: value == 0
                                                     ? HomeDashDesktop()
-                                                    : HomePageNewClassDesktop(),
+                                                    : HomePageClassesDesktop(),
                                               )),
                                       Flexible(
                                           flex: 1,
@@ -156,10 +157,13 @@ class HomeDesktop extends StatelessWidget {
           ),
         ),
       );
-  topCenterBar() => Expanded(
-      flex: 7,
-      child: ValueListenableBuilder(
-          valueListenable: controller.page,
-          builder: (_, value, child) =>
-              value == 1 ? HomeTopBarNewClassDesktop() : Container()));
+  topCenterBar() {
+    final classeController = GetIt.I.get<ClasseController>();
+    return Expanded(
+        flex: 7,
+        child: ValueListenableBuilder(
+            valueListenable: classeController.step,
+            builder: (_, value, child) =>
+                value > 0 ? HomeTopBarNewClassDesktop() : Container()));
+  }
 }

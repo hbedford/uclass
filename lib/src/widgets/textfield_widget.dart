@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class TextFieldWidget extends StatelessWidget {
   final EdgeInsets margin;
   final TextEditingController controller;
+  final Function onChange;
   final String hint;
   final Color color;
   final Color hintColor;
@@ -10,6 +11,8 @@ class TextFieldWidget extends StatelessWidget {
   final EdgeInsets padding;
   final double radius;
   final TextStyle hintStyle;
+  final TextInputType textInputType;
+  final int lines;
   TextFieldWidget(
       {this.margin,
       this.controller,
@@ -17,9 +20,12 @@ class TextFieldWidget extends StatelessWidget {
       this.height,
       this.radius = 10,
       this.hint = '',
+      this.onChange,
       this.hintColor = Colors.black26,
       this.color = Colors.white,
-      this.hintStyle});
+      this.textInputType,
+      this.hintStyle,
+      this.lines});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -30,6 +36,11 @@ class TextFieldWidget extends StatelessWidget {
           color: color, borderRadius: BorderRadius.circular(radius)),
       child: Center(
         child: TextField(
+          controller: controller,
+          onChanged: onChange,
+          maxLines: lines,
+          keyboardType: textInputType,
+          style: TextStyle(color: Colors.black),
           decoration: InputDecoration(
               hintText: hint,
               hintStyle: hintStyle ??

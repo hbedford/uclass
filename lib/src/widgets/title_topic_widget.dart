@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 class TitleTopicWidget extends StatelessWidget {
   final String title;
   final BoxConstraints constraint;
-  TitleTopicWidget({this.title, this.constraint});
+  TitleTopicWidget({this.title, @required this.constraint});
   @override
   Widget build(BuildContext context) {
     return Container(

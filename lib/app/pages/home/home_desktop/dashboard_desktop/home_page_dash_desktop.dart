@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:uclass/app/pages/classe/classe_controller.dart';
+import 'package:uclass/src/widgets/classes_desktop_widget.dart';
 import 'package:uclass/src/widgets/title_topic_widget.dart';
 
-import '../home_classes.dart';
-import '../home_resume.dart';
+import '../../home_resume.dart';
 
 class HomeDashDesktop extends StatelessWidget {
   final TextStyle style =
@@ -18,12 +18,12 @@ class HomeDashDesktop extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           TitleTopicWidget(title: 'SALAS RECENTES', constraint: constraints),
-          ListClassesWidget(
-            list: classeController.studentClasses,
+          ClassesDesktopWidget(
+            list: classeController.recentsClasses,
           ),
           /* classes(constraint), */
           TitleTopicWidget(title: 'MINHAS SALAS', constraint: constraints),
-          ListClassesWidget(
+          ClassesDesktopWidget(
             list: classeController.teacherClasses,
             withPercent: true,
           ),

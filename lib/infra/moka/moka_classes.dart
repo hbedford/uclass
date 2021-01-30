@@ -5,14 +5,18 @@ import 'package:uclass/infra/moka/moka_users.dart';
 class MokaClasses {
   final List<Class> list = [
     Class(
+        id: 1,
         teacher: MokaUsers().teachers[0],
         percent: 7,
-        title: 'Biologia Marinha',
-        color: Colors.green),
+        name: 'Biologia Marinha',
+        color: Colors.green,
+        lastAccess: DateTime(2021, 01, 27, 11, 20, 01)),
     Class(
+        id: 2,
         teacher: MokaUsers().teachers[1],
         percent: 3,
-        title: 'Filosofia',
-        color: Colors.purple)
+        name: 'Filosofia',
+        color: Colors.purple,
+        lastAccess: DateTime(2021, 01, 27, 10, 30, 02))
   ];
 }

@@ -30,7 +30,7 @@ class _HomePageNewClassDesktopState extends State<HomePageNewClassDesktop> {
             builder: (_, constraint) =>
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Text(
-                controller.classe.value.title.value ?? '<Nome da sala nova>',
+                controller.classe.value.name.value ?? '<Nome da sala nova>',
                 style: style,
               ),
               ValueListenableBuilder(
@@ -81,30 +81,67 @@ class _HomePageNewClassDesktopState extends State<HomePageNewClassDesktop> {
                                     ),
                                     Container(
                                         width: size.maxWidth * 0.6,
-                                        child: TextFieldWidget(
-                                          radius: 20,
-                                          height: size.maxHeight * 0.6,
+                                        height: size.maxHeight * 0.6,
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal:
+                                                constraint.maxWidth * 0.01,
+                                            vertical:
+                                                constraint.maxHeight * 0.02),
+                                        decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius:
+                                                BorderRadius.circular(20)),
+                                        child: TextField(
+                                          maxLines: 8,
+                                          style: TextStyle(color: Colors.black),
+                                          decoration: InputDecoration.collapsed(
+                                              fillColor: Colors.white,
+                                              hoverColor: Colors.white,
+                                              hintText: 'Descrição da sala',
+                                              hintStyle: TextStyle(
+                                                  color: Colors.grey[400])),
                                         )),
                                     Row(children: [
                                       Text('N° de vagas', style: style),
                                       Container(
-                                          height: size.maxHeight * 0.25,
+                                          height: size.maxHeight * 0.2,
                                           margin: EdgeInsets.only(
                                               left: size.maxWidth * 0.01,
                                               right: size.maxWidth * 0.03),
                                           width: size.maxWidth * 0.15,
-                                          child: TextFieldWidget()),
+                                          child: ValueListenableBuilder(
+                                            valueListenable: controller
+                                                .classe.value.limitMembers,
+                                            builder: (_, value, child) =>
+                                                TextFieldWidget(
+                                              controller: controller
+                                                  .classe.value.limitEdit.value,
+                                              onChange: controller.classe.value
+                                                  .changeLimitMembers,
+                                              textInputType:
+                                                  TextInputType.number,
+                                              color: Colors.grey,
+                                            ),
+                                          )),
                                       Text(
                                         'Sem limites',
                                         style: style,
                                       ),
-                                      ButtonCheckWidget(
-                                          f: () => null,
-                                          check: true,
-                                          margin: EdgeInsets.only(
-                                              left: constraint.maxWidth * 0.02,
-                                              right:
-                                                  constraints.maxWidth * 0.01)),
+                                      ValueListenableBuilder(
+                                        valueListenable: controller
+                                            .classe.value.limitMembers,
+                                        builder: (_, String value, child) =>
+                                            ButtonCheckWidget(
+                                                f: () => controller.classe.value
+                                                    .changeLimitMembers(''),
+                                                check: value.isEmpty,
+                                                margin: EdgeInsets.only(
+                                                    left: constraint.maxWidth *
+                                                        0.02,
+                                                    right:
+                                                        constraints.maxWidth *
+                                                            0.01)),
+                                      )
                                     ]),
                                   ]),
                             ),
@@ -142,10 +179,13 @@ class _HomePageNewClassDesktopState extends State<HomePageNewClassDesktop> {
                                               left: constraint.maxWidth * 0.02,
                                               right:
                                                   constraints.maxWidth * 0.01)),
-                                      FittedBox(
-                                        fit: BoxFit.fitHeight,
-                                        child: Text('Armazenamento de arquivos',
-                                            style: style),
+                                      Flexible(
+                                        child: FittedBox(
+                                          fit: BoxFit.fitWidth,
+                                          child: Text(
+                                              'Armazenamento de arquivos',
+                                              style: style),
+                                        ),
                                       )
                                     ],
                                   ),

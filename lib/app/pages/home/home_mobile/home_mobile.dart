@@ -3,8 +3,8 @@ import 'package:get_it/get_it.dart';
 import 'package:uclass/app/pages/classe/classe_controller.dart';
 import 'package:uclass/domain/entities/menu.dart';
 import 'package:uclass/src/utils/date_convert.dart';
+import 'package:uclass/src/widgets/classes_mobile_widget.dart';
 
-import '../home_classes.dart';
 import '../home_events.dart';
 import '../home_resume.dart';
 
@@ -93,12 +93,12 @@ class HomeMobile extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             title('SALAS RECENTES', constraint),
-            ListClassesWidget(
+            ClassesMobileWidget(
               list: controller.studentClasses,
             ),
             /* classes(constraint), */
             title('MINHAS SALAS', constraint),
-            ListClassesWidget(
+            ClassesMobileWidget(
               list: controller.teacherClasses,
               withPercent: true,
             ),

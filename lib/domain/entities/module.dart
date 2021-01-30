@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
-import 'package:uclass/app/pages/home/module_dialog/edit_module_widget.dart';
+import 'package:uclass/app/pages/home/module_dialog/dialog_edit_module_widget.dart';
 
 import 'activity.dart';
 

@@ -23,7 +23,7 @@ void main() {
   getIt.registerSingleton<UserController>(
       UserController(user: MokaUsers().userLogin));
   getIt.registerSingleton<ClasseController>(
-    ClasseController(classe: Class(), step: 1, classes: MokaClasses().list),
+    ClasseController(classe: Class(), classes: MokaClasses().list),
   );
   getIt.registerSingleton<ChatController>(ChatController(conversations: [
     Conversation(
