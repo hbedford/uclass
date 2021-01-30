@@ -38,7 +38,7 @@ class ClassDesktopWidget extends StatelessWidget {
                       children: [
                         Text(
                           classe.name.value,
-                          style: TextStyle(fontSize: 20),
+                          style: TextStyle(fontSize: 20, color: Colors.white),
                         ),
                       ],
                     ),

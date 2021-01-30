@@ -228,7 +228,7 @@ class _HomePageNewClassDesktopState extends State<HomePageNewClassDesktop> {
                               ),
                               ButtonWidget(
                                 title: 'VOLTAR',
-                                f: () => null,
+                                f: controller.cancelClass,
                                 height: constraint.maxHeight * 0.05,
                                 width: constraint.maxWidth * 0.1,
                                 style:

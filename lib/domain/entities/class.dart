@@ -26,7 +26,7 @@ class Class {
   final ValueNotifier<List<User>> admins;
   Class(
       {int id,
-      String name,
+      String name = '',
       User teacher,
       List<User> admins,
       List<User> members,
@@ -42,7 +42,7 @@ class Class {
       DateTime lastAccess})
       : this.id = ValueNotifier<int>(id),
         this.admins = ValueNotifier<List<User>>(admins ?? []),
-        this.name = ValueNotifier<String>(name = ''),
+        this.name = ValueNotifier<String>(name),
         this.teacher = ValueNotifier<User>(teacher),
         this.members = ValueNotifier<List<User>>(members ?? []),
         this.limitMembers = ValueNotifier<String>(limitMembers),

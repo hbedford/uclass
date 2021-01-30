@@ -82,4 +82,8 @@ class ClasseController {
         ),
         context: context,
       );
+  cancelClass() {
+    changeStep(0);
+    changeClass(null);
+  }
 }
