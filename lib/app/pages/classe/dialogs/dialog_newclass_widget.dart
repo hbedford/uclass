@@ -56,49 +56,126 @@ class DialogNewClassWidget extends StatelessWidget {
                               constraint: constraint,
                               title: 'Nome da sala',
                             ),
-                            ValueListenableBuilder(
-                                valueListenable: controller.classe.value.admins,
-                                builder: (_, value, child) {
-                                  children = value
-                                      .map<Widget>((e) => Chip(
-                                            // avatar: Image.asset(e.image.value),
-                                            label: FittedBox(
-                                              fit: BoxFit.fitWidth,
-                                              child: Text(e),
-                                            ),
-                                          ))
-                                      .toList();
-                                  children.add(
-                                    Flexible(
-                                      child: Container(
-                                        height: constraint.maxHeight * 0.1,
-                                        child: AutoCompletedTextField(
-                                          itemBuilder: (context, suggestion) =>
-                                              InkWell(
-                                            onTap: () => controller.classe.value
+                            Container(
+                              /* padding: EdgeInsets.symmetric(
+                                  vertical: constraint.maxHeight * 0.01), */
+                              constraints: BoxConstraints(
+                                  minHeight: constraint.maxHeight * 0.1),
+                              width: constraint.maxWidth,
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: ValueListenableBuilder(
+                                  valueListenable:
+                                      controller.classe.value.admins,
+                                  builder: (_, value, child) {
+                                    children = [];
+
+                                    children = value
+                                        .map<Widget>((e) => InkWell(
+                                              onTap: () => controller
+                                                  .classe.value
+                                                  .removeAdmin(e),
+                                              child: Container(
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal:
+                                                        constraint.maxWidth *
+                                                            0.02,
+                                                    vertical:
+                                                        constraint.maxHeight *
+                                                            0.01),
+                                                decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10),
+                                                    color: Colors.grey),
+                                                margin: EdgeInsets.only(
+                                                    left: constraint.maxWidth *
+                                                        0.02,
+                                                    top: constraint.maxHeight *
+                                                        0.005,
+                                                    bottom:
+                                                        constraint.maxHeight *
+                                                            0.005),
+                                                child: Wrap(
+                                                  crossAxisAlignment:
+                                                      WrapCrossAlignment.center,
+                                                  children: [
+                                                    Text(
+                                                      e,
+                                                      style: TextStyle(
+                                                          color: Colors.white),
+                                                    ),
+                                                    Icon(
+                                                      Icons.close,
+                                                      color: Colors.black,
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                            ))
+                                        .toList();
+                                    children.add(
+                                        /* Flexible(
+                                          child: */
+                                        Container(
+                                      height: constraint.maxHeight * 0.1,
+                                      width: constraint.maxWidth * 0.3,
+                                      child: AutoCompletedTextField(
+                                        itemSubmitted: (suggestion) =>
+                                            controller.classe.value
                                                 .addAdmin(suggestion),
-                                            child: Text(suggestion),
-                                          ),
-                                          filter: (item, query) {
-                                            return item
-                                                .toLowerCase()
-                                                .startsWith(
-                                                    query.toLowerCase());
-                                          },
-                                          sort: (a, b) => a.compareTo(b),
-                                          list: [
-                                            'Hugo',
-                                            'Marcio',
-                                            'Hugo Bedford'
-                                          ],
-                                          hint:
-                                              'Exemplo: Nome sobrenome ou nome da instituição',
-                                        ),
+                                        itemBuilder: (context, suggestion) =>
+                                            Container(
+                                                width:
+                                                    constraint.maxWidth * 0.3,
+                                                margin: EdgeInsets.only(
+                                                    top: constraint.maxHeight *
+                                                        0.02),
+                                                padding: EdgeInsets.symmetric(
+                                                    vertical:
+                                                        constraint.maxHeight *
+                                                            0.02,
+                                                    horizontal:
+                                                        constraint.maxWidth *
+                                                            0.05),
+                                                decoration: BoxDecoration(
+                                                    color: Colors.white,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10)),
+                                                child: Text(
+                                                  suggestion,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 14,
+                                                  ),
+                                                )),
+                                        filter: (item, query) {
+                                          return item
+                                              .toLowerCase()
+                                              .startsWith(query.toLowerCase());
+                                        },
+                                        sort: (a, b) => a.compareTo(b),
+                                        list: [
+                                          'Hugo',
+                                          'Marcio',
+                                          'Hugo Monteiro Bedford Bedford'
+                                        ],
+                                        hint:
+                                            'Exemplo: Nome sobrenome ou nome da instituição',
                                       ),
-                                    ),
-                                  );
-                                  return Wrap(children: children);
-                                }),
+                                    ) /* ), */
+                                        );
+                                    return Wrap(
+                                      children: children,
+                                      crossAxisAlignment:
+                                          WrapCrossAlignment.center,
+                                    );
+                                  }),
+                            ),
                             /* TextFieldWidget(
                               onChange: (v) => null,
                               hint: 'Quem pode gerenciar esta sala',

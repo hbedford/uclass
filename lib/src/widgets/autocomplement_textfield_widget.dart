@@ -3,33 +3,42 @@ import 'package:uclass/src/widgets/textfield_widget.dart';
 
 typedef AutoCompletedTextFieldItem<T>(BuildContext context, T suggestion);
 typedef bool Filter<T>(T suggestion, String query);
+typedef InputEventCallback<T>(T data);
 
 class AutoCompletedTextField extends StatefulWidget {
+  final InputEventCallback itemSubmitted;
   final String hint;
   final AutoCompletedTextFieldItem itemBuilder;
   final List list;
   final Filter filter;
+  final Color backgroundColor;
   final Comparator sort;
   AutoCompletedTextField(
-      {this.hint,
+      {@required this.itemSubmitted,
+      this.hint,
       @required this.itemBuilder,
       @required this.list,
       @required this.filter,
-      @required this.sort});
+      @required this.sort,
+      this.backgroundColor = Colors.transparent});
   @override
   _AutoCompletedTextFieldState createState() => _AutoCompletedTextFieldState();
 }
 
 class _AutoCompletedTextFieldState extends State<AutoCompletedTextField> {
   LayerLink link = LayerLink();
-
+  TextEditingController controller = TextEditingController();
   Widget textField;
   OverlayEntry overlay;
+  OverlayState overlayState;
+  BuildContext contxt;
   onChange(String value) {
-    print(value);
+    this.overlayState = Overlay.of(contxt);
+
     if (value.isEmpty) {
-      overlay.remove();
-      setState(() {});
+      controller.clear();
+      this.overlay?.remove();
+      this.overlay = null;
     } else {
       List<String> list = [];
       widget.list.forEach((e) {
@@ -38,11 +47,9 @@ class _AutoCompletedTextFieldState extends State<AutoCompletedTextField> {
         }
       });
       list.sort(widget.sort);
-
-      overlay = createOverlayEntry(list: List.of(list));
-
-      Overlay.of(context).insert(overlay);
-      if (overlay == null) overlay.remove();
+      this.overlay?.remove();
+      this.overlay = createOverlayEntry(list: List.of(list));
+      this.overlayState.insert(this.overlay);
     }
   }
 
@@ -50,6 +57,7 @@ class _AutoCompletedTextFieldState extends State<AutoCompletedTextField> {
   void initState() {
     super.initState();
     textField = TextFieldWidget(
+      controller: controller,
       onChange: onChange,
       hint: widget.hint,
     );
@@ -57,6 +65,7 @@ class _AutoCompletedTextFieldState extends State<AutoCompletedTextField> {
 
   @override
   Widget build(BuildContext context) {
+    contxt = context;
     return CompositedTransformTarget(
       link: link,
       child: textField,
@@ -78,7 +87,13 @@ class _AutoCompletedTextFieldState extends State<AutoCompletedTextField> {
             color: Colors.transparent,
             child: Column(
                 children: list
-                    .map<Widget>((e) => widget.itemBuilder(context, e))
+                    .map<Widget>((e) => InkWell(
+                          onTap: () {
+                            onChange('');
+                            widget.itemSubmitted(e);
+                          },
+                          child: widget.itemBuilder(context, e),
+                        ))
                     .toList()),
           ),
         ),

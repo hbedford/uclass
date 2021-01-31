@@ -79,6 +79,11 @@ class Class {
     admins.notifyListeners();
   }
 
+  removeAdmin(String value) {
+    admins.value.remove(value);
+    admins.notifyListeners();
+  }
+
   saveModule() {
     module.value.save();
   }

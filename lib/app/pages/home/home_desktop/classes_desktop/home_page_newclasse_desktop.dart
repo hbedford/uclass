@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:uclass/app/chat/popup_user_controller.dart';
 import 'package:uclass/app/pages/classe/classe_controller.dart';
+import 'package:uclass/domain/entities/user.dart';
+import 'package:uclass/infra/moka/moka_members.dart';
 import 'package:uclass/src/widgets/button_check_widget.dart';
 import 'package:uclass/src/widgets/button_rectangular_widget.dart';
 import 'package:uclass/src/widgets/button_widget.dart';
@@ -423,6 +425,7 @@ class _HomePageNewClassDesktopState extends State<HomePageNewClassDesktop> {
       );
 
   listMembers(BuildContext context) {
+    final List<User> members = MokaMembers().members;
     final List<GlobalKey> keys = [
       GlobalKey(debugLabel: '1'),
       GlobalKey(debugLabel: '2'),
@@ -432,47 +435,23 @@ class _HomePageNewClassDesktopState extends State<HomePageNewClassDesktop> {
         flex: 1,
         child: LayoutBuilder(
           builder: (_, constraint) => Wrap(
-            children: [
-              Container(
-                key: keys[0],
-                margin: EdgeInsets.only(right: constraint.maxWidth * 0.02),
-                child: InkWell(
-                  onTap: () =>
-                      popController.showOverlay(context, keys[0], Size(40, 40)),
-                  child: Image.asset('assets/avatar1.png'),
-                ),
-              ),
-              Container(
-                key: keys[1],
-                margin: EdgeInsets.only(right: constraint.maxWidth * 0.02),
-                child: InkWell(
-                  onTap: () =>
-                      popController.showOverlay(context, keys[1], Size(40, 40)),
-                  child: Image.asset('assets/avatar2.png'),
-                ),
-              ),
-              Container(
-                key: keys[2],
-                margin: EdgeInsets.only(right: constraint.maxWidth * 0.02),
-                child: InkWell(
-                  onTap: () =>
-                      popController.showOverlay(context, keys[2], Size(40, 40)),
-                  child: Image.asset('assets/avatar3.png'),
-                ),
-              ),
-              /* CompositedTransformTarget(
-              link: this.link,
-              child: InkWell(
-                onTap: _showOverlay,
-                child: Image.asset(
-                  'assets/avatar1.png',
-                  key: key,
-                ),
-              ),
-            ),
-            Image.asset('assets/avatar2.png'), */
-            ],
-          ),
+              children: members
+                  .map(
+                    (user) => Container(
+                      key: keys[members.indexOf(user)],
+                      margin:
+                          EdgeInsets.only(right: constraint.maxWidth * 0.02),
+                      child: Tooltip(
+                        message: user.name.value,
+                        child: InkWell(
+                          onTap: () => popController.showOverlay(context,
+                              keys[members.indexOf(user)], Size(40, 40), user),
+                          child: Image.asset(user.image.value),
+                        ),
+                      ),
+                    ),
+                  )
+                  .toList()),
         ));
   }
 

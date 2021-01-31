@@ -32,7 +32,7 @@ class PopUpUserInfoWidget extends StatelessWidget {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
-                                Image.asset('assets/avatar1.png'),
+                                Image.asset(controller.user.value.image.value),
                               ],
                             )),
                         Flexible(
@@ -52,7 +52,7 @@ class PopUpUserInfoWidget extends StatelessWidget {
                       ],
                     ),
                     Text(
-                      'Fulano de tal',
+                      controller.user.value.name.value,
                       style: TextStyle(color: Colors.black),
                     ),
                     Row(
