@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:uclass/app/pages/home/module_dialog/module_warning_widget.dart';
 import 'package:uclass/domain/entities/activity.dart';
 
+import 'module_correction_widget.dart';
 import 'module_live_widget.dart';
+import 'module_material_widget.dart';
 import 'module_video_widget.dart';
 
 class ActivityModuleWidget extends StatelessWidget {
@@ -43,11 +46,11 @@ class ActivityModuleWidget extends StatelessWidget {
                                     EdgeInsets.all(constraint.maxHeight * 0.05),
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(20),
-                                    border: activity.type.value != null &&
-                                            activity.type.value.id.value == 4
-                                        ? Border.all(
-                                            color: Colors.green, width: 2)
-                                        : null,
+                                    border: Border.all(
+                                        color: activity.type.value == null
+                                            ? Colors.transparent
+                                            : activity.type.value.color.value,
+                                        width: 2),
                                     color: Colors.black87),
                                 child: type(activity),
                               ),
@@ -80,7 +83,13 @@ class ActivityModuleWidget extends StatelessWidget {
   type(Activity activity) => activity.type.value != null
       ? activity.type.value.id.value == 1
           ? ModuleLiveWidget()
-          : ModuleVideoWidget()
+          : activity.type.value.id.value == 2
+              ? ModuleVideoWidget()
+              : activity.type.value.id.value == 3
+                  ? ModuleMaterialWidget()
+                  : activity.type.value.id.value == 4
+                      ? ModuleCorrectionWidget()
+                      : ModuleWarningWidget()
       : Center(
           child: Text(
             'ADICIONAR ITEM',

@@ -9,7 +9,7 @@ class RectangularButtonWidget extends StatelessWidget {
   final EdgeInsets padding;
   final EdgeInsets margin;
   RectangularButtonWidget(
-      {this.constraint,
+      {@required this.constraint,
       this.margin,
       this.f,
       this.padding,

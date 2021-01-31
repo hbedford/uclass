@@ -8,11 +8,31 @@ class Activity {
   final ValueNotifier<TypeActivity> type;
   final ValueNotifier<TimeOfDay> time;
   final types = [
-    TypeActivity(id: 1, name: 'Aula ao vivo', image: 'assets/live.png'),
-    TypeActivity(id: 2, name: 'Video aula', image: 'assets/callvideo.png'),
-    TypeActivity(id: 3, name: 'Material', image: 'assets/folders.png'),
-    TypeActivity(id: 4, name: 'Correção', image: 'assets/corrections.png'),
-    TypeActivity(id: 5, name: 'Avisos', image: 'assets/warning.png')
+    TypeActivity(
+        id: 1,
+        name: 'Aula ao vivo',
+        image: 'assets/live.png',
+        color: Colors.transparent),
+    TypeActivity(
+        id: 2,
+        name: 'Video aula',
+        image: 'assets/callvideo.png',
+        color: Colors.transparent),
+    TypeActivity(
+        id: 3,
+        name: 'Material',
+        image: 'assets/folders.png',
+        color: Colors.transparent),
+    TypeActivity(
+        id: 4,
+        name: 'Correção',
+        image: 'assets/corrections.png',
+        color: Colors.green),
+    TypeActivity(
+        id: 5,
+        name: 'Avisos',
+        image: 'assets/warning.png',
+        color: Colors.yellow)
   ];
   Activity({int id, String name, TypeActivity type, TimeOfDay time})
       : this.id = ValueNotifier<int>(id),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:uclass/src/widgets/button_rectangular_widget.dart';
 import 'package:uclass/src/widgets/button_widget.dart';
+import 'package:uclass/src/widgets/textfield_widget.dart';
 
 class ModuleVideoWidget extends StatelessWidget {
   @override
@@ -38,41 +39,77 @@ class ModuleVideoWidget extends StatelessWidget {
               ),
               Expanded(
                   flex: 4,
-                  child: LayoutBuilder(
-                    builder: (_, constraint) => Container(
-                      margin: EdgeInsets.only(
-                          left: constraint.maxWidth * 0.1,
-                          bottom: constraint.maxHeight * 0.1),
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10)),
-                      child: ListView(
-                        children: [
-                          Container(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: constraint.maxWidth * 0.02),
-                            margin: EdgeInsets.symmetric(
-                                horizontal: constraint.maxWidth * 0.05,
-                                vertical: constraint.maxHeight * 0.05),
+                  child: Column(
+                    children: [
+                      Expanded(
+                        flex: 3,
+                        child: LayoutBuilder(
+                          builder: (_, constraint) => Container(
+                            margin: EdgeInsets.only(
+                                left: constraint.maxWidth * 0.1,
+                                bottom: constraint.maxHeight * 0.1),
                             decoration: BoxDecoration(
-                                color: Colors.grey,
-                                borderRadius: BorderRadius.circular(5)),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10)),
+                            child: ListView(
                               children: [
-                                Text('Aula3.pdf'),
-                                IconButton(
-                                    icon: Icon(
-                                      Icons.delete,
-                                      color: Colors.red,
-                                    ),
-                                    onPressed: () => null)
+                                Container(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: constraint.maxWidth * 0.02),
+                                  margin: EdgeInsets.symmetric(
+                                      horizontal: constraint.maxWidth * 0.05,
+                                      vertical: constraint.maxHeight * 0.05),
+                                  decoration: BoxDecoration(
+                                      color: Colors.grey,
+                                      borderRadius: BorderRadius.circular(5)),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text('Aula3.pdf'),
+                                      IconButton(
+                                          icon: Icon(
+                                            Icons.delete,
+                                            color: Colors.red,
+                                          ),
+                                          onPressed: () => null)
+                                    ],
+                                  ),
+                                )
                               ],
                             ),
-                          )
-                        ],
+                          ),
+                        ),
                       ),
-                    ),
+                      Flexible(
+                          flex: 1,
+                          child: Column(
+                            children: [
+                              Text('Adicionar link do video'),
+                              Expanded(
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Expanded(
+                                        child: TextFieldWidget(
+                                      hint: 'http://',
+                                    )),
+                                    Flexible(
+                                        child: LayoutBuilder(
+                                      builder: (_, constraint) =>
+                                          RectangularButtonWidget(
+                                        constraint: constraint,
+                                        color: Colors.green,
+                                        f: () => null,
+                                        title: 'Adicionar',
+                                      ),
+                                    ))
+                                  ],
+                                ),
+                              )
+                            ],
+                          ))
+                    ],
                   ))
             ],
           ),
