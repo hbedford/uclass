@@ -23,7 +23,7 @@ class Class {
   final ValueNotifier<DateTime> lastAccess;
   final ValueNotifier<TextEditingController> limitEdit =
       ValueNotifier<TextEditingController>(TextEditingController());
-  final ValueNotifier<List<User>> admins;
+  final ValueNotifier<List<String>> admins;
   Class(
       {int id,
       String name = '',
@@ -41,7 +41,7 @@ class Class {
       List<VideoChannel> videoChannels,
       DateTime lastAccess})
       : this.id = ValueNotifier<int>(id),
-        this.admins = ValueNotifier<List<User>>(admins ?? []),
+        this.admins = ValueNotifier<List<String>>(admins ?? []),
         this.name = ValueNotifier<String>(name),
         this.teacher = ValueNotifier<User>(teacher),
         this.members = ValueNotifier<List<User>>(members ?? []),
@@ -72,6 +72,11 @@ class Class {
     module.value = Module();
     /*  modules.value.add(Module(name: 'Teste'));
     modules.notifyListeners(); */
+  }
+
+  addAdmin(String value) {
+    admins.value.add(value);
+    admins.notifyListeners();
   }
 
   saveModule() {

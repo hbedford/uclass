@@ -15,7 +15,7 @@ class ClassesMobileWidget extends StatelessWidget {
       child: LayoutBuilder(
         builder: (_, constraint) => Container(
           margin: EdgeInsets.symmetric(vertical: constraint.maxHeight * 0.02),
-          height: constraint.maxHeight * 0.15,
+          height: constraint.maxHeight * 0.7,
           child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: list.length,

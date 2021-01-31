@@ -22,9 +22,12 @@ class ButtonWidget extends StatelessWidget {
             height: height,
             width: width,
             child: Center(
-                child: Text(
-              title,
-              style: style,
+                child: FittedBox(
+              fit: BoxFit.fitWidth,
+              child: Text(
+                title,
+                style: style,
+              ),
             ))));
   }
 }

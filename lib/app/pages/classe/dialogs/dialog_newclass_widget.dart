@@ -9,6 +9,7 @@ import 'package:uclass/src/widgets/title_topic_widget.dart';
 
 class DialogNewClassWidget extends StatelessWidget {
   final controller = GetIt.I.get<ClasseController>();
+  List<Widget> children;
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
@@ -55,33 +56,49 @@ class DialogNewClassWidget extends StatelessWidget {
                               constraint: constraint,
                               title: 'Nome da sala',
                             ),
-                            Container(
-                              height: constraint.maxHeight * 0.1,
-                              child: AutoCompletedTextField(
-                                itemBuilder: (context, suggestion) =>
-                                    Chip(label: Text(suggestion)),
-                                filter: (item, query) {
-                                  return item
-                                      .toLowerCase()
-                                      .startsWith(query.toLowerCase());
-                                },
-                                sort: (a, b) => a.compareTo(b),
-                                list: ['Hugo', 'Marcio', 'Hugo Bedford'],
-                                hint:
-                                    'Exemplo: Nome sobrenome ou nome da instituição',
-                              ),
-                            ),
-                            Wrap(
-                              children: controller.classe.value.admins.value
-                                  .map((e) => Chip(
-                                        avatar: Image.asset(e.image.value),
-                                        label: FittedBox(
-                                          fit: BoxFit.fitWidth,
-                                          child: Text(e.name.value),
+                            ValueListenableBuilder(
+                                valueListenable: controller.classe.value.admins,
+                                builder: (_, value, child) {
+                                  children = value
+                                      .map<Widget>((e) => Chip(
+                                            // avatar: Image.asset(e.image.value),
+                                            label: FittedBox(
+                                              fit: BoxFit.fitWidth,
+                                              child: Text(e),
+                                            ),
+                                          ))
+                                      .toList();
+                                  children.add(
+                                    Flexible(
+                                      child: Container(
+                                        height: constraint.maxHeight * 0.1,
+                                        child: AutoCompletedTextField(
+                                          itemBuilder: (context, suggestion) =>
+                                              InkWell(
+                                            onTap: () => controller.classe.value
+                                                .addAdmin(suggestion),
+                                            child: Text(suggestion),
+                                          ),
+                                          filter: (item, query) {
+                                            return item
+                                                .toLowerCase()
+                                                .startsWith(
+                                                    query.toLowerCase());
+                                          },
+                                          sort: (a, b) => a.compareTo(b),
+                                          list: [
+                                            'Hugo',
+                                            'Marcio',
+                                            'Hugo Bedford'
+                                          ],
+                                          hint:
+                                              'Exemplo: Nome sobrenome ou nome da instituição',
                                         ),
-                                      ))
-                                  .toList(),
-                            ),
+                                      ),
+                                    ),
+                                  );
+                                  return Wrap(children: children);
+                                }),
                             /* TextFieldWidget(
                               onChange: (v) => null,
                               hint: 'Quem pode gerenciar esta sala',
