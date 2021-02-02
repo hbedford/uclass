@@ -46,15 +46,20 @@ class DialogNewClassWidget extends StatelessWidget {
                               constraint: constraint,
                               title: 'Nome da sala',
                             ),
-                            TextFieldWidget(
-                              hint: 'Dê um nome a sua nova sala',
-                              onChange: controller.classe.value.changeName,
-                              margin: EdgeInsets.only(
-                                  bottom: constraint.maxHeight * 0.05),
+                            ValueListenableBuilder(
+                              valueListenable:
+                                  controller.classe.value.errorName,
+                              builder: (_, error, child) => TextFieldWidget(
+                                error: error,
+                                hint: 'Dê um nome a sua nova sala',
+                                onChange: controller.classe.value.changeName,
+                                margin: EdgeInsets.only(
+                                    bottom: constraint.maxHeight * 0.05),
+                              ),
                             ),
                             TitleTopicWidget(
                               constraint: constraint,
-                              title: 'Nome da sala',
+                              title: 'Quem pode gerenciar esta sala?',
                             ),
                             Container(
                               /* padding: EdgeInsets.symmetric(

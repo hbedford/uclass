@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:uclass/app/pages/home/module_dialog/module_text_widget.dart';
 import 'package:uclass/app/pages/home/module_dialog/module_warning_widget.dart';
 import 'package:uclass/domain/entities/activity.dart';
 
@@ -88,8 +89,10 @@ class ActivityModuleWidget extends StatelessWidget {
               : activity.type.value.id.value == 3
                   ? ModuleMaterialWidget()
                   : activity.type.value.id.value == 4
-                      ? ModuleCorrectionWidget()
-                      : ModuleWarningWidget()
+                      ? ModuleTextWidget()
+                      : activity.type.value.id.value == 5
+                          ? ModuleCorrectionWidget()
+                          : ModuleWarningWidget()
       : Center(
           child: Text(
             'ADICIONAR ITEM',

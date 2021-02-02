@@ -24,6 +24,7 @@ class Class {
   final ValueNotifier<TextEditingController> limitEdit =
       ValueNotifier<TextEditingController>(TextEditingController());
   final ValueNotifier<List<String>> admins;
+  final ValueNotifier<String> errorName = ValueNotifier<String>(null);
   Class(
       {int id,
       String name = '',
@@ -73,6 +74,8 @@ class Class {
     /*  modules.value.add(Module(name: 'Teste'));
     modules.notifyListeners(); */
   }
+
+  changeErrorName(String value) => errorName.value = value;
 
   addAdmin(String value) {
     admins.value.add(value);

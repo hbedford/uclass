@@ -58,6 +58,8 @@ class ClasseController {
     if (classe.value.isValidName && classe.value.isValidAdmins) {
       changeStep(1);
       Navigator.pop(context);
+    } else if (!classe.value.isValidName) {
+      classe.value.changeErrorName('O nome da sala precisa de 4 caracteres');
     }
   }
 

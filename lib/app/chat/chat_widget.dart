@@ -338,40 +338,67 @@ class ChatWidget extends StatelessWidget {
           ),
         ),
       );
-  bottomBar() => Flexible(
-        flex: 1,
-        child: LayoutBuilder(
-            builder: (_, constraint) => Container(
-                  margin: EdgeInsets.symmetric(
-                      vertical: constraint.maxHeight * 0.1,
-                      horizontal: constraint.maxWidth * 0.02),
-                  child: Row(
-                    children: [
-                      IconButton(
-                          icon: Icon(
-                            Icons.add_circle_rounded,
-                            color: Colors.grey,
-                          ),
-                          onPressed: () => null),
-                      Expanded(
-                        child: TextFieldWidget(
-                          radius: 20,
-                          height: constraint.maxHeight,
-                          hint: 'Digite a mensagem',
-                          padding: EdgeInsets.symmetric(
-                              horizontal: constraint.maxWidth * 0.05,
-                              vertical: constraint.maxHeight * 0.01),
-                          margin: EdgeInsets.symmetric(
-                              vertical: constraint.maxHeight * 0.02),
-                          color: Colors.grey[300],
+  bottomBar() {
+    return Flexible(
+      flex: 1,
+      child: LayoutBuilder(
+          builder: (_, constraint) => Container(
+                margin: EdgeInsets.symmetric(
+                    vertical: constraint.maxHeight * 0.1,
+                    horizontal: constraint.maxWidth * 0.02),
+                child: Row(
+                  children: [
+                    IconButton(
+                        icon: Icon(
+                          Icons.add_circle_rounded,
+                          color: Colors.grey,
                         ),
+                        onPressed: () => null),
+                    /*  Expanded(
+                        child:  */
+                    Expanded(
+                      child: Container(
+                        height: constraint.maxHeight,
+                        decoration: BoxDecoration(
+                            color: Colors.grey[300],
+                            borderRadius: BorderRadius.circular(10)),
+                        child: TextField(
+                          textAlignVertical: TextAlignVertical.center,
+                          /* textAlignVertical: TextAlignVertical.center, */
+                          decoration: InputDecoration(
+                              alignLabelWithHint: true,
+                              /*  border: border,
+                              disabledBorder: border,
+                              enabledBorder: border,
+                              focusedBorder: border,
+                              errorBorder: border, */
+                              hintText: 'Digite a mensagem',
+                              fillColor: Colors.transparent,
+                              filled: true),
+                          style: TextStyle(color: Colors.black),
+                        ), /* TextFieldWidget(
+                            radius: 20,
+                            height: constraint.maxHeight,
+                            width: constraint.maxWidth * 0.6,
+                            hint: 'Digite a mensagem',
+                            onChange: (v) => null,
+                            /* padding: EdgeInsets.symmetric(
+                                  horizontal: constraint.maxWidth * 0.05,
+                                  vertical: constraint.maxHeight * 0.01), */
+                            /* margin: EdgeInsets.symmetric(
+                                  vertical: constraint.maxHeight * 0.02), */
+                            color: Colors.grey[300],
+                          ), */
                       ),
-                      Container(
-                          height: constraint.maxHeight * 0.6,
-                          width: constraint.maxWidth * 0.1,
-                          child: Image.asset('assets/send.png'))
-                    ],
-                  ),
-                )),
-      );
+                    ),
+                    /*   ), */
+                    Container(
+                        height: constraint.maxHeight * 0.6,
+                        width: constraint.maxWidth * 0.1,
+                        child: Image.asset('assets/send.png'))
+                  ],
+                ),
+              )),
+    );
+  }
 }

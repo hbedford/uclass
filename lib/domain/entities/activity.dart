@@ -23,13 +23,15 @@ class Activity {
         name: 'Material',
         image: 'assets/folders.png',
         color: Colors.transparent),
+    /* TypeActivity(
+        id: 4, name: 'Texto', image: 'assets/text.png', color: Colors.green), */
     TypeActivity(
-        id: 4,
+        id: 5,
         name: 'Correção',
         image: 'assets/corrections.png',
         color: Colors.green),
     TypeActivity(
-        id: 5,
+        id: 6,
         name: 'Avisos',
         image: 'assets/warning.png',
         color: Colors.yellow)

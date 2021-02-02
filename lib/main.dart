@@ -7,6 +7,7 @@ import 'package:uclass/infra/moka/moka_classes.dart';
 import 'package:uclass/infra/moka/moka_users.dart';
 
 import 'app/chat/chat_controller.dart';
+import 'app/notification/notification_controller.dart';
 import 'app/pages/classe/classe_controller.dart';
 import 'app/pages/home/home_controller.dart';
 import 'app/pages/login/login_controller.dart';
@@ -20,6 +21,7 @@ void main() {
   getIt.registerSingleton<HomeController>(HomeController());
   getIt.registerSingleton<LoginController>(LoginController());
   getIt.registerSingleton<PopUpUserController>(PopUpUserController());
+  getIt.registerSingleton<NotificationController>(NotificationController());
   getIt.registerSingleton<UserController>(
       UserController(user: MokaUsers().userLogin));
   getIt.registerSingleton<ClasseController>(
