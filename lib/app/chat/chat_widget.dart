@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:flutter/foundation.dart' as platform;
 import 'package:uclass/domain/entities/message.dart';
-import 'package:uclass/src/widgets/textfield_widget.dart';
 import 'chat_controller.dart';
 import 'chat_message_widget.dart';
 import 'chat_screen.dart';

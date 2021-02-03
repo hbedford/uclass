@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:uclass/app/chat/popup_user_controller.dart';
 import 'package:uclass/app/user/user_controller.dart';
 import 'package:uclass/infra/moka/moka_classes.dart';
+import 'package:uclass/infra/moka/moka_notifications.dart';
 import 'package:uclass/infra/moka/moka_users.dart';
 
 import 'app/chat/chat_controller.dart';
@@ -21,7 +22,8 @@ void main() {
   getIt.registerSingleton<HomeController>(HomeController());
   getIt.registerSingleton<LoginController>(LoginController());
   getIt.registerSingleton<PopUpUserController>(PopUpUserController());
-  getIt.registerSingleton<NotificationController>(NotificationController());
+  getIt.registerSingleton<NotificationController>(
+      NotificationController(notifications: MokaNotifications().notifications));
   getIt.registerSingleton<UserController>(
       UserController(user: MokaUsers().userLogin));
   getIt.registerSingleton<ClasseController>(

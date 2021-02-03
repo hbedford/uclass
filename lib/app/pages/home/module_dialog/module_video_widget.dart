@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:uclass/src/widgets/button_rectangular_widget.dart';
-import 'package:uclass/src/widgets/button_widget.dart';
 import 'package:uclass/src/widgets/textfield_widget.dart';
 
 class ModuleVideoWidget extends StatelessWidget {

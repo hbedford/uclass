@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:uclass/app/notification/notification_controller.dart';
+import 'package:uclass/app/notification/button_notification.dart';
 import 'package:uclass/app/pages/classe/classe_controller.dart';
 import 'package:uclass/app/pages/home/home_desktop/classes_desktop/home_page_classes_desktop.dart';
 import '../home_controller.dart';
@@ -78,7 +78,6 @@ class HomeDesktop extends StatelessWidget {
   }
 
   topBar() {
-    final notificationController = GetIt.I.get<NotificationController>();
     return Flexible(
       child: LayoutBuilder(
         builder: (_, constraint) => Row(
@@ -139,45 +138,14 @@ class HomeDesktop extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  CompositedTransformTarget(
-                    link: notificationController.link,
-                    child: Container(
-                      child: Stack(
-                        children: [
-                          IconButton(
-                            onPressed: () => null,
-                            icon: Icon(
-                              Icons.notifications,
-                              color: Colors.white,
-                            ),
-                          ),
-                          ValueListenableBuilder(
-                            valueListenable:
-                                notificationController.notifications,
-                            builder: (_, value, child) => Positioned(
-                              right: 10,
-                              top: 10,
-                              child: Container(
-                                height: 10,
-                                width: 10,
-                                decoration: BoxDecoration(
-                                    color:
-                                        notificationController.haveNotification
-                                            ? Colors.red
-                                            : Colors.transparent,
-                                    borderRadius: BorderRadius.circular(100)),
-                              ),
-                            ),
-                          )
-                        ],
+                  Flexible(child: ButtonNotification()),
+                  Flexible(
+                    child: IconButton(
+                      onPressed: () => null,
+                      icon: Icon(
+                        Icons.settings,
+                        color: Colors.white,
                       ),
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: () => null,
-                    icon: Icon(
-                      Icons.settings,
-                      color: Colors.white,
                     ),
                   )
                 ],
