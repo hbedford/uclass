@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:uclass/app/notification/button_notification.dart';
+import 'package:uclass/app/notification/notification_controller.dart';
 import 'package:uclass/app/pages/classe/classe_controller.dart';
 import 'package:uclass/app/pages/home/home_desktop/classes_desktop/home_page_classes_desktop.dart';
+import 'package:uclass/domain/entities/notificationinfo.dart';
 import '../home_controller.dart';
 import '../home_events.dart';
 import '../home_leftside.dart';
@@ -15,6 +17,15 @@ class HomeDesktop extends StatelessWidget {
   final controller = GetIt.I.get<HomeController>();
   @override
   Widget build(BuildContext context) {
+    Future.delayed(Duration(seconds: 1), () {
+      final notificationController = GetIt.I.get<NotificationController>();
+      notificationController.changeNewNotification(
+          NotificationInfo(
+              id: 6,
+              title: 'Você acabou de receber um convite',
+              message: "Você foi convidado para participar da sala GO"),
+          context);
+    });
     return Scaffold(
       body: Row(
         children: [
@@ -78,6 +89,7 @@ class HomeDesktop extends StatelessWidget {
   }
 
   topBar() {
+    final notificationController = GetIt.I.get<NotificationController>();
     return Flexible(
       child: LayoutBuilder(
         builder: (_, constraint) => Row(
@@ -138,7 +150,10 @@ class HomeDesktop extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Flexible(child: ButtonNotification()),
+                  Flexible(
+                      child: CompositedTransformTarget(
+                          link: notificationController.link,
+                          child: ButtonNotification())),
                   Flexible(
                     child: IconButton(
                       onPressed: () => null,

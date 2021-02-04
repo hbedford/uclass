@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:uclass/app/notification/button_notification.dart';
 
 import 'notification_controller.dart';
 
@@ -30,12 +31,16 @@ class PopUpNotifications extends StatelessWidget {
                     style: TextStyle(color: Colors.white),
                   ),
                   Container(
+                      width: size.width,
+                      height: size.height,
+                      child: ButtonNotification())
+                  /* Container(
                     width: size.width,
                     height: size.height,
                     child: IconButton(
                         icon: Icon(Icons.notifications),
                         onPressed: () => controller.showAndHide(context)),
-                  )
+                  ) */
                 ],
               ),
             ),
@@ -49,9 +54,9 @@ class PopUpNotifications extends StatelessWidget {
                             width: size.width * 5,
                             margin: EdgeInsets.symmetric(
                                 horizontal: size.width * 0.05,
-                                vertical: size.height * 0.1),
+                                vertical: size.height * 0.05),
                             padding: EdgeInsets.symmetric(
-                                vertical: size.height * 0.3,
+                                vertical: size.height * 0.15,
                                 horizontal: size.width * 0.2),
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),

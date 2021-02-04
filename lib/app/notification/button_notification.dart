@@ -18,6 +18,51 @@ class _ButtonNotificationState extends State<ButtonNotification> {
         color: Colors.transparent,
         child: Container(
           width: constraint.maxWidth,
+          height: constraint.maxHeight,
+          child: Stack(
+            children: [
+              LayoutBuilder(
+                builder: (_, constraint) => Container(
+                  height: constraint.maxHeight,
+                  width: constraint.maxWidth,
+                  child: IconButton(
+                    onPressed: () => controller.showAndHide(context),
+                    icon: Icon(
+                      Icons.notifications,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+              ValueListenableBuilder(
+                valueListenable: controller.notifications,
+                builder: (_, value, child) => Positioned(
+                  right: 30,
+                  top: 40,
+                  child: Container(
+                    height: 10,
+                    width: 10,
+                    decoration: BoxDecoration(
+                        color: controller.haveNotification
+                            ? Colors.red
+                            : Colors.transparent,
+                        borderRadius: BorderRadius.circular(100)),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/* return LayoutBuilder(
+      builder: (_, constraint) => Material(
+        color: Colors.transparent,
+        child: Container(
+          width: constraint.maxWidth,
           height: constraint.maxHeight * 0.4,
           child: Stack(
             children: [
@@ -59,3 +104,4 @@ class _ButtonNotificationState extends State<ButtonNotification> {
     );
   }
 }
+ */
