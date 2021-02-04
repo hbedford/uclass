@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
@@ -42,50 +44,64 @@ class PopUpNotifications extends StatelessWidget {
               builder: (_, value, child) => Wrap(
                 direction: Axis.vertical,
                 children: controller.notificationsActives
-                    .map((e) => Container(
-                          width: size.width * 5,
-                          margin: EdgeInsets.symmetric(
-                              horizontal: size.width * 0.05,
-                              vertical: size.height * 0.1),
-                          padding: EdgeInsets.symmetric(
-                              vertical: size.height * 0.3,
-                              horizontal: size.width * 0.2),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.white54),
-                          /* width: width, */
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                    .map((e) => ClipRect(
+                        child: Container(
+                            width: size.width * 5,
+                            margin: EdgeInsets.symmetric(
+                                horizontal: size.width * 0.05,
+                                vertical: size.height * 0.1),
+                            padding: EdgeInsets.symmetric(
+                                vertical: size.height * 0.3,
+                                horizontal: size.width * 0.2),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.white54),
+                            /* width: width, */
+                            child: BackdropFilter(
+                              filter: ImageFilter.blur(sigmaX: 1, sigmaY: 1),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Container(
-                                          margin: EdgeInsets.only(
-                                              right: size.width * 0.1),
-                                          child: Icon(Icons.alarm)),
-                                      Text(
-                                        e.title.value,
-                                        style: TextStyle(color: Colors.black),
+                                      Expanded(
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            Container(
+                                                margin: EdgeInsets.only(
+                                                    right: size.width * 0.1),
+                                                child: Icon(Icons.alarm)),
+                                            Flexible(
+                                              child: FittedBox(
+                                                fit: BoxFit.fitWidth,
+                                                child: Text(
+                                                  e.title.value,
+                                                  softWrap: true,
+                                                  style: TextStyle(
+                                                      color: Colors.black),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
+                                      IconButton(
+                                          icon: Icon(Icons.close),
+                                          onPressed: () =>
+                                              e.changeDisable(true))
                                     ],
                                   ),
-                                  IconButton(
-                                      icon: Icon(Icons.close),
-                                      onPressed: () => e.changeDisable(true))
+                                  Text(
+                                    e.message.value,
+                                    style: TextStyle(color: Colors.black),
+                                  ),
                                 ],
                               ),
-                              Text(
-                                e.message.value,
-                                style: TextStyle(color: Colors.black),
-                              )
-                            ],
-                          ),
-                        ))
+                            ))))
                     .toList(),
               ),
             )

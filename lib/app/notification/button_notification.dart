@@ -40,7 +40,7 @@ class _ButtonNotificationState extends State<ButtonNotification> {
                 valueListenable: controller.notifications,
                 builder: (_, value, child) => Positioned(
                   right: 30,
-                  top: 10,
+                  top: 20,
                   child: Container(
                     height: 10,
                     width: 10,
