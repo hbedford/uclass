@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:uclass/app/chat/chat_controller.dart';
+import 'package:uclass/app/chat/popup_last_conversations.dart';
 import 'package:uclass/app/notification/button_notification.dart';
 import 'package:uclass/app/notification/notification_controller.dart';
 import 'package:uclass/app/pages/classe/classe_controller.dart';
@@ -34,9 +36,11 @@ class HomeDesktop extends StatelessWidget {
               flex: 8,
               child: LayoutBuilder(
                 builder: (_, constraint) => Container(
-                  margin: EdgeInsets.symmetric(
-                      vertical: constraint.maxHeight * 0.05,
-                      horizontal: constraint.maxWidth * 0.02),
+                  margin: EdgeInsets.only(
+                    left: constraint.maxWidth * 0.02,
+                    top: constraint.maxHeight * 0.05,
+                    bottom: constraint.maxHeight * 0.01,
+                  ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -57,24 +61,38 @@ class HomeDesktop extends StatelessWidget {
                                               )),
                                       Flexible(
                                           flex: 1,
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
+                                          child: Row(
                                             children: [
-                                              Text(
-                                                'EVENTOS',
-                                                style: style.copyWith(
-                                                    color: Colors.white54,
-                                                    fontSize: 14),
+                                              Flexible(
+                                                flex: 2,
+                                                child: Column(
+                                                  /*  crossAxisAlignment:
+                                                      CrossAxisAlignment.center, */
+                                                  children: [
+                                                    Flexible(
+                                                      child: Text(
+                                                        'EVENTOS',
+                                                        style: style.copyWith(
+                                                            color:
+                                                                Colors.white54,
+                                                            fontSize: 14),
+                                                      ),
+                                                    ),
+                                                    Expanded(
+                                                        child: LayoutBuilder(
+                                                            builder:
+                                                                (_, constraint) =>
+                                                                    HomeEvents(
+                                                                      constraint:
+                                                                          constraint,
+                                                                    )))
+                                                  ],
+                                                ),
                                               ),
-                                              Expanded(
-                                                  child: LayoutBuilder(
-                                                      builder:
-                                                          (_, constraint) =>
-                                                              HomeEvents(
-                                                                constraint:
-                                                                    constraint,
-                                                              )))
+                                              Flexible(
+                                                flex: 1,
+                                                child: PopUpLastConversations(),
+                                              )
                                             ],
                                           ))
                                     ],

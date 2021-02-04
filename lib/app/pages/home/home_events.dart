@@ -55,6 +55,7 @@ class HomeEvents extends StatelessWidget {
             vertical: constraints.maxHeight * 0.03,
             horizontal: constraints.maxWidth * 0.05),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
               DateConvert().dayWeek(e.date.value).toString().toUpperCase(),
@@ -70,6 +71,7 @@ class HomeEvents extends StatelessWidget {
             ),
             Text(
               e.title.value,
+              textAlign: TextAlign.center,
               style: style.copyWith(
                   color: Colors.grey,
                   fontWeight: FontWeight.w100,

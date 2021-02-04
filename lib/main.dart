@@ -31,7 +31,7 @@ void main() {
   );
   getIt.registerSingleton<ChatController>(ChatController(conversations: [
     Conversation(
-        color: Colors.blue, isOpened: true, user: User(name: 'Corona Virus'))
+        color: Colors.blue, isOpened: true, user: MokaUsers().userLogin),
   ]));
   runApp(App());
 }
