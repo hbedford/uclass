@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:uclass/app/chat/popup_user_controller.dart';
 import 'package:uclass/app/user/user_controller.dart';
 import 'package:uclass/infra/moka/moka_classes.dart';
+import 'package:uclass/infra/moka/moka_conversations.dart';
 import 'package:uclass/infra/moka/moka_notifications.dart';
 import 'package:uclass/infra/moka/moka_users.dart';
 
@@ -29,9 +30,8 @@ void main() {
   getIt.registerSingleton<ClasseController>(
     ClasseController(classe: Class(), classes: MokaClasses().list),
   );
-  getIt.registerSingleton<ChatController>(ChatController(conversations: [
-    Conversation(
-        color: Colors.blue, isOpened: true, user: MokaUsers().userLogin),
-  ]));
+  getIt.registerSingleton<ChatController>(ChatController(
+      conversations: MokaConversations().conversations,
+      conversation: MokaConversations().conversations[0]));
   runApp(App());
 }

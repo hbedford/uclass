@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:uclass/app/chat/chat_desktop/chats_desktop_widget.dart';
 import 'package:uclass/app/chat/chat_widget.dart';
 
 import 'package:flutter/foundation.dart' as platform;
@@ -30,9 +31,11 @@ class HomeScreen extends StatelessWidget {
               child: platform.kIsWeb && MediaQuery.of(context).size.width > 1320
                   ? HomeDesktop()
                   : HomeMobile()),
-          ChatWidget(
-            constraints: constraint,
-          )
+          platform.kIsWeb && MediaQuery.of(context).size.width > 1320
+              ? ChatsDesktopWidget(
+                  constraints: constraint,
+                )
+              : Container()
         ],
       ),
       /*  ), */
