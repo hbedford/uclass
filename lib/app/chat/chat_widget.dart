@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+/* import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:flutter/foundation.dart' as platform;
 import 'package:uclass/domain/entities/message.dart';
@@ -10,7 +10,7 @@ class ChatWidget extends StatelessWidget {
   final BoxConstraints constraints;
   ChatWidget({this.constraints});
   final controller = GetIt.I.get<ChatController>();
-  final List<Message> list = [
+  /*  final List<Message> list = [
     Message(
         message:
             't is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using',
@@ -22,7 +22,7 @@ class ChatWidget extends StatelessWidget {
         date: DateTime(2021, 01, 14, 14, 05, 00),
         userReceiveId: 1,
         userSenderId: 0),
-  ];
+  ]; */
 
   final TextStyle style = TextStyle(fontFamily: 'Gotham', color: Colors.white);
   @override
@@ -32,7 +32,7 @@ class ChatWidget extends StatelessWidget {
         right: constraints.maxWidth * 0.1,
         child: platform.kIsWeb && MediaQuery.of(context).size.width > 1320
             ? web()
-            : mobileCircle(context));
+            : mobileCircle(context));A
   }
 
   web() => Material(
@@ -118,7 +118,7 @@ class ChatWidget extends StatelessWidget {
         child: LayoutBuilder(
           builder: (_, constraint) => ListView(
             scrollDirection: Axis.vertical,
-            children: list
+            children: controller.
                 .map<Widget>((Message e) => ChatMessageWidget(
                       constraint: constraint,
                       receiver: e.userReceiveId.value == 0,
@@ -401,3 +401,4 @@ class ChatWidget extends StatelessWidget {
     );
   }
 }
+ */

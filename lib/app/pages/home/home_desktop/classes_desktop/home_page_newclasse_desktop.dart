@@ -426,27 +426,25 @@ class _HomePageNewClassDesktopState extends State<HomePageNewClassDesktop> {
 
   listMembers(BuildContext context) {
     final List<User> members = MokaMembers().members;
-    final List<GlobalKey> keys = [
-      GlobalKey(debugLabel: '1'),
-      GlobalKey(debugLabel: '2'),
-      GlobalKey(debugLabel: '3')
-    ];
+    final LayerLink link = LayerLink();
     return Flexible(
         flex: 1,
         child: LayoutBuilder(
           builder: (_, constraint) => Wrap(
               children: members
                   .map(
-                    (user) => Container(
-                      key: keys[members.indexOf(user)],
-                      margin:
-                          EdgeInsets.only(right: constraint.maxWidth * 0.02),
-                      child: Tooltip(
-                        message: user.name.value,
-                        child: InkWell(
-                          onTap: () => popController.showOverlay(context,
-                              keys[members.indexOf(user)], Size(40, 40), user),
-                          child: Image.asset(user.image.value),
+                    (user) => CompositedTransformTarget(
+                      link: link,
+                      child: Container(
+                        margin:
+                            EdgeInsets.only(right: constraint.maxWidth * 0.02),
+                        child: Tooltip(
+                          message: user.name.value,
+                          child: InkWell(
+                            onTap: () => popController.showOverlay(
+                                context, link, Size(40, 40), user),
+                            child: Image.asset(user.image.value),
+                          ),
                         ),
                       ),
                     ),

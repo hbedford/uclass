@@ -34,13 +34,6 @@ class PopUpNotifications extends StatelessWidget {
                       width: size.width,
                       height: size.height,
                       child: ButtonNotification())
-                  /* Container(
-                    width: size.width,
-                    height: size.height,
-                    child: IconButton(
-                        icon: Icon(Icons.notifications),
-                        onPressed: () => controller.showAndHide(context)),
-                  ) */
                 ],
               ),
             ),
@@ -61,7 +54,6 @@ class PopUpNotifications extends StatelessWidget {
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
                                 color: Colors.white54),
-                            /* width: width, */
                             child: BackdropFilter(
                               filter: ImageFilter.blur(sigmaX: 1, sigmaY: 1),
                               child: Column(

@@ -6,30 +6,40 @@ class ChatController {
   final ValueNotifier<List<Conversation>> conversations;
   final notification;
   final LayerLink link = LayerLink();
-  final ValueNotifier<Conversation> conversation;
+  /* final ValueNotifier<Conversation> conversation; */
 
   ChatController(
       {List<Conversation> conversations,
       bool notification = true,
       Conversation conversation})
-      : this.conversations = ValueNotifier<List<Conversation>>(conversations),
-        this.notification = ValueNotifier<bool>(notification),
-        this.conversation = ValueNotifier<Conversation>(conversation);
+      : this.conversations =
+            ValueNotifier<List<Conversation>>(conversations ?? []),
+        this.notification = ValueNotifier<bool>(
+            notification) /* ,
+        this.conversation = ValueNotifier<Conversation>(conversation) */
+  ;
   addConversation(Conversation c) => conversations.value.add(c);
   changeNotification(bool n) => notification.value = n;
-  changeConversation(Conversation value) => conversation.value = value;
+  /* changeConversation(Conversation value) => conversation.value = value; */
 
-  //CONTINUAR DAQUI
-  openChat(BuildContext context, Conversation c) {}
-  List<Conversation> conversationsOrderByView{
+  List<Conversation> get conversationsOrderByView {
     List<Conversation> list = conversations.value;
-    list.sort((a,b){
+    list.sort((a, b) =>
+        a.lastMessageDateReceived.compareTo(b.lastMessageDateReceived));
+    return list;
+  }
 
-      //esqueci tudo
-      if(a.lastMessageDateReceivedNotView !=null && b.lastMessageDateReceivedNotView!=null){}else{}
-      //Verificar se contem mensagem não vista
+  List<Conversation> get activeConversations {
+    List<Conversation> list = [];
+    list.addAll(conversations.value);
+    list.removeWhere((element) => element.active.value == false);
+    return list;
+  }
 
-
-    });
+  List<Conversation> get disableConversations {
+    List<Conversation> list = [];
+    list.addAll(conversationsOrderByView);
+    list.removeWhere((element) => element.active.value == true);
+    return list;
   }
 }

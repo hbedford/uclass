@@ -14,8 +14,6 @@ import 'app/pages/classe/classe_controller.dart';
 import 'app/pages/home/home_controller.dart';
 import 'app/pages/login/login_controller.dart';
 import 'domain/entities/class.dart';
-import 'domain/entities/conversation.dart';
-import 'domain/entities/user.dart';
 import 'src/app.dart';
 
 void main() {

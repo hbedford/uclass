@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
-import 'package:uclass/app/chat/chat_controller.dart';
 import 'package:uclass/src/utils/paint_triangle.dart';
-
-import 'chat_widget.dart';
 
 class PopUpChat extends StatefulWidget {
   @override

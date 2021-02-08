@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:uclass/app/chat/chat_desktop/chats_desktop_widget.dart';
-import 'package:uclass/app/chat/chat_widget.dart';
 
 import 'package:flutter/foundation.dart' as platform;
 

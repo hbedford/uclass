@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:uclass/app/chat/chat_controller.dart';
 import 'package:uclass/app/chat/popup_last_conversations.dart';
 import 'package:uclass/app/notification/button_notification.dart';
 import 'package:uclass/app/notification/notification_controller.dart';
@@ -127,17 +126,19 @@ class HomeDesktop extends StatelessWidget {
                       radius: 40,
                       backgroundColor: Colors.transparent,
                       backgroundImage: AssetImage('assets/avatar.png'),
-                      child: Stack(
-                        children: [
-                          Positioned(
-                            child: CircleAvatar(
-                              backgroundColor: Colors.green,
-                              radius: 4,
-                            ),
-                            bottom: 5,
-                            right: 5,
-                          )
-                        ],
+                      child: LayoutBuilder(
+                        builder: (_, constraint) => Stack(
+                          children: [
+                            Positioned(
+                              child: CircleAvatar(
+                                backgroundColor: Colors.green,
+                                radius: constraint.maxWidth * 0.1,
+                              ),
+                              bottom: 5,
+                              right: 5,
+                            )
+                          ],
+                        ),
                       ),
                     ),
                   ),

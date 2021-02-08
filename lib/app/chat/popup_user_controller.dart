@@ -16,24 +16,25 @@ class PopUpUserController {
         this.anchorSize = ValueNotifier<Size>(null),
         this.user = ValueNotifier<User>(null),
         this.link = ValueNotifier<LayerLink>(LayerLink());
-  void showOverlay(BuildContext context, GlobalKey key, Size size, User user) {
+
+  void showOverlay(BuildContext context, LayerLink link, Size size, User user) {
     changeUser(user);
     if (overlayIsShown.value) {
       overlayIsShown.value = false;
       overlayEntry.value.remove();
     }
-    overlayEntry.value = _createOverlayEntry(context, key);
+    overlayEntry.value = _createOverlayEntry(context, link);
     Overlay.of(context).insert(overlayEntry.value);
     overlayIsShown.value = true;
-    RenderBox renderBox = key.currentContext.findRenderObject();
-    anchorSize.value = renderBox.size;
-    position.value = renderBox.localToGlobal(Offset.zero);
   }
 
   changeUser(User value) => user.value = value;
-  OverlayEntry _createOverlayEntry(BuildContext context, GlobalKey key) {
+
+  OverlayEntry _createOverlayEntry(BuildContext context, LayerLink link) {
     return OverlayEntry(builder: (ctxt) {
-      return PopUpUserInfoWidget();
+      return PopUpUserInfoWidget(
+        link: link,
+      );
     });
   }
 
